@@ -4,7 +4,7 @@ import { OpynAbis } from '../abis'
 import type { OpynContractName } from '../types'
 
 // Map of contract names to their respective addresses
-const contractAddresses: Record<OpynContractName, Address> = {
+export const OpynAddresses: Record<OpynContractName, Address> = {
   Controller: '0x',
   Factory: '0x',
   Feeder: '0x',
@@ -15,7 +15,7 @@ const contractAddresses: Record<OpynContractName, Address> = {
 export function getOpynContracts({ client }: { client: PublicClient }) {
   const contracts = Object.keys(OpynAbis).reduce(
     (acc, key) => {
-      const address = contractAddresses[key]
+      const address = OpynAddresses[key]
       if (!address) {
         console.error(`Address not found for contract: ${key}`)
         return acc
