@@ -1,0 +1,52 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "off",
+        "useKeyWithClickEvents": "off",
+        "useValidAnchor": "off",
+        "noPositiveTabindex": "off",
+        "noRedundantAlt": "off",
+        "useAltText": "off",
+        "useMediaCaption": "off",
+        "noDistractingElements": "off",
+        "useHeadingContent": "off",
+        "noAccessKey": "off",
+        "noAutofocus": "off",
+        "noBlankTarget": "off",
+        "useAriaPropsForRole": "off",
+        "useHtmlLang": "off",
+        "useIframeTitle": "off",
+        "useKeyWithMouseEvents": "off",
+        "useValidLang": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "quoteStyle": "single"
+    }
+  },
+  "files": {
+    "ignore": ["**/chat-icons.tsx"]
+  }
+}

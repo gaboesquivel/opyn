@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 2%; /* #050505 */
+    --foreground: 0 0% 100%; /* #FFFFFF */
+
+    --card: 210 4% 11%; /* #1B1C1D */
+    --card-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --popover: 210 5% 16%; /* #27292B */
+    --popover-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --primary: 220 4% 25%; /* #3D4043 */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --accent: 220 4% 25%; /* #3D4043 */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --secondary: 210 5% 16%; /* #27292B */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --tertiary: 0 0% 82%; /* #CFD1D3 */
+    --tertiary-foreground: 0 0% 100%; /* #FFFFFF */
+    --subtle: 210 5% 16%; /* #27292B */
+
+    --neutral-dark: 210 5% 43%; /* #686D73 */
+    --neutral-dark-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --neutral-light: 210 5% 65%; /* #A1A5AA */
+    --neutral-light-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --positive: 126 79% 52%; /* #29E03B */
+    --negative: 12 95% 60%; /* #FA5C38 */
+    --brand: 188 96% 55%; /* #1FD5F9 */
+    --input: 210 5% 16%; /* #27292B */
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    @apply overflow-hidden md:overflow-auto;
+  }
+}
+
+/* Crypto Ticker Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+
+/* Custom Scrollbar Styles */
+@layer utilities {
+  /* Webkit browsers (Chrome, Safari, newer versions of Edge) */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: red !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsla(var(--primary), 0.5);
+    border-radius: var(--radius);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent !important;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsla(var(--primary), 0.5) transparent;
+  }
+}
+
+/* To adjust the size of long KaTeX expressions to fit within their parent container (instead of allowing scrolling), 
+you can use CSS techniques to scale down the KaTeX content responsively. Here's how you can do it:
+
+Explanation:
+width: 100% and max-width: 100%: Ensures the KaTeX container adjusts to the width of the parent without exceeding it.
+
+transform: scale(0.9): This scales down the entire KaTeX content slightly to fit better in the container. You can adjust this value depending on the size of the expressions you are dealing with (e.g., scale(0.8) or smaller for very large expressions).
+
+transform-origin: left: Ensures that scaling happens from the left edge, so the content shrinks towards the left instead of scaling from the center.
+
+white-space: normal and word-wrap: break-word: These ensure that long expressions or words will break and wrap, instead of causing horizontal overflow.
+
+overflow: hidden: Hides any overflowing content that might go outside the container.
+
+ */
+
+.katex-display {
+  font-size: clamp(0.7rem, 2vw, 1.2rem); /* Dynamically adjust font size */
+  line-height: 1.2;
+  padding: 10px 0 !important;
+  margin: 10px 0 !important;
+  width: 100%; /* Ensure full width of the parent */
+  max-width: 100%;
+  overflow: auto;
+}
+
+.katex {
+  font-size: inherit; /* Inherit font size from parent */
+  width: 100%;
+  max-width: 100%;
+  word-wrap: break-word; /* Ensure breaking of long words or expressions */
+}
+
+@layer components {
+  .swiper-custom-pagination {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .swiper-custom-pagination .swiper-pagination-bullet {
+    @apply bg-brand/50 opacity-100 transition-all duration-300 ease-in-out;
+    transform: scale(1);
+  }
+
+  .swiper-custom-pagination .swiper-pagination-bullet-active {
+    @apply bg-brand transition-all duration-300 ease-in-out;
+    transform: scale(1.2);
+  }
+
+  .swiper-reduced-padding {
+    @apply pb-2; /* Adjust this value as needed */
+  }
+
+  .swiper-reduced-padding .swiper-pagination {
+    @apply bottom-1; /* Adjust this value as needed */
+  }
+
+  /* Slide change animation */
+  .swiper-pagination-horizontal.swiper-pagination-bullets
+    .swiper-pagination-bullet {
+    @apply transition-all duration-500 ease-in-out;
+  }
+
+  /* Optional: Add a subtle grow effect on hover */
+  .swiper-pagination-bullet:hover {
+    transform: scale(1.1);
+  }
+}
