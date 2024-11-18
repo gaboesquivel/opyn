@@ -69,7 +69,7 @@ export type Database = {
         }
         Relationships: []
       }
-      markets: {
+      market: {
         Row: {
           address: string
           base_asset: string
@@ -96,19 +96,19 @@ export type Database = {
             foreignKeyName: "markets_base_asset_fkey"
             columns: ["base_asset"]
             isOneToOne: false
-            referencedRelation: "tokens"
+            referencedRelation: "token"
             referencedColumns: ["uuid"]
           },
           {
             foreignKeyName: "markets_quote_asset_fkey"
             columns: ["quote_asset"]
             isOneToOne: false
-            referencedRelation: "tokens"
+            referencedRelation: "token"
             referencedColumns: ["uuid"]
           },
         ]
       }
-      tokens: {
+      token: {
         Row: {
           address: string
           chain_id: number
@@ -135,7 +135,7 @@ export type Database = {
         }
         Relationships: []
       }
-      users: {
+      user: {
         Row: {
           address: string
           created_at: string

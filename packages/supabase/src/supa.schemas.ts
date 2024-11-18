@@ -78,7 +78,7 @@ export const documentsUpdateSchema = z.object({
 
 export const documentsRelationshipsSchema = z.tuple([]);
 
-export const marketsRowSchema = z.object({
+export const marketRowSchema = z.object({
   address: z.string(),
   base_asset: z.string(),
   created_at: z.string(),
@@ -86,7 +86,7 @@ export const marketsRowSchema = z.object({
   quote_asset: z.string(),
 });
 
-export const marketsInsertSchema = z.object({
+export const marketInsertSchema = z.object({
   address: z.string(),
   base_asset: z.string(),
   created_at: z.string().optional(),
@@ -94,7 +94,7 @@ export const marketsInsertSchema = z.object({
   quote_asset: z.string(),
 });
 
-export const marketsUpdateSchema = z.object({
+export const marketUpdateSchema = z.object({
   address: z.string().optional(),
   base_asset: z.string().optional(),
   created_at: z.string().optional(),
@@ -102,24 +102,24 @@ export const marketsUpdateSchema = z.object({
   quote_asset: z.string().optional(),
 });
 
-export const marketsRelationshipsSchema = z.tuple([
+export const marketRelationshipsSchema = z.tuple([
   z.object({
     foreignKeyName: z.literal("markets_base_asset_fkey"),
     columns: z.tuple([z.literal("base_asset")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("tokens"),
+    referencedRelation: z.literal("token"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
   z.object({
     foreignKeyName: z.literal("markets_quote_asset_fkey"),
     columns: z.tuple([z.literal("quote_asset")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("tokens"),
+    referencedRelation: z.literal("token"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
 
-export const tokensRowSchema = z.object({
+export const tokenRowSchema = z.object({
   address: z.string(),
   chain_id: z.number(),
   created_at: z.string(),
@@ -128,7 +128,7 @@ export const tokensRowSchema = z.object({
   uuid: z.string(),
 });
 
-export const tokensInsertSchema = z.object({
+export const tokenInsertSchema = z.object({
   address: z.string(),
   chain_id: z.number(),
   created_at: z.string().optional(),
@@ -137,7 +137,7 @@ export const tokensInsertSchema = z.object({
   uuid: z.string().optional(),
 });
 
-export const tokensUpdateSchema = z.object({
+export const tokenUpdateSchema = z.object({
   address: z.string().optional(),
   chain_id: z.number().optional(),
   created_at: z.string().optional(),
@@ -146,9 +146,9 @@ export const tokensUpdateSchema = z.object({
   uuid: z.string().optional(),
 });
 
-export const tokensRelationshipsSchema = z.tuple([]);
+export const tokenRelationshipsSchema = z.tuple([]);
 
-export const usersRowSchema = z.object({
+export const userRowSchema = z.object({
   address: z.string(),
   created_at: z.string(),
   ens: z.string().nullable(),
@@ -156,7 +156,7 @@ export const usersRowSchema = z.object({
   telegram: z.string().nullable(),
 });
 
-export const usersInsertSchema = z.object({
+export const userInsertSchema = z.object({
   address: z.string(),
   created_at: z.string().optional(),
   ens: z.string().optional().nullable(),
@@ -164,7 +164,7 @@ export const usersInsertSchema = z.object({
   telegram: z.string().optional().nullable(),
 });
 
-export const usersUpdateSchema = z.object({
+export const userUpdateSchema = z.object({
   address: z.string().optional(),
   created_at: z.string().optional(),
   ens: z.string().optional().nullable(),
@@ -172,7 +172,7 @@ export const usersUpdateSchema = z.object({
   telegram: z.string().optional().nullable(),
 });
 
-export const usersRelationshipsSchema = z.tuple([]);
+export const userRelationshipsSchema = z.tuple([]);
 
 export const documentsWithStoragePathRowSchema = z.object({
   created_at: z.string().nullable(),

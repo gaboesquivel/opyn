@@ -2,34 +2,27 @@
 
 import { type ActionResult, failure, success } from '@/lib/actions'
 import { createSupabaseServerClient } from '@/services/supabase'
-import type { Tables } from '@opyn/supabase'
+import { type Tables, userInsertSchema } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
-import { z } from 'zod'
 
-const userSchema = z.object({
-  address: z.string(),
-  ens: z.string().nullable().optional(),
-  notifs: z.boolean().nullable().optional(),
-  telegram: z.string().nullable().optional(),
-})
-
+// Saves or updates a user record in the database
 export const saveUser = createSafeActionClient()
-  .schema(userSchema)
+  .schema(userInsertSchema)
   .action(
-    async ({ parsedInput: user }): Promise<ActionResult<Tables<'users'>>> => {
+    async ({ parsedInput: user }): Promise<ActionResult<Tables<'user'>>> => {
       try {
         const supabase = await createSupabaseServerClient()
 
         const { data, error } = await supabase
-          .from('users')
-          .upsert(user, { onConflict: 'address' })
+          .from('user')
+          .upsert(user, { onConflict: 'id' })
           .select()
           .single()
 
         if (error) return failure('DB_OP_FAILURE', error)
 
         if (!data)
-          return failure('NO_DATA', new Error('No data returned from insert'))
+          return failure('DB_OP_FAILURE', new Error('No data returned'))
 
         return success(data)
       } catch (error) {
