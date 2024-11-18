@@ -79,27 +79,27 @@ export const documentsUpdateSchema = z.object({
 export const documentsRelationshipsSchema = z.tuple([]);
 
 export const marketRowSchema = z.object({
-  address: z.string(),
   base_asset: z.string(),
   created_at: z.string(),
+  id: z.string(),
   label: z.string(),
   owner: z.string(),
   quote_asset: z.string(),
 });
 
 export const marketInsertSchema = z.object({
-  address: z.string(),
   base_asset: z.string(),
   created_at: z.string().optional(),
+  id: z.string(),
   label: z.string(),
   owner: z.string(),
   quote_asset: z.string(),
 });
 
 export const marketUpdateSchema = z.object({
-  address: z.string().optional(),
   base_asset: z.string().optional(),
   created_at: z.string().optional(),
+  id: z.string().optional(),
   label: z.string().optional(),
   owner: z.string().optional(),
   quote_asset: z.string().optional(),

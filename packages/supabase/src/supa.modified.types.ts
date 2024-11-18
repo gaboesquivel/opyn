@@ -71,25 +71,25 @@ export type Database = {
       }
       market: {
         Row: {
-          address: string
           base_asset: string
           created_at: string
+          id: string
           label: string
           owner: string
           quote_asset: string
         }
         Insert: {
-          address: string
           base_asset: string
           created_at?: string
+          id: string
           label: string
           owner: string
           quote_asset: string
         }
         Update: {
-          address?: string
           base_asset?: string
           created_at?: string
+          id?: string
           label?: string
           owner?: string
           quote_asset?: string
