@@ -1,1 +1,1 @@
-export * from './trigger/activity'
+export * from './trigger/new-market'
