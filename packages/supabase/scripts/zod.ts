@@ -1,7 +1,7 @@
 // scripts/removeSupabaseUrl.js
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 const inputFilePath = path.join(__dirname, '../src/supa.types.ts')
 const outputFilePath = path.join(__dirname, '../src/supa.modified.types.ts')
