@@ -6,6 +6,7 @@ import type {
 import { TradingDashboard } from '@/components/routes/trade/trading-dashboard'
 import { TradingMarketInfo } from '@/components/routes/trade/trading-market-info'
 import { TradingPositions } from '@/components/routes/trade/trading-positions'
+import { getMarket } from '@/services/supabase/api'
 import { createSupabaseServerClient } from '@/services/supabase/server'
 import dynamic from 'next/dynamic'
 
@@ -16,17 +17,11 @@ export default async function TradePage({
   const { pair, trade } = params
   const bot = searchParams.bot
 
-  const supabase = await createSupabaseServerClient()
-  const { data: market, error } = await supabase
-    .from('market')
-    .select('*')
-    .eq('label', pair)
-    .single()
+  const market = await getMarket(pair)
+  const baseAsset = market.base_token[0].symbol
+  const quoteAsset = market.quote_token[0].symbol
 
-  // if (error) throw new Error(`Failed to fetch market data: ${error.message}`)
-  // if (!market) throw new Error(`Market not found for pair: ${pair}`)
-
-  console.log(market)
+  console.log(baseAsset, quoteAsset)
 
   return (
     <TradingDashboard
