@@ -47,6 +47,6 @@
     }
   },
   "files": {
-    "ignore": ["**/chat-icons.tsx"]
+    "ignore": ["**/chat-icons.tsx", "**/.trigger/**"]
   }
 }
