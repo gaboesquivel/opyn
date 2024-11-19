@@ -36,7 +36,7 @@ import { useTradeRoute } from '../hooks/use-trade-route'
 import type { TradeRouteParams } from '../routing'
 import { PerpTypeButtons } from '../trading-perp-type-buttons'
 
-export function TradingSidebar({ pair, trade }: TradeRouteParams) {
+export function TradingSidebar({ marketSlug, trade }: TradeRouteParams) {
   const [_, setDialog] = useQueryState('dialog')
   const {
     signMessage,
@@ -47,7 +47,7 @@ export function TradingSidebar({ pair, trade }: TradeRouteParams) {
     reset,
     failureReason,
   } = useSignMessage()
-  const { data } = useTradeData({ pair, trade })
+  const { data } = useTradeData({ marketSlug, trade })
   const [side, setSide] = useQueryState<TradeSide>('side', {
     defaultValue: 'long',
     clearOnDefault: true,
@@ -62,7 +62,7 @@ export function TradingSidebar({ pair, trade }: TradeRouteParams) {
   const [quantity, setQuantity] = useState<string>('1000')
   const [sliderValue, setSliderValue] = useState(0)
   const order: OrderType = {
-    pair,
+    pair: marketSlug.split('-')[0],
     type: 'market',
     side,
     size: Number.parseFloat(quantity), // * leverage
@@ -316,11 +316,11 @@ function OrderToast({
   status: 'loading' | 'success' | 'error'
   errorMessage?: string
 }) {
-  const { side, perp, pair } = useTradeRoute()
+  const { side, perp, marketSlug } = useTradeRoute()
   return (
     <div className="bg-secondary text-white p-4 rounded-lg min-w-[300px] shadow-lg">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold">{pair}</h2>
+        <h2 className="text-lg font-semibold">{marketSlug}</h2>
         <span className={side === 'long' ? 'text-green-400' : 'text-red-400'}>
           {side.charAt(0).toUpperCase() + side.slice(1)}
         </span>
