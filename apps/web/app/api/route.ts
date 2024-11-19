@@ -36,6 +36,8 @@ export async function POST(req: Request) {
   if (!isValidEvent(evt, network))
     return NextResponse.json({ error: 'Invalid event' }, { status: 400 })
 
+  // TODO: have fun with hooks
+
   //   const result = await tasks.trigger('address-activity', evt)
   //   console.info(`Triggered address activity event for webhook ${evt.id}`, result)
 

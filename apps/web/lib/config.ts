@@ -17,5 +17,6 @@ export const appConfig = {
   // feature flags
   features: {
     ai: process.env.NEXT_PUBLIC_AI === 'true', // Fullscreen AI only experience
+    aiAssistant: process.env.NEXT_PUBLIC_AI_ASSISTANT === 'true', // AI Assistant in sidebar
   },
 } as const
