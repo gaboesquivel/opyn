@@ -6,8 +6,6 @@ import type {
 import { TradingDashboard } from '@/components/routes/trade/trading-dashboard'
 import { TradingMarketInfo } from '@/components/routes/trade/trading-market-info'
 import { TradingPositions } from '@/components/routes/trade/trading-positions'
-import { getMarket } from '@/services/supabase/api'
-import { createSupabaseServerClient } from '@/services/supabase/server'
 import dynamic from 'next/dynamic'
 
 export default async function TradePage({
@@ -16,12 +14,6 @@ export default async function TradePage({
 }: TradePageProps) {
   const { pair, trade } = params
   const bot = searchParams.bot
-
-  const market = await getMarket(pair)
-  const baseAsset = market.base_token[0].symbol
-  const quoteAsset = market.quote_token[0].symbol
-
-  console.log(baseAsset, quoteAsset)
 
   return (
     <TradingDashboard
