@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { appConfig } from '@/lib/config'
 import { cn } from '@/lib/utils'
 import type { OrderType, PerpType, TradeSide } from '@opyn/api'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
@@ -149,18 +150,20 @@ export function TradingSidebar({ pair, trade }: TradeRouteParams) {
             Compare Perps
           </span>
 
-          <Link
-            href={{
-              pathname,
-              query: {
-                ...Object.fromEntries(searchParams.entries()),
-                bot: 'opyn',
-              },
-            }}
-            className=" hidden sm:block border-b border-current text-brand cursor-pointer"
-          >
-            OpynAI
-          </Link>
+          {appConfig.features.aiAssistant && (
+            <Link
+              href={{
+                pathname,
+                query: {
+                  ...Object.fromEntries(searchParams.entries()),
+                  bot: 'opyn',
+                },
+              }}
+              className=" hidden sm:block border-b border-current text-brand cursor-pointer"
+            >
+              OpynAI
+            </Link>
+          )}
         </p>
 
         <div className="flex justify-between items-center mb-4">
