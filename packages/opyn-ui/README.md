@@ -111,8 +111,8 @@ These specifications are also provided as JSON files (`colors.json`, `shadows.js
   data-state="active"
   className={cn(
     "text-sm font-medium",
-    "data-[state=active]:text-blue-500",
-    "data-[state=inactive]:text-gray-400"
+    "data-[state=active]:text-brand-500",
+    "data-[state=inactive]:text-brand-400"
   )}
 >
   Tab 1
@@ -141,7 +141,6 @@ These specifications are also provided as JSON files (`colors.json`, `shadows.js
 
 By following these best practices, your shadcn/ui components will be consistent, accessible, and maintainable.
 
----
 
 ## Resources
 
