@@ -10,7 +10,8 @@ import { useQuery } from '@tanstack/react-query'
 import type { TradeRouteParams } from '../routing'
 
 // returns all data for the trade routes
-export function useTradeData({ trade, pair }: TradeRouteParams) {
+export function useTradeData({ trade, marketSlug }: TradeRouteParams) {
+  const pair = marketSlug.split('-')[0]
   return useQuery({
     queryKey: ['trade', trade, pair],
     queryFn: () => getTradeRouteData({ trade, pair }),

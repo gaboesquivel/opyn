@@ -8,6 +8,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "nanoid": "^5.0.8",
     "viem": "^2.21.16"
   }
 }

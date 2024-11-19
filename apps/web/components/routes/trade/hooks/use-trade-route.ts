@@ -4,7 +4,7 @@ import type { TradeRouteParams } from '../routing'
 
 // return all params in the pathname + query params
 export function useTradeRoute() {
-  const { trade, pair } = useParams<TradeRouteParams>()
+  const { trade, marketSlug } = useParams<TradeRouteParams>()
   const [states, setRouteStates] = useQueryStates(
     {
       perp: parseAsFloat.withDefault(1),
@@ -18,7 +18,7 @@ export function useTradeRoute() {
   return {
     ...states,
     trade,
-    pair,
+    marketSlug,
     setRouteStates,
   }
 }

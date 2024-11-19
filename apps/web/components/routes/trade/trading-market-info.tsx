@@ -14,8 +14,8 @@ import { useTradeData } from './hooks/use-trade-data'
 import { useTradeRoute } from './hooks/use-trade-route'
 import type { TradeRouteParams } from './routing'
 
-export function TradingMarketInfo({ pair, trade }: TradeRouteParams) {
-  const { data } = useTradeData({ pair, trade })
+export function TradingMarketInfo({ marketSlug, trade }: TradeRouteParams) {
+  const { data } = useTradeData({ marketSlug, trade })
   const [perp, setPerp] = useQueryState('perp', { defaultValue: '1' })
 
   if (!data) return null
@@ -110,8 +110,11 @@ export function TradingMarketInfo({ pair, trade }: TradeRouteParams) {
   )
 }
 
-export function TradingMarketInfoMobile({ pair, trade }: TradeRouteParams) {
-  const { data } = useTradeData({ pair, trade })
+export function TradingMarketInfoMobile({
+  marketSlug,
+  trade,
+}: TradeRouteParams) {
+  const { data } = useTradeData({ marketSlug, trade })
 
   if (!data) return null
 

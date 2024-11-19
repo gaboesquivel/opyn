@@ -36,8 +36,8 @@ export function DepositWithdraw() {
   const [activeTab, setActiveTab] = useQueryState('dialog', {
     defaultValue: 'deposit',
   })
-  const { pair, trade } = useTradeRoute()
-  const { data } = useTradeData({ pair, trade })
+  const { marketSlug, trade } = useTradeRoute()
+  const { data } = useTradeData({ marketSlug, trade })
 
   return (
     <DialogContent>
@@ -76,8 +76,8 @@ function WithdrawContent() {
   const [amount, setAmount] = useState<string>('1,000')
 
   // NOTE: useTradeData could use  useTradeRoute to remove verbosity
-  const { pair, trade } = useTradeRoute()
-  const { data } = useTradeData({ pair, trade })
+  const { marketSlug, trade } = useTradeRoute()
+  const { data } = useTradeData({ marketSlug, trade })
 
   // Make ts happy and dont shown anything if this value not found
   if (!data?.market.counterpart) return null
@@ -172,8 +172,8 @@ function DepositContent() {
   } = useWriteContract()
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash })
 
-  const { pair, trade } = useTradeRoute()
-  const { data } = useTradeData({ pair, trade })
+  const { marketSlug, trade } = useTradeRoute()
+  const { data } = useTradeData({ marketSlug, trade })
 
   useEffect(() => {
     if (isSuccess && action === 'approve') {
@@ -257,8 +257,8 @@ function PositionInfo({
   action,
   amount,
 }: { token: Token; amount: string; action: 'withdraw' | 'deposit' }) {
-  const { pair, trade } = useTradeRoute()
-  const { data } = useTradeData({ pair, trade })
+  const { marketSlug, trade } = useTradeRoute()
+  const { data } = useTradeData({ marketSlug, trade })
   const position = data?.account.position || {
     collateral: 0,
     liq: {

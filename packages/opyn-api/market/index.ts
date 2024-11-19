@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import type { TradeType } from '../types'
 
 export function getMarketData({
@@ -27,10 +28,10 @@ export function getMarketData({
 }
 
 export function getMarkets({ trade }: { trade: TradeType }) {
-  return generatePairs()
+  return generateMarkets()
 }
 
-function generatePairs() {
+function generateMarkets() {
   const assets = [
     'ETH',
     'BTC',
@@ -90,16 +91,18 @@ function generatePairs() {
 
   const stablecoins = ['USDC', 'USDT', 'DAI', 'BUSD']
 
-  const pairs = []
+  const markets = []
 
   for (const asset of assets) {
     for (const stablecoin of stablecoins) {
-      pairs.push({
+      const id = asset === 'ETH' && stablecoin === 'USDC' ? 'eth001' : nanoid(6)
+      markets.push({
         value: `${asset}${stablecoin}`,
         label: `${asset}-${stablecoin}`,
+        marketSlug: `${asset}${stablecoin}-${id}`,
       })
     }
   }
 
-  return pairs.slice(0, 108) // Return exactly 108 pairs
+  return markets.slice(0, 108) // Return exactly 108 markets
 }

@@ -1,7 +1,7 @@
 import type { AIBot, PerpType, TradeSide, TradeType } from '@opyn/api'
 
 export type TradeRouteParams = {
-  pair: string
+  marketSlug: string
   trade: TradeType
 }
 

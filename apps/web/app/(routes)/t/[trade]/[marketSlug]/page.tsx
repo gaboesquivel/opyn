@@ -12,17 +12,25 @@ export default async function TradePage({
   params,
   searchParams,
 }: TradePageProps) {
-  const { pair, trade } = params
+  const { marketSlug, trade } = params
   const bot = searchParams.bot
 
   return (
     <TradingDashboard
-      nav={<TradingNav pair={pair} trade={trade} />}
+      nav={<TradingNav marketSlug={marketSlug} trade={trade} />}
       account={<TradingAccountInfo />}
-      sidebar={bot ? <OpynAi /> : <TradingSidebar pair={pair} trade={trade} />}
-      market={<TradingMarketInfo pair={pair} trade={trade} />}
-      marketMobile={<TradingMarketInfoMobile pair={pair} trade={trade} />}
-      chart={<TradingViewWidget pair={pair} />}
+      sidebar={
+        bot ? (
+          <OpynAi />
+        ) : (
+          <TradingSidebar marketSlug={marketSlug} trade={trade} />
+        )
+      }
+      market={<TradingMarketInfo marketSlug={marketSlug} trade={trade} />}
+      marketMobile={
+        <TradingMarketInfoMobile marketSlug={marketSlug} trade={trade} />
+      }
+      chart={<TradingViewWidget pair={marketSlug.split('-')[0]} />}
       positions={<TradingPositions />}
       searchParams={searchParams}
       params={params}

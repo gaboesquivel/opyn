@@ -15,11 +15,11 @@ import { useTradeData } from './hooks/use-trade-data'
 import { useTradeRoute } from './hooks/use-trade-route'
 import type { TradeRouteParams } from './routing'
 
-export function TradingNav({ pair, trade }: TradeRouteParams) {
+export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
   const router = useRouter()
   const {
     data: { market, markets } = {},
-  } = useTradeData({ trade, pair })
+  } = useTradeData({ trade, marketSlug })
   const { setRouteStates } = useTradeRoute()
   const { underlier, counterpart } = market || {}
 
@@ -30,8 +30,10 @@ export function TradingNav({ pair, trade }: TradeRouteParams) {
     <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 w-full flex-1">
       <div className="w-full sm:w-[180px] order-2 sm:order-1 flex flex-row justify-between sm:block mr-4">
         <Select
-          value={pair}
-          onValueChange={(pair) => router.push(`/t/${trade}/${pair}`)}
+          value={marketSlug.split('-')[0]}
+          onValueChange={(marketSlug) =>
+            router.push(`/t/${trade}/${marketSlug}`)
+          }
         >
           <SelectTrigger
             className="w-1/2 sm:w-full sm:min-w-[200px] h-9 sm:h-[56px] text-lg font-medium"
@@ -43,7 +45,9 @@ export function TradingNav({ pair, trade }: TradeRouteParams) {
                   <CurrencyIcon currency={underlier} />
                   <CurrencyIcon currency={counterpart} />
                 </div>
-                <span>{markets.find((m) => m.value === pair)?.label}</span>
+                <span>
+                  {markets.find((m) => m.marketSlug === marketSlug)?.label}
+                </span>
               </div>
             </SelectValue>
           </SelectTrigger>
@@ -69,7 +73,7 @@ export function TradingNav({ pair, trade }: TradeRouteParams) {
       <Tabs
         value={trade}
         onValueChange={(selectedTrade) =>
-          router.push(`/t/${selectedTrade}/${pair}`)
+          router.push(`/t/${selectedTrade}/${marketSlug}`)
         }
         className="hidden sm:flex w-full sm:w-2/3 order-1 sm:order-2"
       >
