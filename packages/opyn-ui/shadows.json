@@ -1,0 +1,14 @@
+{
+  "normalStyles": {
+    "description": "Regular usage for components on the screen like buttons, cards, images and dropdowns.",
+    "sizes": ["Small", "Medium", "Large"]
+  },
+  "hoverStyles": {
+    "description": "Used for hover effects when the user's cursor is inside the area of the component. Primarily used for hover variants inside atomic components.",
+    "variants": ["Primary", "Secondary", "Error", "Warning", "Success"]
+  },
+  "focusedStyles": {
+    "description": "Used for focused effects for drawing user attention and occasionally on sub-components when the user is performing nested activity inside the parent component (e.g., input dropdowns).",
+    "variants": ["Primary", "Secondary", "Error", "Warning", "Success"]
+  }
+}
