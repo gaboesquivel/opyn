@@ -120,8 +120,8 @@ export function TradingSidebar({ marketSlug, trade }: TradeRouteParams) {
   const { openConnectModal } = useConnectModal()
 
   return (
-    <Card variant="padded">
-      <div className=" min-w-[270px] ">
+    <Card variant="padded" className="h-full">
+      <div className=" min-w-[270px] h-full flex flex-col">
         <div className="flex gap-1 mb-4 gap-2 justify-evenly">
           <Button
             className="flex-1 h-[44px]"
@@ -229,45 +229,49 @@ export function TradingSidebar({ marketSlug, trade }: TradeRouteParams) {
             {leverage}X
           </div>
         </div>
-        <ScrollArea className="h-[250px] w-full rounded-md border p-4">
-          <div className="hidden sm:block">
-            <PositionInfo />
-          </div>
+        {/* <ScrollArea className="h-[250px] w-full rounded-md border p-4"> */}
+        <div className="hidden sm:block">
+          <PositionInfo />
+        </div>
 
-          <Accordion
-            type="single"
-            collapsible
-            className="w-full text-neutral-light text-xs"
-          >
-            <AccordionItem value="item-1" className="border-0">
-              <AccordionTrigger className="hover:no-underline">
-                Position Info
-              </AccordionTrigger>
-              <AccordionContent className="text-xs">
-                <PositionInfo />
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-1" className="border-0">
-              <AccordionTrigger className="hover:no-underline">
-                Payoff Index
-              </AccordionTrigger>
-              <AccordionContent className="text-xs">
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </ScrollArea>
-        <Button
-          variant="positve"
-          className="w-full mb-4"
-          onClick={address ? executeOrder : openConnectModal}
-          disabled={address ? isPending || quantity === '0' : false}
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="item-1"
+          className="w-full text-neutral-light text-xs"
         >
-          {address ? 'Place order' : 'Connect Wallet'}
-        </Button>
+          <AccordionItem value="item-1" className="border-0 sm:hidden">
+            <AccordionTrigger className="hover:no-underline">
+              Position Info
+            </AccordionTrigger>
+            <AccordionContent className="text-xs">
+              <PositionInfo />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2" className="border-0">
+            <AccordionTrigger className="hover:no-underline">
+              Payoff Index
+            </AccordionTrigger>
+            <AccordionContent className="text-xs">
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        {/* </ScrollArea> */}
 
-        <div className="text-center text-xs text-neutral-light">
-          Buying power: $167,310.63
+        <div className="mt-auto">
+          <Button
+            variant="positve"
+            className="w-full mb-4"
+            onClick={address ? executeOrder : openConnectModal}
+            disabled={address ? isPending || quantity === '0' : false}
+          >
+            {address ? 'Place order' : 'Connect Wallet'}
+          </Button>
+
+          <div className="text-center text-xs text-neutral-light">
+            Buying power: $167,310.63
+          </div>
         </div>
       </div>
     </Card>
