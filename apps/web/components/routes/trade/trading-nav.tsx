@@ -1,25 +1,20 @@
 'use client'
 
+import { getTradeRouteData } from '@/components/routes/trade/hooks/use-trade-data'
 import { WidtdrawDeposit } from '@/components/routes/trade/trading-widthdraw-deposit'
 import { CurrencyIcon } from '@/components/shared/icons'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useRouter } from 'next/navigation'
-import { useTradeData } from './hooks/use-trade-data'
 import { useTradeRoute } from './hooks/use-trade-route'
 import type { TradeRouteParams } from './routing'
 
 export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
   const router = useRouter()
-  const {
-    data: { market, markets } = {},
-  } = useTradeData({ trade, marketSlug })
+  const { market, markets } = getTradeRouteData({
+    trade,
+    pair: marketSlug.split('-')[0],
+  })
   const { setRouteStates } = useTradeRoute()
   const { underlier, counterpart } = market || {}
 
@@ -27,7 +22,7 @@ export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
   if (!underlier || !counterpart || !markets) return null
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 w-full flex-1">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 w-full flex-1 sm:min-h-14">
       <div className="w-full sm:w-[180px] order-2 sm:order-1 flex flex-row justify-between sm:block mr-4">
         <Select
           value={marketSlug.split('-')[0]}
@@ -51,19 +46,6 @@ export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
               </div>
             </SelectValue>
           </SelectTrigger>
-          {/* <SelectContent>
-            {markets.map((market) => (
-              <SelectItem key={market.value} value={market.value}>
-                <div className="flex items-center space-x-2">
-                  <div className="flex -space-x-1">
-                    <CurrencyIcon currency={market.value.split('-')[0]} />
-                    <CurrencyIcon currency={market.value.split('-')[1]} />
-                  </div>
-                  <span>{market.label}</span>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent> */}
         </Select>
         <div className="sm:hidden w-1/2 flex items-center justify-center">
           <WidtdrawDeposit />

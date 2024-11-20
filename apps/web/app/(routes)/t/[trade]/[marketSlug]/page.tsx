@@ -3,9 +3,16 @@ import type {
   TradeRouteParams,
   TradeSearchParams,
 } from '@/components/routes/trade/routing'
+import TradingAccountInfo from '@/components/routes/trade/trading-account-info'
+import { TradingViewWidget } from '@/components/routes/trade/trading-chart'
 import { TradingDashboard } from '@/components/routes/trade/trading-dashboard'
-import { TradingMarketInfo } from '@/components/routes/trade/trading-market-info'
+import {
+  TradingMarketInfo,
+  TradingMarketInfoMobile,
+} from '@/components/routes/trade/trading-market-info'
+import { TradingNav } from '@/components/routes/trade/trading-nav'
 import { TradingPositions } from '@/components/routes/trade/trading-positions'
+import { TradingSidebar } from '@/components/routes/trade/trading-sidebar'
 import dynamic from 'next/dynamic'
 
 export default async function TradePage({
@@ -27,53 +34,21 @@ export default async function TradePage({
         )
       }
       market={<TradingMarketInfo marketSlug={marketSlug} trade={trade} />}
-      marketMobile={
+      mobileMarket={
         <TradingMarketInfoMobile marketSlug={marketSlug} trade={trade} />
       }
       chart={<TradingViewWidget pair={marketSlug.split('-')[0]} />}
       positions={<TradingPositions />}
-      searchParams={searchParams}
-      params={params}
+      mobilePositions={<TradingPositionsCard key="trading-positions-card" />} // key required on swiper
     />
   )
 }
 
-const TradingSidebar = dynamic(
+// NOTE: dynamic since its not display on first render
+const TradingPositionsCard = dynamic(
   () =>
-    import('@/components/routes/trade/trading-sidebar').then(
-      (mod) => mod.TradingSidebar,
-    ),
-  { ssr: false },
-)
-
-const TradingNav = dynamic(
-  () =>
-    import('@/components/routes/trade/trading-nav').then(
-      (mod) => mod.TradingNav,
-    ),
-  { ssr: false },
-)
-
-const TradingViewWidget = dynamic(
-  () =>
-    import('@/components/routes/trade/trading-chart').then(
-      (mod) => mod.TradingViewWidget,
-    ),
-  { ssr: false },
-)
-
-const TradingAccountInfo = dynamic(
-  () =>
-    import('@/components/routes/trade/trading-account-info').then(
-      (mod) => mod.default,
-    ),
-  { ssr: false },
-)
-
-const TradingMarketInfoMobile = dynamic(
-  () =>
-    import('@/components/routes/trade/trading-market-info').then(
-      (mod) => mod.TradingMarketInfoMobile,
+    import('@/components/routes/trade/trading-positions/index').then(
+      (mod) => mod.TradingPositionsCard,
     ),
   { ssr: false },
 )

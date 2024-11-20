@@ -6,16 +6,6 @@ import {
 } from '@/components/ui/resizable'
 import type { TradeRouteParams, TradeSearchParams } from './routing'
 
-// TODO: move this import to route page
-import dynamic from 'next/dynamic'
-const TradingPositionsCard = dynamic(
-  () =>
-    import('@/components/routes/trade/trading-positions/index').then(
-      (mod) => mod.TradingPositionsCard,
-    ),
-  { ssr: false },
-)
-
 export function TradingDashboard({
   sidebar,
   nav,
@@ -23,9 +13,8 @@ export function TradingDashboard({
   chart,
   market,
   account,
-  marketMobile,
-  searchParams,
-  params,
+  mobileMarket,
+  mobilePositions,
 }: {
   sidebar: React.ReactNode
   nav: React.ReactNode
@@ -33,14 +22,13 @@ export function TradingDashboard({
   chart: React.ReactNode
   market: React.ReactNode
   account: React.ReactNode
-  marketMobile: React.ReactNode
-  searchParams: TradeSearchParams
-  params: TradeRouteParams
+  mobileMarket: React.ReactNode
+  mobilePositions: React.ReactNode
 }) {
   return (
     <div className="flex flex-col pt-1 sm:p-0 sm:m-4 pb-0 h-full flex-1 ">
       <div className="gap-4 flex flex-col lg:flex-row justify-between items-center w-full mb-3 sm:mb-4 lg:m-0">
-        <div className="lg:mb-4 lg:mb-0 flex-shrink-0 w-full lg:w-auto pl-2 sm:pl-0">
+        <div className="lg:mb-4 lg:mb-0 flex-shrink-0 w-full lg:w-auto pl-2 sm:pl-0 sm:min-h-14">
           {nav}
         </div>
         <div className="hidden sm:flex justify-center self-start flex-shrink w-full lg:w-auto overflow-hidden h-full">
@@ -49,16 +37,11 @@ export function TradingDashboard({
       </div>
 
       <div className="flex-grow flex flex-col min-h-0">
+        {/* Mobile  */}
         <div className="sm:hidden flex-grow flex flex-col h-full">
           <div className="mb-3">{market}</div>
           <MobileSwiper
-            slides={[
-              chart,
-              account,
-              marketMobile,
-              sidebar,
-              <TradingPositionsCard key="trading-positions-card" />,
-            ]}
+            slides={[chart, account, mobileMarket, sidebar, mobilePositions]}
           />
         </div>
 
@@ -76,7 +59,7 @@ export function TradingDashboard({
               */}
               <div className="h-[calc(100vh-44px-64px-56px-16px-16px+72px+16px+50px)] ">
                 <ResizablePanelGroup direction="vertical">
-                  <div className="mb-4">{market}</div>
+                  <div className="mb-4 sm:min-h-14">{market}</div>
 
                   <ResizablePanel defaultSize={60}>{chart}</ResizablePanel>
 
