@@ -97,7 +97,7 @@ export function TradingDashboard({
                 className="gap-2 max-h-full "
               >
                 {/* <div className="flex-grow overflow-auto">{sidebar}</div> */}
-                <ResizablePanel defaultSize={50}>{sidebar}</ResizablePanel>
+                <ResizablePanel defaultSize={57}>{sidebar}</ResizablePanel>
                 <ResizableHandle />
                 <ResizablePanel defaultSize={10}>
                   <div />
