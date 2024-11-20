@@ -27,8 +27,12 @@ For detailed information on each component, please refer to their respective REA
 ### Packages
 
 - **Opyn API (`/packages/opyn-api`)**: Opyn API TypeScript SDK. [Details](/packages/opyn-api/README.md)
+- **Opyn Core (`/packages/opyn-core`)**: Core smart contract interactions and ABIs. [Details](/packages/opyn-core/README.md)
+- **Opyn Math (`/packages/opyn-math`)**: Math utilities for calculations. [Details](/packages/opyn-math/README.md)
+- **Alchemy (`/packages/alchemy`)**: Alchemy webhook handlers and blockchain event monitoring. [Details](/packages/alchemy/README.md)
+- **Trigger (`/packages/trigger`)**: Trigger.dev job definitions and event handlers. [Details](/packages/trigger/README.md)
 - **Supabase (`/packages/supabase`)**: Postgres database, types and zod schemas. [Details](/packages/supabase/README.md)
-- **Errors (`/packages/opyn-errors`)**: Centralized error catalog. [Details](/packages/errors/README.md)
+- **Errors (`/packages/errors`)**: Centralized error catalog. [Details](/packages/errors/README.md)
 
 ### Tooling
 
@@ -55,3 +59,6 @@ For detailed information on each component, please refer to their respective REA
 
 This setup provides a faster JavaScript runtime and efficient package management for enhanced development efficiency.
 
+# License
+
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.

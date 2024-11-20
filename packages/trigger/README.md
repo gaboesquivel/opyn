@@ -4,7 +4,7 @@ This directory contains the configuration and implementation of background jobs 
 
 ## Overview
 
-Trigger.dev is an open-source job scheduling and execution platform that allows us to create, manage, and monitor background jobs efficiently. We use it for various issuance-related tasks and to handle webhook events from services like Moralis and Alchemy.
+Trigger.dev is an open-source job scheduling and execution platform that allows us to create, manage, and monitor background jobs efficiently. 
 
 ## Key Features
 
