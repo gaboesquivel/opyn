@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { QuantityInput } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Slider } from '@/components/ui/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
@@ -228,34 +229,34 @@ export function TradingSidebar({ marketSlug, trade }: TradeRouteParams) {
             {leverage}X
           </div>
         </div>
+        <ScrollArea className="h-[250px] w-full rounded-md border p-4">
+          <div className="hidden sm:block">
+            <PositionInfo />
+          </div>
 
-        <div className="hidden sm:block">
-          <PositionInfo />
-        </div>
-
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full text-neutral-light text-xs"
-        >
-          <AccordionItem value="item-1" className="border-0">
-            <AccordionTrigger className="hover:no-underline">
-              Position Info
-            </AccordionTrigger>
-            <AccordionContent className="text-xs">
-              <PositionInfo />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-1" className="border-0">
-            <AccordionTrigger className="hover:no-underline">
-              Payoff Index
-            </AccordionTrigger>
-            <AccordionContent className="text-xs">
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full text-neutral-light text-xs"
+          >
+            <AccordionItem value="item-1" className="border-0">
+              <AccordionTrigger className="hover:no-underline">
+                Position Info
+              </AccordionTrigger>
+              <AccordionContent className="text-xs">
+                <PositionInfo />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-1" className="border-0">
+              <AccordionTrigger className="hover:no-underline">
+                Payoff Index
+              </AccordionTrigger>
+              <AccordionContent className="text-xs">
+                Yes. It adheres to the WAI-ARIA design pattern.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </ScrollArea>
         <Button
           variant="positve"
           className="w-full mb-4"
