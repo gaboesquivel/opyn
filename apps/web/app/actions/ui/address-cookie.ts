@@ -9,6 +9,7 @@ const schema = z.object({
   address: z
     .string()
     .regex(/^0x[a-fA-F0-9]{40}$/, 'Invalid Ethereum address')
+    .transform((addr) => addr ? addr.toLowerCase() : '')
     .or(z.literal('')),
 })
 
