@@ -60,7 +60,7 @@ export default function MarketSearch() {
             <Link
               key={token.value}
               href={{
-                pathname: `/t/${trade}/${token.value}`,
+                pathname: `/trade/${trade}/${token.value}`,
                 query: Object.fromEntries(
                   Array.from(searchParams.entries()).filter(
                     ([key]) => key !== 'dialog',

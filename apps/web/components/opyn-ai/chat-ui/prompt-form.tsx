@@ -171,7 +171,7 @@ const commandHandlers: Record<string, CommandHandler> = {
     const currentParams = new URLSearchParams(searchParams.toString())
     if (interval) currentParams.set('interval', interval)
 
-    router.push(`/t/perps/${pair}?${currentParams.toString()}`)
+    router.push(`/trade/perps/${pair}?${currentParams.toString()}`)
     console.log(`Pair: ${pair}, Interval: ${interval}`)
     return ''
   },

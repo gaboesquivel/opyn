@@ -32,7 +32,7 @@ export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
         <Select
           value={marketSlug.split('-')[0]}
           onValueChange={(marketSlug) =>
-            router.push(`/t/${trade}/${marketSlug}`)
+            router.push(`/trade/${trade}/${marketSlug}`)
           }
         >
           <SelectTrigger
@@ -73,7 +73,7 @@ export function TradingNav({ marketSlug, trade }: TradeRouteParams) {
       <Tabs
         value={trade}
         onValueChange={(selectedTrade) =>
-          router.push(`/t/${selectedTrade}/${marketSlug}`)
+          router.push(`/trade/${selectedTrade}/${marketSlug}`)
         }
         className="hidden sm:flex w-full sm:w-2/3 order-1 sm:order-2"
       >
