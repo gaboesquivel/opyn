@@ -1,90 +1,89 @@
 {
-  "geist": {
-    "description": "Inter is an open-source typeface artistically crafted & designed by Rasmus Andersson and released in 2017, with the goal of improving readability and legibility on screens of different sizes and resolutions. Inter features a large x-height, open apertures, and a generous letter spacing, which make it easy to read even in small sizes or low resolutions. It is a versatile typeface that can be used for different purposes, from user interfaces and websites to editorial design and branding. Its versatility and support for over 140+ languages is what makes it one of the most popular fonts in the current design industry."
-  },
-  "titles": {
-    "description": "For main screen titles, shouldn't be used more than once on the screen. Only use for drawing maximum user attention. Supported for both simple and animated text if required.",
-    "styles": {
-      "large": {
-        "fontSize": "120px",
-        "lineSpacing": "150",
-        "letterSpacing": "-2%"
-      },
-      "small": {
-        "fontSize": "96px",
-        "lineSpacing": "150",
-        "letterSpacing": "-2%"
-      }
+  "Primary": {
+    "description": "Primary color is your main 'brand' color which is used across the design, reflecting brand personality through UI elements. Here, we deliberately chose black and white only so you can customize the palette according to your brand colors swiftly.",
+    "colors": {
+      "White": "#FFFFFF",
+      "Black": "#000000"
     }
   },
-  "headings": {
-    "description": "For section headers and semi-headings, can be used multiple times on a single page but only once inside a section.",
-    "styles": {
-      "huge": {
-        "fontSize": "72px",
-        "lineSpacing": "90",
-        "letterSpacing": "-2%"
-      },
-      "extraLarge": {
-        "fontSize": "60px",
-        "lineSpacing": "72",
-        "letterSpacing": "-2%"
-      },
-      "large": {
-        "fontSize": "48px",
-        "lineSpacing": "60",
-        "letterSpacing": "-2%"
-      },
-      "medium": {
-        "fontSize": "36px",
-        "lineSpacing": "44",
-        "letterSpacing": "-2%"
-      },
-      "small": {
-        "fontSize": "30px",
-        "lineSpacing": "38",
-        "letterSpacing": "0%"
-      },
-      "extraSmall": {
-        "fontSize": "24px",
-        "lineSpacing": "32",
-        "letterSpacing": "0%"
-      }
+  "Brand": {
+    "description": "Gray is a key neutral color and is the crux of any UI design. Majority of the UI design elements like text, forms, shadows, backgrounds, dividers are all usually gray.",
+    "palette": {
+      "50": "#FAFAFA",
+      "100": "#F6F7F9",
+      "200": "#E5E7EA",
+      "300": "#CED2D6",
+      "400": "#9EA5AD",
+      "500": "#676767",
+      "600": "#596066",
+      "700": "#454C52",
+      "800": "#383F45",
+      "900": "#24292E",
+      "1000": "#1A1D1F"
     }
   },
-  "body": {
-    "description": "For paragraphs, descriptions, and other blocks of text that make up the bulk of a user interface or content area.",
-    "styles": {
-      "extraLarge": {
-        "fontSize": "20px",
-        "lineSpacing": "30",
-        "letterSpacing": "0%"
-      },
-      "large": {
-        "fontSize": "18px",
-        "lineSpacing": "28",
-        "letterSpacing": "0%"
-      },
-      "medium": {
-        "fontSize": "16px",
-        "lineSpacing": "24",
-        "letterSpacing": "0%"
-      },
-      "small": {
-        "fontSize": "14px",
-        "lineSpacing": "20",
-        "letterSpacing": "0%"
-      },
-      "extraSmall": {
-        "fontSize": "12px",
-        "lineSpacing": "18",
-        "letterSpacing": "0%"
-      },
-      "tiny": {
-        "fontSize": "10px",
-        "lineSpacing": "16",
-        "letterSpacing": "0%"
-      }
+  "Gray": {
+    "description": "Gray is a key neutral color and is the crux of any UI design. Majority of the UI design elements like text, forms, shadows, backgrounds, dividers are all usually gray.",
+    "palette": {
+      "50": "#FAFAFA",
+      "100": "#F0F7F9",
+      "200": "#E5E7EA",
+      "300": "#CED2D6",
+      "400": "#9EA5AD",
+      "500": "#676767",
+      "600": "#596066",
+      "700": "#454C52",
+      "800": "#383F45",
+      "900": "#24292E",
+      "1000": "#1A1D1F"
+    }
+  },
+  "Error": {
+    "description": "Error colors are typically used for elements such as error messages, form validation messages, and other notifications that require a sense of urgency and user's attention to the issue at hand.",
+    "palette": {
+      "50": "#FAFAFA",
+      "100": "#F2E2E2",
+      "200": "#FDE9E9",
+      "300": "#FAC7C7",
+      "400": "#F7A1A1",
+      "500": "#F37373",
+      "600": "#F34141",
+      "700": "#CD3636",
+      "800": "#A52E2E",
+      "900": "#702323",
+      "1000": "#601818"
+    }
+  },
+  "Warning": {
+    "description": "Warning colors are typically used for elements such as warning messages, toasts, task status and other notifications regarding potential outcomes that require a sense of care and attention on the user's end.",
+    "palette": {
+      "50": "#FFFFF5",
+      "100": "#FEFADF",
+      "200": "#FBF2CB",
+      "300": "#FFD16A",
+      "400": "#FBBC55",
+      "500": "#E9A23B",
+      "600": "#CB811A",
+      "700": "#A65C00",
+      "800": "#884400",
+      "900": "#783108",
+      "1000": "#6B2E06"
+    }
+  },
+  "Success": {
+    "description": "Success colors are typically used to communicate a positive event, successful confirmation, completion notification etc,. They are often chosen to create a sense of positivity and to reinforce a positive user experience in the design.",
+    "palette": {
+      "50": "#F6FFFA",
+      "100": "#EFFDF6",
+      "200": "#D9F9EC",
+      "300": "#BFF1D2",
+      "400": "#96EABA",
+      "500": "#6AD090",
+      "600": "#53B483",
+      "700": "#2F9461",
+      "800": "#267657",
+      "900": "#255546",
+      "1000": "#1E4340"
     }
   }
 }
