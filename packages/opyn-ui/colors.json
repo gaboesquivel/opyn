@@ -47,43 +47,43 @@
       "300": "#FAD0C7",
       "400": "#F7B1A1",
       "500": "#F7876E",
-      "600": "#F34141",
-      "700": "#CD3636",
+      "600": "#FA5C38",
+      "700": "#CD5337",
       "800": "#A52E2E",
-      "900": "#702323",
-      "1000": "#601818"
+      "900": "#7B3323",
+      "1000": "#3E0F04"
     }
   },
   "Warning": {
     "description": "Warning colors are typically used for elements such as warning messages, toasts, task status and other notifications regarding potential outcomes that require a sense of care and attention on the user's end.",
     "palette": {
-      "50": "#FFFFF5",
-      "100": "#FEFADF",
+      "50": "#FFFCF5",
+      "100": "#FEFAF5",
       "200": "#FBF2CB",
-      "300": "#FFD16A",
-      "400": "#FBBC55",
-      "500": "#E9A23B",
-      "600": "#CB811A",
-      "700": "#A65C00",
-      "800": "#884400",
-      "900": "#783108",
-      "1000": "#6B2E06"
+      "300": "#FDE57E",
+      "400": "#FFD16A",
+      "500": "#FBBC55",
+      "600": "#E9A23B",
+      "700": "#C8811A",
+      "800": "#A35C00",
+      "900": "#8B4400",
+      "1000": "#78310B"
     }
   },
   "Success": {
     "description": "Success colors are typically used to communicate a positive event, successful confirmation, completion notification etc,. They are often chosen to create a sense of positivity and to reinforce a positive user experience in the design.",
     "palette": {
-      "50": "#F6FFFA",
-      "100": "#EFFDF6",
-      "200": "#D9F9EC",
-      "300": "#BFF1D2",
-      "400": "#96EABA",
-      "500": "#6AD090",
-      "600": "#53B483",
-      "700": "#2F9461",
-      "800": "#267657",
-      "900": "#255546",
-      "1000": "#1E4340"
+      "50": "#F6FEF7",
+      "100": "#EDFDEE",
+      "200": "#D7F9DB",
+      "300": "#B7F1BC",
+      "400": "#74FB81",
+      "500": "#06EA1D",
+      "600": "#29E03B",
+      "700": "#1DA52B",
+      "800": "#1D8727",
+      "900": "#1B6A22",
+      "1000": "#18531E"
     }
   }
 }
