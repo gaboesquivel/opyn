@@ -21,7 +21,7 @@ In the **future**, this repository may evolve to package a **Tailwind CSS theme*
    - Simplify complexity when building UI views/pages
 
 
-## General Guidelines for Working on the App
+## General Guidelines for Working on the App 
 
 ### 1. **Color Palette**
    - Always use colors from our **defined palette**.
@@ -101,7 +101,18 @@ These specifications are also provided as JSON files (`colors.json`, `shadows.js
    - Use **Tailwind CSS classes** for styling simplicity and consistency.
    - Resort to JavaScript styling only as a last option.
 
----
+8. **Form Components**
+   - Use `<Form>` component instead of native `<form>` for enhanced functionality.
+
+9. **Navigation Components**
+   - Use shadcn/ui Sidebar component for menu navigation.
+   - Use shadcn/ui Sheet component for contextual dialogs and panels.
+
+10. **Loading States**
+    - Use shadcn/ui Skeleton components in Suspense fallbacks.
+
+11. **Notifications**
+    - Use Sonner for toast notifications instead of shadcn/ui Toast for improved animations.
 
 ### Examples
 
@@ -144,17 +155,23 @@ By following these best practices, your shadcn/ui components will be consistent,
 
 ## Resources
 
-1. **[shadcn/ui Twitter](https://x.com/shadcn)**  
+1. **[shadcn-ui/ui Source](https://github.com/shadcn-ui/ui)**  
+   The source code for shadcn/ui components.
+   
+2. **[shadcn/ui Twitter](https://x.com/shadcn)**  
    The official Twitter account for shadcn/ui, providing updates, announcements, and community engagement.
 
-2. **[shadcn/ui Kit](https://kit.shadcnui.com/)**  
-   The definitive starter kit for building modern, accessible, and customizable UI components with Tailwind CSS. This kit embodies the ShadCN philosophy, offering a practical and minimalistic approach to component design.
-
-4. **[Radix UI](https://www.radix-ui.com/)**  
+3. **[Radix UI](https://www.radix-ui.com/)**  
    A library of unstyled, accessible primitives for building component systems. Radix UI is highly modular and integrates well with Tailwind CSS for customization.
 
-5. **[Lucide Icons](https://lucide.dev/)**  
+4. **[Lucide Icons](https://lucide.dev/)**  
    A fork of Feather Icons offering a customizable set of icons for modern web projects. Works seamlessly with ShadCN-style systems.
 
-6. **[Dev Resources](https://github.com/blockmatic/dev-resources)**  
+5. **[shadcn/ui Kit](https://kit.shadcnui.com/)**  
+   The definitive starter kit for building modern, accessible, and customizable UI components with Tailwind CSS. This kit embodies the ShadCN philosophy, offering a practical and minimalistic approach to component design.
+
+6. **[Animations.dev](https://animations.dev/)**  
+   A collection of CSS animations for modern web projects.
+
+7. **[Dev Resources](https://github.com/blockmatic/dev-resources)**  
    A curated collection of tutorials, talks and tools for building performant applications.
