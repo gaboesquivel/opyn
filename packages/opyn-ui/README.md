@@ -97,7 +97,7 @@ These specifications are also provided as JSON files (`colors.json`, `shadows.js
    - Leverage Radix UI data attributes for styling interactive components, ensuring accessibility and predictability.
 
 7. **Styling Priority**  
-   - **Favor ARIA attributes** for accessibility and semantic clarity.
+   - **Favor Radix UI data attributes** for accessibility and semantic clarity.
    - Use **Tailwind CSS classes** for styling simplicity and consistency.
    - Resort to JavaScript styling only as a last option.
 
