@@ -1,3 +1,4 @@
+import { MobileSwiper } from '@/components/layout/mobile/swiper'
 import {
   ResizableHandle,
   ResizablePanel,
@@ -39,11 +40,7 @@ export function TradeDashboard({
         <div className="sm:hidden flex-grow flex flex-col h-full">
           <div className="mb-3">{market}</div>
 
-          {/* 
-          NOTE: this stopped working after the refactor to the dashboard.
-          <MobileSwiper
-            slides={[chart, health, mobileMarket, order, mobilePositions]}
-          /> */}
+          <MobileSwiper slides={[chart, health, mobileMarket, order]} />
         </div>
 
         {/* Desktop resizable dashboard */}
