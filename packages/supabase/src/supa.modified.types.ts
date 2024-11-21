@@ -402,7 +402,7 @@ export type Database = {
           address: string
           chain_id: number
           created_at: string
-          decimals: number | null
+          decimals: number
           name: string
           stablecoin: boolean
           symbol: string
@@ -412,7 +412,7 @@ export type Database = {
           address: string
           chain_id: number
           created_at?: string
-          decimals?: number | null
+          decimals?: number
           name: string
           stablecoin?: boolean
           symbol: string
@@ -422,7 +422,7 @@ export type Database = {
           address?: string
           chain_id?: number
           created_at?: string
-          decimals?: number | null
+          decimals?: number
           name?: string
           stablecoin?: boolean
           symbol?: string
