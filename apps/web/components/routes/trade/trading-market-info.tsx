@@ -10,18 +10,19 @@ import { Card } from '@/components/ui/card'
 
 import { useQueryState } from 'nuqs'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
-import { useTradeData } from './hooks/use-trade-data'
-import { useTradeRoute } from './hooks/use-trade-route'
+import { getTradeRouteData } from './hooks/use-trade-data'
 import type { TradeRouteParams } from './routing'
 
 export function TradingMarketInfo({ marketSlug, trade }: TradeRouteParams) {
-  const { data } = useTradeData({ marketSlug, trade })
+  const { market } = getTradeRouteData({
+    trade,
+    pair: marketSlug.split('-')[0],
+  })
   const [perp, setPerp] = useQueryState('perp', { defaultValue: '1' })
 
-  if (!data) return null
+  if (!market) return null
 
-  const { indexPrice, markPrice, change24h, volume24h, openInterest } =
-    data.market
+  const { indexPrice, markPrice, change24h, volume24h, openInterest } = market
 
   const isPositiveChange = change24h.value > 0
   const changeColorClass = isPositiveChange ? 'text-positive' : 'text-negative'
@@ -114,12 +115,14 @@ export function TradingMarketInfoMobile({
   marketSlug,
   trade,
 }: TradeRouteParams) {
-  const { data } = useTradeData({ marketSlug, trade })
+  const { market } = getTradeRouteData({
+    trade,
+    pair: marketSlug.split('-')[0],
+  })
 
-  if (!data) return null
+  if (!market) return null
 
-  const { indexPrice, markPrice, change24h, volume24h, openInterest } =
-    data.market
+  const { indexPrice, markPrice, change24h, volume24h, openInterest } = market
 
   const isPositiveChange = change24h.value > 0
   const changeColorClass = isPositiveChange ? 'text-positive' : 'text-negative'

@@ -71,7 +71,14 @@ export function MobileMenu() {
                 isActive(option.href) ? 'text-white' : 'text-neutral-light',
               )}
             >
-              <option.icon isActive={isActive(option.href)} />
+              {
+                // hotfix for prop issue with bot icon
+                option.href === '/ai' ? (
+                  <Bot />
+                ) : (
+                  <option.icon isActive={isActive(option.href)} />
+                )
+              }
             </div>
             <span className="text-xs text-neutral-light">{option.text}</span>
           </Link>

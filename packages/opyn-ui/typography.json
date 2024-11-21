@@ -1,0 +1,90 @@
+{
+  "geist": {
+    "description": "Inter is an open-source typeface artistically crafted & designed by Rasmus Andersson and released in 2017, with the goal of improving readability and legibility on screens of different sizes and resolutions. Inter features a large x-height, open apertures, and a generous letter spacing, which make it easy to read even in small sizes or low resolutions. It is a versatile typeface that can be used for different purposes, from user interfaces and websites to editorial design and branding. Its versatility and support for over 140+ languages is what makes it one of the most popular fonts in the current design industry."
+  },
+  "titles": {
+    "description": "For main screen titles, shouldn't be used more than once on the screen. Only use for drawing maximum user attention. Supported for both simple and animated text if required.",
+    "styles": {
+      "large": {
+        "fontSize": "120px",
+        "lineSpacing": "150",
+        "letterSpacing": "-2%"
+      },
+      "small": {
+        "fontSize": "96px",
+        "lineSpacing": "150",
+        "letterSpacing": "-2%"
+      }
+    }
+  },
+  "headings": {
+    "description": "For section headers and semi-headings, can be used multiple times on a single page but only once inside a section.",
+    "styles": {
+      "huge": {
+        "fontSize": "72px",
+        "lineSpacing": "90",
+        "letterSpacing": "-2%"
+      },
+      "extraLarge": {
+        "fontSize": "60px",
+        "lineSpacing": "72",
+        "letterSpacing": "-2%"
+      },
+      "large": {
+        "fontSize": "48px",
+        "lineSpacing": "60",
+        "letterSpacing": "-2%"
+      },
+      "medium": {
+        "fontSize": "36px",
+        "lineSpacing": "44",
+        "letterSpacing": "-2%"
+      },
+      "small": {
+        "fontSize": "30px",
+        "lineSpacing": "38",
+        "letterSpacing": "0%"
+      },
+      "extraSmall": {
+        "fontSize": "24px",
+        "lineSpacing": "32",
+        "letterSpacing": "0%"
+      }
+    }
+  },
+  "body": {
+    "description": "For paragraphs, descriptions, and other blocks of text that make up the bulk of a user interface or content area.",
+    "styles": {
+      "extraLarge": {
+        "fontSize": "20px",
+        "lineSpacing": "28",
+        "letterSpacing": "0%"
+      },
+      "large": {
+        "fontSize": "18px",
+        "lineSpacing": "28",
+        "letterSpacing": "0%"
+      },
+      "medium": {
+        "fontSize": "16px",
+        "lineSpacing": "24",
+        "letterSpacing": "0%"
+      },
+      "small": {
+        "fontSize": "14px",
+        "lineSpacing": "20",
+        "letterSpacing": "0%"
+      },
+      "extraSmall": {
+        "fontSize": "12px",
+        "lineSpacing": "18",
+        "letterSpacing": "0%"
+      },
+      "tiny": {
+        "fontSize": "10px",
+        "lineSpacing": "16",
+        "letterSpacing": "0%"
+      }
+    }
+  }
+}

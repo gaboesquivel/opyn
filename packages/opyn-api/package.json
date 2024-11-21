@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "nanoid": "^5.0.8",
-    "viem": "^2.21.16"
+    "viem": "2.x"
   }
 }

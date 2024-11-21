@@ -1,0 +1,89 @@
+{
+  "Primary": {
+    "description": "Primary color is your main 'brand' color which is used across the design, reflecting brand personality through UI elements. Here, we deliberately chose black and white only so you can customize the palette according to your brand colors swiftly.",
+    "colors": {
+      "White": "#FFFFFF",
+      "Black": "#000000"
+    }
+  },
+  "Brand": {
+    "description": "Brand colors are used to create a sense of cohesion and consistency across the design. They are often chosen to create a sense of positivity and to reinforce a positive user experience in the design.",
+    "palette": {
+      "50": "#F0FCFF",
+      "100": "#E1F9FE",
+      "200": "#C3F4FD",
+      "300": "#83E8FC",
+      "400": "#4FDFFC",
+      "500": "#1FD5F9",
+      "600": "#06BBE0",
+      "700": "#0492AE",
+      "800": "#047D95",
+      "900": "#03687C",
+      "1000": "#023E4B"
+    }
+  },
+  "Gray": {
+    "description": "Gray is a key neutral color and is the crux of any UI design. Majority of the UI design elements like text, forms, shadows, backgrounds, dividers are all usually gray.",
+    "palette": {
+      "50": "#F7F7F8",
+      "100": "#F2F2F3",
+      "200": "#E2E3E4",
+      "300": "#CFD1D3",
+      "400": "#A1A5AA",
+      "500": "#686D73",
+      "600": "#5A5F63",
+      "700": "#494D50",
+      "800": "#3D4043",
+      "900": "#27292B",
+      "1000": "#1A1D1F"
+    }
+  },
+  "Error": {
+    "description": "Error colors are typically used for elements such as error messages, form validation messages, and other notifications that require a sense of urgency and user's attention to the issue at hand.",
+    "palette": {
+      "50": "#FFFBFA",
+      "100": "#FEF3F1",
+      "200": "#FDECE8",
+      "300": "#FAD0C7",
+      "400": "#F7B1A1",
+      "500": "#F7876E",
+      "600": "#FA5C38",
+      "700": "#CD5337",
+      "800": "#A52E2E",
+      "900": "#7B3323",
+      "1000": "#3E0F04"
+    }
+  },
+  "Warning": {
+    "description": "Warning colors are typically used for elements such as warning messages, toasts, task status and other notifications regarding potential outcomes that require a sense of care and attention on the user's end.",
+    "palette": {
+      "50": "#FFFCF5",
+      "100": "#FEFAF5",
+      "200": "#FBF2CB",
+      "300": "#FDE57E",
+      "400": "#FFD16A",
+      "500": "#FBBC55",
+      "600": "#E9A23B",
+      "700": "#C8811A",
+      "800": "#A35C00",
+      "900": "#8B4400",
+      "1000": "#78310B"
+    }
+  },
+  "Success": {
+    "description": "Success colors are typically used to communicate a positive event, successful confirmation, completion notification etc,. They are often chosen to create a sense of positivity and to reinforce a positive user experience in the design.",
+    "palette": {
+      "50": "#F6FEF7",
+      "100": "#EDFDEE",
+      "200": "#D7F9DB",
+      "300": "#B7F1BC",
+      "400": "#74FB81",
+      "500": "#06EA1D",
+      "600": "#29E03B",
+      "700": "#1DA52B",
+      "800": "#1D8727",
+      "900": "#1B6A22",
+      "1000": "#18531E"
+    }
+  }
+}

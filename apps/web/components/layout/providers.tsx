@@ -13,7 +13,6 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { merge } from 'lodash'
-import type { ThemeProviderProps } from 'next-themes/dist/types'
 import { WagmiProvider } from 'wagmi'
 import { arbitrum } from 'wagmi/chains'
 
@@ -44,7 +43,7 @@ const customRainbowKitTheme: RainbowKitTheme = merge(darkTheme(), {
   },
 } as RainbowKitTheme)
 
-export function Providers({ children }: ThemeProviderProps) {
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig}>
