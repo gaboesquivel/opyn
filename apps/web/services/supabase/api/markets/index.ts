@@ -19,6 +19,7 @@ export async function getMarkets({
 
   return data as NonNullable<typeof data>
 }
+
 export async function getMarket({
   marketId,
   supabase,

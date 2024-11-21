@@ -12,6 +12,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useSupabaseClient } from '@/services/supabase'
+import { getAllTransactions } from '@/services/supabase/api/transaction/index'
+import { useQuery } from '@tanstack/react-query'
 import { ChevronDown } from 'lucide-react'
 import { useQueryState } from 'nuqs'
 import { useState } from 'react'
@@ -20,6 +23,12 @@ import { PositionsDropdownMenu } from './dropdown'
 
 export function TradePositions() {
   const [scrollableHeight, setScrollableHeight] = useState(200)
+  const supabase = useSupabaseClient()
+  const { data: transactions } = useQuery({
+    queryKey: ['transactions'],
+    queryFn: () => getAllTransactions({ supabase }),
+  })
+  console.log('😎 transactions', transactions)
 
   return (
     <ResizablePanel
