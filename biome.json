@@ -47,6 +47,6 @@
     }
   },
   "files": {
-    "ignore": ["**/chat-icons.tsx", "**/.trigger/**"]
+    "ignore": ["**/chat-icons.tsx", "**/.trigger/**", "**/vercel.json"]
   }
 }
