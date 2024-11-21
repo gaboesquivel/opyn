@@ -14,6 +14,56 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
     .nullable(),
 )
 
+export const chainlinkPriceFeedRowSchema = z.object({
+  asset: z.string(),
+  asset_uuid: z.string().nullable(),
+  created_at: z.string().nullable(),
+  feed: z.string(),
+  id: z.number(),
+  numeraire: z.string(),
+  numeraire_uuid: z.string().nullable(),
+  updated_at: z.string().nullable(),
+})
+
+export const chainlinkPriceFeedInsertSchema = z.object({
+  asset: z.string(),
+  asset_uuid: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  feed: z.string(),
+  id: z.number(),
+  numeraire: z.string(),
+  numeraire_uuid: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const chainlinkPriceFeedUpdateSchema = z.object({
+  asset: z.string().optional(),
+  asset_uuid: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  feed: z.string().optional(),
+  id: z.number().optional(),
+  numeraire: z.string().optional(),
+  numeraire_uuid: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const chainlinkPriceFeedRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('chainlink_price_feed_asset_fkey'),
+    columns: z.tuple([z.literal('asset_uuid')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('chainlink_price_feed_numeraire_fkey'),
+    columns: z.tuple([z.literal('numeraire_uuid')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+])
+
 export const documentSectionsRowSchema = z.object({
   content: z.string(),
   document_id: z.number(),
@@ -78,44 +128,262 @@ export const documentsUpdateSchema = z.object({
 
 export const documentsRelationshipsSchema = z.tuple([])
 
-export const marketRowSchema = z.object({
-  base_asset: z.string(),
-  created_at: z.string(),
-  id: z.string(),
-  label: z.string(),
-  owner: z.string(),
-  quote_asset: z.string(),
-})
+export const oracleTypeSchema = z.union([
+  z.literal('CHAINLINK'),
+  z.literal('PYTH'),
+  z.literal('UNISWAP'),
+])
 
 export const marketInsertSchema = z.object({
-  base_asset: z.string(),
+  asset_flo: z.string(),
+  auction: z.string(),
+  controller: z.string(),
+  crab_world: z.string(),
   created_at: z.string().optional(),
+  deployer: z.string(),
+  half_crab: z.string(),
   id: z.string(),
+  is_active: z.boolean().optional().nullable(),
+  is_immutable: z.boolean().optional().nullable(),
   label: z.string(),
-  owner: z.string(),
-  quote_asset: z.string(),
+  oracle: z.string().optional().nullable(),
+  oracle_type: oracleTypeSchema.optional().nullable(),
+  power_perp_factory: z.string().optional().nullable(),
+  protocol_asset: z.string(),
+  protocol_numeraire: z.string(),
+  redemption: z.string().optional().nullable(),
+  safetypool: z.string().optional().nullable(),
+  shutdown: z.string().optional().nullable(),
+  span_margin: z.string().optional().nullable(),
+  stable_flo: z.string(),
+  two_crab: z.string(),
+  updated_at: z.string().optional().nullable(),
 })
 
 export const marketUpdateSchema = z.object({
-  base_asset: z.string().optional(),
+  asset_flo: z.string().optional(),
+  auction: z.string().optional(),
+  controller: z.string().optional(),
+  crab_world: z.string().optional(),
   created_at: z.string().optional(),
+  deployer: z.string().optional(),
+  half_crab: z.string().optional(),
   id: z.string().optional(),
+  is_active: z.boolean().optional().nullable(),
+  is_immutable: z.boolean().optional().nullable(),
   label: z.string().optional(),
-  owner: z.string().optional(),
-  quote_asset: z.string().optional(),
+  oracle: z.string().optional().nullable(),
+  oracle_type: oracleTypeSchema.optional().nullable(),
+  power_perp_factory: z.string().optional().nullable(),
+  protocol_asset: z.string().optional(),
+  protocol_numeraire: z.string().optional(),
+  redemption: z.string().optional().nullable(),
+  safetypool: z.string().optional().nullable(),
+  shutdown: z.string().optional().nullable(),
+  span_margin: z.string().optional().nullable(),
+  stable_flo: z.string().optional(),
+  two_crab: z.string().optional(),
+  updated_at: z.string().optional().nullable(),
 })
 
 export const marketRelationshipsSchema = z.tuple([
   z.object({
-    foreignKeyName: z.literal('markets_base_asset_fkey'),
-    columns: z.tuple([z.literal('base_asset')]),
+    foreignKeyName: z.literal('market_protocol_asset_fkey'),
+    columns: z.tuple([z.literal('protocol_asset')]),
     isOneToOne: z.literal(false),
     referencedRelation: z.literal('token'),
     referencedColumns: z.tuple([z.literal('uuid')]),
   }),
   z.object({
-    foreignKeyName: z.literal('markets_quote_asset_fkey'),
-    columns: z.tuple([z.literal('quote_asset')]),
+    foreignKeyName: z.literal('market_protocol_numeraire_fkey'),
+    columns: z.tuple([z.literal('protocol_numeraire')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+])
+
+export const marketCollateralRowSchema = z.object({
+  collateral_address: z.string(),
+  created_at: z.string().nullable(),
+  id: z.number(),
+  market_id: z.string(),
+  updated_at: z.string().nullable(),
+})
+
+export const marketCollateralInsertSchema = z.object({
+  collateral_address: z.string(),
+  created_at: z.string().optional().nullable(),
+  id: z.number().optional(),
+  market_id: z.string(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const marketCollateralUpdateSchema = z.object({
+  collateral_address: z.string().optional(),
+  created_at: z.string().optional().nullable(),
+  id: z.number().optional(),
+  market_id: z.string().optional(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const marketCollateralRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('market_collateral_collateral_address_fkey'),
+    columns: z.tuple([z.literal('collateral_address')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('whitelisted_collateral'),
+    referencedColumns: z.tuple([z.literal('collateral_address')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('market_collateral_market_id_fkey'),
+    columns: z.tuple([z.literal('market_id')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('market'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+])
+
+export const marketMetricRowSchema = z.object({
+  created_at: z.string().nullable(),
+  fees_collected: z.number(),
+  liquidity: z.number(),
+  market_id: z.string(),
+  num_traders: z.number(),
+  open_interest: z.number(),
+  updated_at: z.string().nullable(),
+  volume_24h: z.number(),
+  volume_30d: z.number(),
+  volume_7d: z.number(),
+})
+
+export const marketMetricInsertSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  fees_collected: z.number().optional(),
+  liquidity: z.number().optional(),
+  market_id: z.string(),
+  num_traders: z.number().optional(),
+  open_interest: z.number().optional(),
+  updated_at: z.string().optional().nullable(),
+  volume_24h: z.number().optional(),
+  volume_30d: z.number().optional(),
+  volume_7d: z.number().optional(),
+})
+
+export const marketMetricUpdateSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  fees_collected: z.number().optional(),
+  liquidity: z.number().optional(),
+  market_id: z.string().optional(),
+  num_traders: z.number().optional(),
+  open_interest: z.number().optional(),
+  updated_at: z.string().optional().nullable(),
+  volume_24h: z.number().optional(),
+  volume_30d: z.number().optional(),
+  volume_7d: z.number().optional(),
+})
+
+export const marketMetricRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('market_metric_market_id_fkey'),
+    columns: z.tuple([z.literal('market_id')]),
+    isOneToOne: z.literal(true),
+    referencedRelation: z.literal('market'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+])
+
+export const perpTypeSchema = z.union([
+  z.literal('zero_perp'),
+  z.literal('half_perp'),
+  z.literal('one_perp'),
+  z.literal('two_perp'),
+])
+
+export const marketPerpInsertSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  funding_fee: z.number(),
+  id: z.number().optional(),
+  initial_carry: z.number(),
+  is_active: z.boolean().optional().nullable(),
+  liquidation_fee: z.number(),
+  lower_carry: z.number(),
+  market_id: z.string(),
+  minting_fee: z.number(),
+  perp_type: perpTypeSchema,
+  updated_at: z.string().optional().nullable(),
+  upper_carry: z.number(),
+})
+
+export const marketPerpUpdateSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  funding_fee: z.number().optional(),
+  id: z.number().optional(),
+  initial_carry: z.number().optional(),
+  is_active: z.boolean().optional().nullable(),
+  liquidation_fee: z.number().optional(),
+  lower_carry: z.number().optional(),
+  market_id: z.string().optional(),
+  minting_fee: z.number().optional(),
+  perp_type: perpTypeSchema.optional(),
+  updated_at: z.string().optional().nullable(),
+  upper_carry: z.number().optional(),
+})
+
+export const marketPerpRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('market_perp_market_id_fkey'),
+    columns: z.tuple([z.literal('market_id')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('market'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+])
+
+export const pythPriceFeedRowSchema = z.object({
+  asset: z.string(),
+  asset_uuid: z.string().nullable(),
+  created_at: z.string().nullable(),
+  id: z.number(),
+  numeraire: z.string(),
+  numeraire_uuid: z.string().nullable(),
+  price_id: z.string(),
+  updated_at: z.string().nullable(),
+})
+
+export const pythPriceFeedInsertSchema = z.object({
+  asset: z.string(),
+  asset_uuid: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  id: z.number(),
+  numeraire: z.string(),
+  numeraire_uuid: z.string().optional().nullable(),
+  price_id: z.string(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const pythPriceFeedUpdateSchema = z.object({
+  asset: z.string().optional(),
+  asset_uuid: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  id: z.number().optional(),
+  numeraire: z.string().optional(),
+  numeraire_uuid: z.string().optional().nullable(),
+  price_id: z.string().optional(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const pythPriceFeedRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('pyth_price_feed_asset_fkey'),
+    columns: z.tuple([z.literal('asset_uuid')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('pyth_price_feed_numeraire_fkey'),
+    columns: z.tuple([z.literal('numeraire_uuid')]),
     isOneToOne: z.literal(false),
     referencedRelation: z.literal('token'),
     referencedColumns: z.tuple([z.literal('uuid')]),
@@ -128,6 +396,7 @@ export const tokenRowSchema = z.object({
   created_at: z.string(),
   decimals: z.number().nullable(),
   name: z.string(),
+  stablecoin: z.boolean(),
   symbol: z.string(),
   uuid: z.string(),
 })
@@ -138,6 +407,7 @@ export const tokenInsertSchema = z.object({
   created_at: z.string().optional(),
   decimals: z.number().optional().nullable(),
   name: z.string(),
+  stablecoin: z.boolean().optional(),
   symbol: z.string(),
   uuid: z.string().optional(),
 })
@@ -148,37 +418,208 @@ export const tokenUpdateSchema = z.object({
   created_at: z.string().optional(),
   decimals: z.number().optional().nullable(),
   name: z.string().optional(),
+  stablecoin: z.boolean().optional(),
   symbol: z.string().optional(),
   uuid: z.string().optional(),
 })
 
 export const tokenRelationshipsSchema = z.tuple([])
 
+export const transactionsRowSchema = z.object({
+  created_at: z.string().nullable(),
+  from_address: z.string(),
+  id: z.number(),
+  market_id: z.string(),
+  perp_id: z.number(),
+  quantity_amount: z.number(),
+  status: z.string(),
+  to_address: z.string(),
+  token: z.string(),
+  transaction_hash: z.string(),
+  transaction_timestamp: z.string(),
+  transaction_type: z.string(),
+  updated_at: z.string().nullable(),
+  usd_amount: z.number(),
+})
+
+export const transactionsInsertSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  from_address: z.string(),
+  id: z.never().optional(),
+  market_id: z.string(),
+  perp_id: z.number(),
+  quantity_amount: z.number(),
+  status: z.string(),
+  to_address: z.string(),
+  token: z.string(),
+  transaction_hash: z.string(),
+  transaction_timestamp: z.string().optional(),
+  transaction_type: z.string(),
+  updated_at: z.string().optional().nullable(),
+  usd_amount: z.number(),
+})
+
+export const transactionsUpdateSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  from_address: z.string().optional(),
+  id: z.never().optional(),
+  market_id: z.string().optional(),
+  perp_id: z.number().optional(),
+  quantity_amount: z.number().optional(),
+  status: z.string().optional(),
+  to_address: z.string().optional(),
+  token: z.string().optional(),
+  transaction_hash: z.string().optional(),
+  transaction_timestamp: z.string().optional(),
+  transaction_type: z.string().optional(),
+  updated_at: z.string().optional().nullable(),
+  usd_amount: z.number().optional(),
+})
+
+export const transactionsRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('transactions_market_id_fkey'),
+    columns: z.tuple([z.literal('market_id')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('market'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('transactions_perp_id_fkey'),
+    columns: z.tuple([z.literal('perp_id')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('market_perp'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('transactions_token_fkey'),
+    columns: z.tuple([z.literal('token')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+])
+
+export const uniswapPoolRowSchema = z.object({
+  created_at: z.string().nullable(),
+  id: z.number(),
+  market_id: z.string(),
+  token0: z.string(),
+  token0_uuid: z.string().nullable(),
+  token1: z.string(),
+  token1_uuid: z.string().nullable(),
+  updated_at: z.string().nullable(),
+})
+
+export const uniswapPoolInsertSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  id: z.number().optional(),
+  market_id: z.string(),
+  token0: z.string(),
+  token0_uuid: z.string().optional().nullable(),
+  token1: z.string(),
+  token1_uuid: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const uniswapPoolUpdateSchema = z.object({
+  created_at: z.string().optional().nullable(),
+  id: z.number().optional(),
+  market_id: z.string().optional(),
+  token0: z.string().optional(),
+  token0_uuid: z.string().optional().nullable(),
+  token1: z.string().optional(),
+  token1_uuid: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const uniswapPoolRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal('uniswap_pool_market_id_fkey'),
+    columns: z.tuple([z.literal('market_id')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('market'),
+    referencedColumns: z.tuple([z.literal('id')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('uniswap_pool_token0_uuid_fkey'),
+    columns: z.tuple([z.literal('token0_uuid')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+  z.object({
+    foreignKeyName: z.literal('uniswap_pool_token1_uuid_fkey'),
+    columns: z.tuple([z.literal('token1_uuid')]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal('token'),
+    referencedColumns: z.tuple([z.literal('uuid')]),
+  }),
+])
+
 export const userRowSchema = z.object({
   address: z.string(),
   created_at: z.string(),
-  ens: z.string().nullable(),
-  notifs: z.boolean().nullable(),
+  notifications_enabled: z.boolean(),
   telegram: z.string().nullable(),
 })
 
 export const userInsertSchema = z.object({
   address: z.string(),
   created_at: z.string().optional(),
-  ens: z.string().optional().nullable(),
-  notifs: z.boolean().optional().nullable(),
+  notifications_enabled: z.boolean().optional(),
   telegram: z.string().optional().nullable(),
 })
 
 export const userUpdateSchema = z.object({
   address: z.string().optional(),
   created_at: z.string().optional(),
-  ens: z.string().optional().nullable(),
-  notifs: z.boolean().optional().nullable(),
+  notifications_enabled: z.boolean().optional(),
   telegram: z.string().optional().nullable(),
 })
 
 export const userRelationshipsSchema = z.tuple([])
+
+export const whitelistedCollateralRowSchema = z.object({
+  chainlink_adapter: z.string().nullable(),
+  collateral_address: z.string(),
+  collateral_name: z.string().nullable(),
+  created_at: z.string().nullable(),
+  engine: z.string().nullable(),
+  id: z.number(),
+  is_default: z.boolean().nullable(),
+  pyth_adapter: z.string().nullable(),
+  uniswap_adapter: z.string().nullable(),
+  updated_at: z.string().nullable(),
+})
+
+export const whitelistedCollateralInsertSchema = z.object({
+  chainlink_adapter: z.string().optional().nullable(),
+  collateral_address: z.string(),
+  collateral_name: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  engine: z.string().optional().nullable(),
+  id: z.number().optional(),
+  is_default: z.boolean().optional().nullable(),
+  pyth_adapter: z.string().optional().nullable(),
+  uniswap_adapter: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const whitelistedCollateralUpdateSchema = z.object({
+  chainlink_adapter: z.string().optional().nullable(),
+  collateral_address: z.string().optional(),
+  collateral_name: z.string().optional().nullable(),
+  created_at: z.string().optional().nullable(),
+  engine: z.string().optional().nullable(),
+  id: z.number().optional(),
+  is_default: z.boolean().optional().nullable(),
+  pyth_adapter: z.string().optional().nullable(),
+  uniswap_adapter: z.string().optional().nullable(),
+  updated_at: z.string().optional().nullable(),
+})
+
+export const whitelistedCollateralRelationshipsSchema = z.tuple([])
 
 export const documentsWithStoragePathRowSchema = z.object({
   created_at: z.string().nullable(),
@@ -190,3 +631,44 @@ export const documentsWithStoragePathRowSchema = z.object({
 })
 
 export const documentsWithStoragePathRelationshipsSchema = z.tuple([])
+
+export const marketRowSchema = z.object({
+  asset_flo: z.string(),
+  auction: z.string(),
+  controller: z.string(),
+  crab_world: z.string(),
+  created_at: z.string(),
+  deployer: z.string(),
+  half_crab: z.string(),
+  id: z.string(),
+  is_active: z.boolean().nullable(),
+  is_immutable: z.boolean().nullable(),
+  label: z.string(),
+  oracle: z.string().nullable(),
+  oracle_type: oracleTypeSchema.nullable(),
+  power_perp_factory: z.string().nullable(),
+  protocol_asset: z.string(),
+  protocol_numeraire: z.string(),
+  redemption: z.string().nullable(),
+  safetypool: z.string().nullable(),
+  shutdown: z.string().nullable(),
+  span_margin: z.string().nullable(),
+  stable_flo: z.string(),
+  two_crab: z.string(),
+  updated_at: z.string().nullable(),
+})
+
+export const marketPerpRowSchema = z.object({
+  created_at: z.string().nullable(),
+  funding_fee: z.number(),
+  id: z.number(),
+  initial_carry: z.number(),
+  is_active: z.boolean().nullable(),
+  liquidation_fee: z.number(),
+  lower_carry: z.number(),
+  market_id: z.string(),
+  minting_fee: z.number(),
+  perp_type: perpTypeSchema,
+  updated_at: z.string().nullable(),
+  upper_carry: z.number(),
+})

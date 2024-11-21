@@ -1,8 +1,8 @@
 # Opyn Errors Package
 
-## Overview
 
-The Opyn Errors package provides a standardized way to handle and manage errors across the Opyn ecosystem. This package is designed to improve error handling, debugging, and user experience in Opyn-related applications.
+The Opyn Errors package provides a standardized way to handle and manage errors across the Opyn ecosystem. 
+This package is designed to improve error handling, debugging, and user experience in Opyn-related applications.
 
 ## Features
 

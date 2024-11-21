@@ -198,8 +198,6 @@ Benefits:
 - [lucide-react](https://lucide.dev/): Icon library for React applications.
 - [mini-svg-data-uri](https://github.com/tigt/mini-svg-data-uri): Optimizes SVGs for data URIs.
 - [zod](https://zod.dev/): TypeScript-first schema validation.
-- [@opyn/utils](workspace:*): Internal project library.
-- [@opyn/tokens](workspace:*): Smart contract interfaces and utilities.
 - [@radix-ui/react-slot](https://www.radix-ui.com/primitives/docs/utilities/slot): Utility component for flexible composition.
 - [@blockmatic/hooks-utils](https://github.com/blockmatic/hooks-utils): A collection of useful React hooks, including createContextHook for easy context creation and consumption.
 - [pino-pretty](https://github.com/pinojs/pino-pretty): Prettifier for Pino logs. WalletConnect uses pino for logging.
@@ -228,26 +226,7 @@ This section outlines the error handling strategies implemented in the applicati
 
 6. **Centralized Error Management**: A centralized error object in `@repo/errors` maps error codes to descriptive messages:
 
-   ```typescript
-   const opynErrors = {
-     INVALID_INPUT: { code: 'INVALID_INPUT', message: 'Invalid input provided' },
-     NETWORK_ERROR: { code: 'NETWORK_ERROR', message: 'A network error occurred' },
-     // Additional error definitions...
-   } as const
-   ```
-
-
 7. **Server Action Error Return Example**: When handling errors in server actions, use the `ActionResponse` interface and the `opynErrors` object for consistency:
-
-   ```typescript
-   // Example of returning an error from a server action
-   return {
-     success: false,
-     error: opynErrors.INVALID_SIGNATURE
-   }
-   ```
-
-   This approach ensures that all server actions return a consistent error structure, making it easier for the client to handle and display errors appropriately.
 
 8. **Custom Error Objects**: Custom error objects with `code` and `message` properties are thrown based on centralized definitions.
 
