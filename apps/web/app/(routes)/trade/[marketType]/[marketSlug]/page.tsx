@@ -13,7 +13,10 @@ import type {
 } from '@/components/routes/trade/routing'
 
 import { OpynCharts } from '@/components/routes/trade/charts'
-import { TradePositions } from '@/components/routes/trade/positions/index'
+import {
+  TradePositions,
+  TradingPositionsCard,
+} from '@/components/routes/trade/positions/index'
 import { parseMarketSlug } from '@/lib/opyn'
 import { createSupabaseServerClient, getMarketData } from '@/services/supabase'
 
@@ -60,7 +63,7 @@ export default async function TradePage({
         />
       }
       positions={<TradePositions />}
-      mobilePositions={<TradePositions key="trading-positions-card" />} // key required on swiper
+      mobilePositions={<TradingPositionsCard />}
     />
   )
 }

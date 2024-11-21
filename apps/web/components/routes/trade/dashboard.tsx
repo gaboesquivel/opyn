@@ -40,7 +40,9 @@ export function TradeDashboard({
         <div className="sm:hidden flex-grow flex flex-col h-full">
           <div className="mb-3">{market}</div>
 
-          <MobileSwiper slides={[chart, health, mobileMarket, order]} />
+          <MobileSwiper
+            slides={[chart, health, mobileMarket, order, mobilePositions]}
+          />
         </div>
 
         {/* Desktop resizable dashboard */}
