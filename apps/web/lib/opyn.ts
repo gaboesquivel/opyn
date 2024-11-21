@@ -9,6 +9,9 @@ export function parseMarketSlug(slug: string): {
   numeraireSymbol: string
   marketId: string
 } {
+  // hotfix for mobile ai slug
+  if (!slug) return { underlierSymbol: '', numeraireSymbol: '', marketId: '' }
+
   const parts = slug.split('-')
   if (parts.length !== 3) throw new Error('Invalid market slug format')
 
