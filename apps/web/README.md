@@ -218,7 +218,7 @@ This section outlines the error handling strategies implemented in the applicati
 
 2. **Error Boundaries**: Unexpected errors are handled using error boundaries implemented in `error.tsx` and `global-error.tsx`, providing fallback UIs.
 
-3. **Form Validation**: `useActionState` is combined with `react-hook-form` and `zod` for form validation.
+3. **Form Validation**: `useActionState` is combined with `react-hook-form` and `zod` for form validation. <Form> from shadcn/ui is used to wrap forms.
 
 4. **Service Layer**: The `services/` directory throws user-friendly errors, which TanStack Query catches and displays.
 

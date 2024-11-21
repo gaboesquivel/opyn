@@ -40,7 +40,7 @@ const rangeVariants = cva('absolute h-full', {
   variants: {
     variant: {
       default: 'bg-primary',
-      brand: 'bg-brand',
+      brand: 'bg-brand-500',
     },
   },
   defaultVariants: {
@@ -54,7 +54,7 @@ const thumbVariants = cva(
     variants: {
       variant: {
         default: 'border-primary',
-        brand: 'bg-brand border-background',
+        brand: 'bg-brand-500 border-background',
       },
     },
     defaultVariants: {

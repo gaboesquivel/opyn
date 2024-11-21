@@ -1,8 +1,8 @@
-import type { AIBot, PerpType, TradeSide, TradeType } from '@opyn/api'
+import type { AIBot, MarketType, PerpType, TradeSide } from '@/types/opyn'
 
 export type TradeRouteParams = {
   marketSlug: string
-  trade: TradeType
+  marketType: MarketType
 }
 
 export type TradeSearchParams = {
