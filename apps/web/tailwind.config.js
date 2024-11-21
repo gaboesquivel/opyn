@@ -89,6 +89,7 @@ module.exports = {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
+        },
         brand: {
           50: 'hsl(var(--brand-50))',
           100: 'hsl(var(--brand-100))',
