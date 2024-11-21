@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           'flex flex-col min-h-[100dvh] w-full ',
           'bg-background',
-          'text-foreground antialiased p-0 ',
+          'text-foreground antialiased p-0 text-xxs sm:text-base',
           appConfig.features.ai && 'bg-card',
         )}
       >

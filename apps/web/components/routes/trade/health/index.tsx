@@ -9,7 +9,7 @@ export function TradeAccountHealth() {
   return (
     <Card
       variant="padded"
-      className="items-center justify-between flex text-sm w-full gap-10 flex sm:max-h-[56px] py-4 sm:py-0 h-full sm:h-14 self-start flex-col sm:flex-row"
+      className="items-center justify-between flex text-sm w-full gap-10 flex sm:max-h-[56px] py-4 sm:py-0 h-full sm:h-14 self-start flex-col sm:flex-row "
     >
       {/* Mobile */}
       <div className="w-full sm:hidden grid grid-cols-2 gap-4">
