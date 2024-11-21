@@ -6,6 +6,7 @@ import { OpynConnectButton } from '@/components/layout/header/connect'
 import { appConfig } from '@/lib/config'
 import { useAction } from 'next-safe-action/hooks'
 
+import { DubShareDialog } from '@/components/layout/header/dub'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react'
@@ -44,6 +45,10 @@ export function Header() {
       </div>
 
       <div className="flex justify-end lg:min-w-[300px] lg:gap-5">
+        <div className="flex items-center gap-2 mr-4">
+          <DubShareDialog />
+        </div>
+
         <div className="items-center gap-5 flex">
           <OpynConnectButton />
         </div>

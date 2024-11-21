@@ -1,8 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardHeader } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import { useQueryState } from 'nuqs'
 import { FundingChart } from './funding'
 import { PayoffChart } from './payoff'
@@ -43,8 +44,9 @@ export function OpynCharts({
                   size="sm"
                   className="flex items-center"
                 >
-                  <span className="sm:hidden">Details</span>
-                  <span className="hidden sm:inline">Market Details</span>
+                  <span className="sm:hidden">Advanced</span>
+                  <span className="hidden sm:inline">Advanced Trading</span>
+                  <ArrowUpRightIcon className="ml-2 h-4 w-4" />
                 </Button>
               </div>
               <TabsContent value="price" className="flex-1 h-full w-full mt-4">

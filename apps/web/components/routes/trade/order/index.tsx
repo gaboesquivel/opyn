@@ -117,7 +117,7 @@ export function TradeOrder({ marketSlug, marketType }: TradeRouteParams) {
 
   return (
     <Card variant="padded">
-      <div className=" min-w-[270px] ">
+      <div className="min-w-[270px] ">
         <div className="flex gap-1 mb-4 gap-2 justify-evenly">
           <Button
             className="flex-1 h-[44px]"
@@ -195,6 +195,8 @@ export function TradeOrder({ marketSlug, marketType }: TradeRouteParams) {
           <OrderDetails />
         </div>
 
+        {/* 
+        NOTE: disabled for now
         <Accordion
           type="single"
           collapsible
@@ -208,7 +210,7 @@ export function TradeOrder({ marketSlug, marketType }: TradeRouteParams) {
               Yes. It adheres to the WAI-ARIA design pattern.
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
+        </Accordion> */}
 
         <Button
           variant="positve"

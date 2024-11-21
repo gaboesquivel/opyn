@@ -57,7 +57,7 @@ export function TradeDashboard({
               {/* scrollable content goes here, max height to 100vh - footer - header - accountInfo with paddings + market info with padding  + 50px
                 so we allow hidding the market info to explore positions more comfy
               */}
-              <div className="h-[calc(100vh-44px-64px-56px-16px-16px+72px+16px+50px)] ">
+              <div className="h-[calc(100vh-44px-64px-56px-16px-16px+72px+16px+140px)] ">
                 <ResizablePanelGroup direction="vertical">
                   <div className="mb-4 sm:min-h-14">{market}</div>
 
@@ -80,9 +80,9 @@ export function TradeDashboard({
                 className="gap-2 max-h-full "
               >
                 {/* <div className="flex-grow overflow-auto">{order}</div> */}
-                <ResizablePanel defaultSize={57}>{order}</ResizablePanel>
+                <ResizablePanel defaultSize={100}>{order}</ResizablePanel>
                 <ResizableHandle />
-                <ResizablePanel defaultSize={10}>
+                <ResizablePanel defaultSize={0}>
                   <div />
                 </ResizablePanel>
               </ResizablePanelGroup>
