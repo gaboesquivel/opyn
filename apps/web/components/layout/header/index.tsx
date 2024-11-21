@@ -1,12 +1,26 @@
+'use client'
+
+import { setAddressCookie } from '@/app/actions/ui/address-cookie'
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/lib/config'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAction } from 'next-safe-action/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
+import { useAccount } from 'wagmi'
 import { Menu } from './menu'
 
 export function Header() {
+  const { execute } = useAction(setAddressCookie)
+  const { address } = useAccount()
+
+  // Set the user's address in a cookie for server-side access
+  // keeps them in sync with the wallet client
+  useEffect(() => {
+    address ? execute({ address }) : execute({ address: '' })
+  }, [address, execute])
+
   return (
     <div
       className={`${appConfig.features.ai ? 'sticky' : 'sticky'}  top-0 z-50 flex max-h-[64px] h-[64px] w-full items-center justify-between p-2 bg-background`}
