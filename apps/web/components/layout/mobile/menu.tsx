@@ -90,14 +90,14 @@ export function MobileMenu() {
 
 const navOptions = [
   { text: 'Trade', href: '/', icon: TradeIcon },
-  { text: 'Markets', href: '/m', icon: MarketsIcon },
-  { text: 'Vaults', href: '/v', icon: VaultsIcon },
-  { text: 'Portfolio', href: '/p', icon: PortfolioIcon },
+  { text: 'Markets', href: '/markets', icon: MarketsIcon },
+  { text: 'Vaults', href: '/vaults', icon: VaultsIcon },
+  { text: 'Portfolio', href: '/portfolio', icon: PortfolioIcon },
   { text: 'OpynAI', href: '/ai', icon: Bot },
 ]
 
 const tradeSubOptions = [
-  { text: 'Perps', href: '/t/perps' },
-  { text: 'Spot', href: '/t/spot' },
-  { text: 'Vaults', href: '/t/vaults' },
+  { text: 'Perps', href: '/trade/perps' },
+  { text: 'Spot', href: '/trade/spot' },
+  { text: 'Vaults', href: '/trade/vaults' },
 ]

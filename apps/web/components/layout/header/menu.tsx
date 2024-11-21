@@ -71,9 +71,9 @@ export function Menu() {
 function isActive(href: string, pathname: string) {
   if (href === '/') {
     return (
-      pathname.includes('/t/perps') ||
-      pathname.includes('/t/spot') ||
-      pathname.includes('/t/vaults')
+      pathname.includes('/trade/perps') ||
+      pathname.includes('/trade/spot') ||
+      pathname.includes('/trade/vaults')
     )
   }
   return pathname.startsWith(href)
