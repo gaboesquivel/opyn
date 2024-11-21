@@ -1,0 +1,34 @@
+name: Deploy to Vercel [Custom]
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        if: github.actor != 'vercel-opynco'
+      - name: Determine Deployment Environment
+        if: github.actor != 'vercel-opynco'
+        id: prod_or_not
+        run: |
+          if [ "${{ github.ref }}" == 'refs/heads/main' ]
+          then
+              echo "vercel-args=--prod" >> $GITHUB_OUTPUT
+          else
+              echo "vercel-args=" >> $GITHUB_OUTPUT
+          fi
+      - uses: amondnet/vercel-action@v25
+        name: Deploy to Vercel
+        if: github.actor != 'vercel-opynco'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: ${{ steps.prod_or_not.outputs.vercel-args }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+          github-comment: true
+          working-directory: ./
