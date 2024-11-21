@@ -101,4 +101,76 @@ export const saveDepositIntent = createSafeActionClient()
    - Avoid 'use client' for data fetching or state management
 
 # Reference
-- Next.js documentation for Data Fetching, Rendering, and Routing best practices
+- Next.js documentation for Data Fetching, Rendering, and Routing best practices 
+- Radix UI documentation for accessibility and component primitives
+- Shadcn UI documentation for component system and starter kit
+
+
+# UI Component Guidelines
+
+## Icons and Design System
+- Use Heroicons (https://heroicons.com/) for all icons
+- Follow design system tokens in app/globals.css and tailwind.config.js
+- Avoid default Tailwind colors to maintain brand consistency
+
+## Styling Best Practices
+- Always use `cn` utility function for conditional class names
+- Add `className` prop to components for external styling overrides
+- Use `cva` function for component variants to centralize styling
+- Utilize CSS Flexbox and Grid for modern layouts
+- Build fluid, responsive components with container queries
+- Ensure mobile-first responsive design with Tailwind classes
+
+## Component Architecture
+- Use Radix UI's built-in functions (e.g. `onOpenChange`) over custom logic
+- Style with Radix UI data attributes for interactivity
+- Prioritize Radix UI data attributes for accessibility
+- Use Tailwind CSS classes for styling
+- Avoid JavaScript styling unless absolutely necessary
+
+## Component Usage
+- Use `<Form>` instead of native `<form>`
+- Use shadcn/ui Sidebar for menu navigation
+- Use shadcn/ui Sheet for contextual dialogs/panels
+- Use shadcn/ui Skeleton in Suspense fallbacks
+- Use Sonner for toast notifications
+
+### Examples
+
+#### Example 1: Styling a Tab Component
+```tsx
+<Tab
+  data-state="active"
+  className={cn(
+    "text-sm font-medium",
+    "data-[state=active]:text-brand-500",
+    "data-[state=inactive]:text-brand-400"
+  )}
+>
+  Tab 1
+</Tab>
+```
+
+#### Example 2: Responsive Grid Layout
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <Card />
+  <Card />
+  <Card />
+</div>
+```
+
+#### Example 3: Using Radix's `onOpenChange`
+```tsx
+<Dialog onOpenChange={(isOpen) => console.log(isOpen)}>
+  <DialogTrigger asChild>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>Content goes here</DialogContent>
+</Dialog>
+```
+
+
+By following these best practices, your shadcn/ui components will be consistent, accessible, and maintainable.
+
+
