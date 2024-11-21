@@ -1,6 +1,6 @@
-import type { OpynError } from './types'
+import type { OpynError, OpynErrorCode } from './types'
 
-export const opynErrors: Record<string, OpynError> = {
+export const opynErrors: Record<OpynErrorCode, OpynError> = {
   INVALID_INPUT: { code: 'INVALID_INPUT', message: 'Invalid input provided' },
   NETWORK_ERROR: { code: 'NETWORK_ERROR', message: 'A network error occurred' },
   INVALID_SIGNATURE: {

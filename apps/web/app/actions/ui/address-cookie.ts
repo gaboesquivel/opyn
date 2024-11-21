@@ -35,7 +35,7 @@ export const setAddressCookie = createSafeActionClient()
 
         return success({ address })
       } catch (error) {
-        return failure('COOKIE_SET_FAILURE', error)
+        return failure('SERVER_ERROR', error)
       }
     },
   )

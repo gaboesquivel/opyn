@@ -44,10 +44,10 @@
 - Use error boundaries for unexpected errors
 - Use useActionState with react-hook-form for form validation
 - Use next-safe-action for server actions:
-  - Handle errors gracefully with logOpynErr from @opyn/errors
+  - Handle errors gracefully with captureAppError from @opyn/errors
   - Use ActionResult for consistent responses
 - Use next-safe-action for all server actions:
-  - Handle errors gracefully and return appropriate responses using logOpynErr.
+  - Handle errors gracefully and return appropriate responses using captureAppError.
   - Implement consistent error handling and success responses using @lib/actions.ts
   - Example:
 ```typescript
@@ -174,3 +174,38 @@ export const saveDepositIntent = createSafeActionClient()
 By following these best practices, your shadcn/ui components will be consistent, accessible, and maintainable.
 
 
+
+
+# Viem
+- Always use getAddress from viem to convert addresses to Address type, never as Address
+
+
+# NextJS Services 
+
+- never use try/catch in services instead use captureAppError from @/services/sentry
+- use SupaApiParams type for supabase client
+- return type guards for supabase queries and mutations
+- return data type can never be null
+
+```tsx
+import { captureAppError } from '@/services/sentry/index'
+import type { SupaApiParams } from '../types'
+
+export async function getTokenByUuid({
+  uuid,
+  supabase,
+}: SupaApiParams & {
+  uuid: string
+}) {
+  const { data, error } = await supabase
+    .from('token')
+    .select()
+    .eq('uuid', uuid)
+    .single()
+
+  if (error || !data) captureAppError('FETCH_ERROR', error)
+
+  return data as NonNullable<typeof data>
+}
+
+```

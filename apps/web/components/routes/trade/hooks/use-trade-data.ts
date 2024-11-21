@@ -1,39 +1,51 @@
+import { parseMarketSlug } from '@/lib/opyn'
+// DEPRECATED: this is a mocked hook, we will prolly not use this strategy
 import {
-  type TradeType,
   getAccountInfo,
   getAccountPosition,
   getAccountPositions,
   getMarketData,
   getMarkets,
-} from '@opyn/api'
+  useSupabaseClient,
+} from '@/services/supabase'
+import type { MarketType } from '@/types/opyn'
+import type { Database } from '@opyn/supabase'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { useQuery } from '@tanstack/react-query'
 import type { TradeRouteParams } from '../routing'
 
 // returns all data for the trade routes
-export function useTradeData({ trade, marketSlug }: TradeRouteParams) {
-  const pair = marketSlug.split('-')[0]
+export function useTradeData({ marketType, marketSlug }: TradeRouteParams) {
+  const { marketId } = parseMarketSlug(marketSlug)
+  const supabase = useSupabaseClient()
   return useQuery({
-    queryKey: ['trade', trade, pair],
-    queryFn: () => getTradeRouteData({ trade, pair }),
-    refetchInterval: 5000, // NOTE: this simulates a subscription
+    queryKey: ['trade', marketType, marketId],
+    queryFn: () => getTradeRouteData({ marketType, marketId, supabase }),
+    refetchInterval: 5000,
   })
 }
 
-export function getTradeRouteData({
-  trade,
-  pair,
+// DEPRECATED: this is a mock function
+export async function getTradeRouteData({
+  marketType,
+  marketId,
   account,
-}: { trade: string; pair: string; account?: string }) {
-  // NOTE: this simulates a graphql query
+  supabase,
+}: {
+  marketType: MarketType
+  marketId: string
+  account?: string
+  supabase: SupabaseClient<Database>
+}) {
   return {
-    market: getMarketData({ trade: trade as TradeType, pair: pair as string }),
-    markets: getMarkets({ trade: trade as TradeType }),
+    marketMetric: await getMarketData({ marketId, supabase }),
+    markets: await getMarkets({ marketType, supabase }),
     account: {
-      info: getAccountInfo(account),
-      position: getAccountPosition(pair),
-      positions: getAccountPositions(account || '0x'),
+      info: await getAccountInfo(account),
+      position: await getAccountPosition(marketId),
+      positions: await getAccountPositions(account || '0x'),
     },
-    trade,
-    pair,
+    marketType,
+    marketId,
   }
 }

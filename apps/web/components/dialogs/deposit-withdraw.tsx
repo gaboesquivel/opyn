@@ -14,18 +14,18 @@ import { QuantityInput } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatCurrency } from '@/lib/utils'
-import { getToken } from '@opyn/api'
-import type { Token } from '@opyn/api'
+import { getMarket, getMarketData } from '@/services/supabase'
+import { useSupabaseClient } from '@/services/supabase/sdk/client'
+import type { Tables } from '@opyn/supabase'
 import { DialogDescription } from '@radix-ui/react-dialog'
-import { AlertCircle, Globe, X } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { AlertCircle } from 'lucide-react'
 import { useQueryState } from 'nuqs'
 import { useEffect, useMemo, useState } from 'react'
-import { erc20Abi, formatUnits, parseUnits } from 'viem'
+import { erc20Abi, formatUnits, getAddress, parseUnits } from 'viem'
 import {
   useAccount,
-  // useChainId,
   useReadContract,
-  // useSwitchChain,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi'
@@ -36,8 +36,9 @@ export function DepositWithdraw() {
   const [activeTab, setActiveTab] = useQueryState('dialog', {
     defaultValue: 'deposit',
   })
-  const { marketSlug, trade } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, trade })
+  const { marketSlug, marketType, underlierSymbol, numeraireSymbol } =
+    useTradeRoute()
+  const { data } = useTradeData({ marketSlug, marketType })
 
   return (
     <DialogContent>
@@ -46,8 +47,7 @@ export function DepositWithdraw() {
           {activeTab === 'deposit' ? 'Deposit' : 'Withdraw'} Collateral
         </DialogTitle>
         <DialogDescription className="text-neutral-light">
-          {data?.market.underlier}-{data?.market.counterpart} -{' '}
-          {data?.market.counterpart}
+          {underlierSymbol}-{numeraireSymbol} - {numeraireSymbol}
         </DialogDescription>
       </DialogHeader>
 
@@ -74,33 +74,34 @@ export function DepositWithdraw() {
 function WithdrawContent() {
   const { address } = useAccount()
   const [amount, setAmount] = useState<string>('1,000')
-
-  // NOTE: useTradeData could use  useTradeRoute to remove verbosity
-  const { marketSlug, trade } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, trade })
-
-  // Make ts happy and dont shown anything if this value not found
-  if (!data?.market.counterpart) return null
-
-  // This could come from API directly through useTradeData hook
-  const token = getToken({ symbol: data?.market.counterpart, chainId: 42161 })
-
+  const { marketSlug, marketId } = useTradeRoute()
+  const supabase = useSupabaseClient()
+  const { data: market } = useQuery({
+    queryKey: ['market', marketSlug],
+    queryFn: () => getMarket({ marketId, supabase }),
+    enabled: !!marketSlug,
+  })
   const { writeContract, data: hash, isPending, error } = useWriteContract()
-  if (!token) return
+
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash,
   })
 
+  const numeraire = market?.numeraire
+
+  // return for now, skeleton loading state later
+  if (!numeraire) return
+
   const withdraw = () => {
-    if (!address || !token?.address || !amount) return
+    if (!address || !numeraire?.address || !amount) return
     const quantity = Number.parseFloat(amount)
-      .toFixed(token.decimals)
+      .toFixed(numeraire.decimals)
       .replaceAll(',', '')
       .replaceAll('.', '')
 
     // send to self for testing
     writeContract({
-      address: token.address,
+      address: getAddress(numeraire.address),
       abi: erc20Abi,
       functionName: 'transfer',
       args: [address, BigInt(quantity)],
@@ -122,15 +123,15 @@ function WithdrawContent() {
         <QuantityInput
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          deco={<CurrencyIcon currency={token?.symbol || 'USDC'} />}
+          deco={<CurrencyIcon currency={numeraire.symbol || 'USDC'} />}
           className="bg-primary"
         />
 
-        {token ? <Balance token={token} setAmount={setAmount} /> : null}
+        {numeraire ? <Balance token={numeraire} setAmount={setAmount} /> : null}
       </div>
 
-      {token ? (
-        <PositionInfo token={token} amount={amount} action="withdraw" />
+      {numeraire ? (
+        <PositionInfo token={numeraire} amount={amount} action="withdraw" />
       ) : null}
 
       <ChainWarning action="withdraw" />
@@ -146,7 +147,7 @@ function WithdrawContent() {
           ? 'Withdrawing...'
           : isSuccess
             ? 'Withdrew!'
-            : `Withdraw ${token?.symbol}`}
+            : `Withdraw ${numeraire.symbol}`}
       </Button>
 
       {error && (
@@ -161,8 +162,13 @@ function WithdrawContent() {
 function DepositContent() {
   const { address } = useAccount()
   const [amount, setAmount] = useState<string>('1,000')
-  const [action, setAction] = useState<DepositAction>('approve')
-
+  const { marketSlug, marketId, marketType } = useTradeRoute()
+  const supabase = useSupabaseClient()
+  const { data: market } = useQuery({
+    queryKey: ['market', marketSlug],
+    queryFn: () => getMarket({ marketId, supabase }),
+    enabled: !!marketSlug,
+  })
   const {
     writeContract,
     data: hash,
@@ -171,32 +177,22 @@ function DepositContent() {
     reset,
   } = useWriteContract()
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash })
+  const { data } = useTradeData({ marketSlug, marketType })
 
-  const { marketSlug, trade } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, trade })
+  // return for now, skeleton loading state later
+  if (!market?.numeraire) return null
 
-  useEffect(() => {
-    if (isSuccess && action === 'approve') {
-      reset()
-      setAction('transfer')
-    }
-  }, [isSuccess, reset, action])
+  const numeraire = market.numeraire
 
-  if (!data?.market.counterpart) return null
-
-  const token = getToken({ symbol: data.market.counterpart, chainId: 42161 })
-
-  if (!token?.address) return null
-
-  function execAction(functionName: DepositAction) {
-    if (!token?.address) return null
-    if (!address || !token.address || !amount) return
-    const quantity = parseUnits(amount.replace(/,/g, ''), token.decimals)
+  function deposit() {
+    if (!numeraire?.address) return null
+    if (!address || !numeraire.address || !amount) return
+    const quantity = parseUnits(amount.replace(/,/g, ''), numeraire.decimals)
 
     writeContract({
-      address: token.address,
+      address: getAddress(numeraire.address),
       abi: erc20Abi,
-      functionName,
+      functionName: 'transfer',
       args: [address, quantity],
     })
   }
@@ -215,13 +211,13 @@ function DepositContent() {
         <QuantityInput
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          deco={<CurrencyIcon currency={token.symbol} />}
+          deco={<CurrencyIcon currency={numeraire.symbol} />}
           className="bg-primary"
         />
-        <Balance token={token} setAmount={setAmount} />
+        <Balance token={numeraire} setAmount={setAmount} />
       </div>
 
-      <PositionInfo token={token} amount={amount} action="deposit" />
+      <PositionInfo token={numeraire} amount={amount} action="deposit" />
 
       <ChainWarning action="deposit" />
 
@@ -229,18 +225,14 @@ function DepositContent() {
 
       <Button
         className="w-full bg-white text-black hover:bg-gray-200"
-        onClick={() => execAction(action)}
+        onClick={deposit}
         disabled={isPending || isLoading}
       >
         {isPending || isLoading
-          ? action === 'approve'
-            ? 'Approving...'
-            : 'Depositing...'
+          ? 'Depositing...'
           : isSuccess
-            ? action === 'approve'
-              ? 'Approved!'
-              : 'Deposited!'
-            : `${action === 'approve' ? 'Approve' : 'Deposit'} ${token.symbol}`}
+            ? 'Deposited!'
+            : `Deposit ${numeraire.symbol}`}
       </Button>
 
       {error && (
@@ -256,9 +248,10 @@ function PositionInfo({
   token,
   action,
   amount,
-}: { token: Token; amount: string; action: 'withdraw' | 'deposit' }) {
-  const { marketSlug, trade } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, trade })
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}: { token: any; amount: string; action: 'withdraw' | 'deposit' }) {
+  const { marketSlug, marketType } = useTradeRoute()
+  const { data } = useTradeData({ marketSlug, marketType })
   const position = data?.account.position || {
     collateral: 0,
     liq: {
@@ -432,11 +425,11 @@ function CollateralWarning({ action }: { action: 'deposit' | 'withdraw' }) {
 function Balance({
   token,
   setAmount,
-}: { token: Token; setAmount: (amount: string) => void }) {
+}: { token: Tables<'token'>; setAmount: (amount: string) => void }) {
   const { address } = useAccount()
 
   const { data: balance, refetch } = useReadContract({
-    address: token.address,
+    address: getAddress(token.address),
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: [address ?? '0x'],
@@ -447,7 +440,7 @@ function Balance({
   })
 
   const formattedBalance = formatCurrency({
-    value: formatUnits(balance || BigInt(0), token.decimals),
+    value: formatUnits(balance || 0n, token.decimals),
   })
 
   useEffect(() => {
@@ -464,9 +457,7 @@ function Balance({
 
         <span
           className="cursor-pointer text-brand"
-          onClick={() =>
-            setAmount(formatUnits(balance || BigInt(0), token.decimals))
-          }
+          onClick={() => setAmount(formatUnits(balance || 0n, token.decimals))}
         >
           Max
         </span>

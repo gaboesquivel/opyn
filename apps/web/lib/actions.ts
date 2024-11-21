@@ -10,10 +10,10 @@
  * - info is required; error is null
  * When success is false:
  * - error is required and must contain a user-friendly error message
- * - error is sent to sentry with logOpynErr
+ * - error is sent to sentry with captureAppError
  */
 
-import { logOpynErr } from '@/services/sentry'
+import { captureAppError } from '@/services/sentry'
 import type { OpynError, OpynErrorCode } from '@opyn/errors'
 
 export type ActionResult<T> = Success<T> | Failure
@@ -26,5 +26,5 @@ export function success<T>(info: T): Success<T> {
 }
 
 export function failure(code: OpynErrorCode, error: unknown): Failure {
-  return { success: false, error: logOpynErr(code, error), info: null }
+  return { success: false, error: captureAppError(code, error), info: null }
 }

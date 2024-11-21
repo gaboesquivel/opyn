@@ -12,8 +12,17 @@ export function initializeSentry() {
   })
 }
 
-// Logs an application error, reports to Sentry and throws an OpynError from catalog for UI to display
-export function logOpynErr(code: OpynErrorCode, error: unknown) {
+/**
+ * Logs an application error and reports it to Sentry for debugging purposes.
+ * Returns a standardized OpynError from the catalog instead of exposing raw error details.
+ *
+ * This approach:
+ * 1. Preserves full error context for debugging via Sentry
+ * 2. Returns user-friendly error messages that maintain trust
+ * 3. Prevents exposure of sensitive information in error details
+ * 4. Provides consistent error handling across the application
+ */
+export function captureAppError(code: OpynErrorCode, error: unknown) {
   console.error(`${code}: ${JSON.stringify(error)}`)
   // TODO: review this line later when testing with Sentry
   sentryCaptureException(

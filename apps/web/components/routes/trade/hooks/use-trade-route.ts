@@ -1,10 +1,15 @@
+import { parseMarketSlug } from '@/lib/opyn'
 import { useParams } from 'next/navigation'
 import { parseAsFloat, parseAsString, useQueryStates } from 'nuqs'
 import type { TradeRouteParams } from '../routing'
 
-// return all params in the pathname + query params
+// returns all relevant route and search params in /trade pages
+// setRouteStates is used to update the search params
+
+// TODO: discuss if we want make this the cannonical source of truth for trade route and search params
+
 export function useTradeRoute() {
-  const { trade, marketSlug } = useParams<TradeRouteParams>()
+  const { marketType, marketSlug } = useParams<TradeRouteParams>()
   const [states, setRouteStates] = useQueryStates(
     {
       perp: parseAsFloat.withDefault(1),
@@ -17,8 +22,9 @@ export function useTradeRoute() {
 
   return {
     ...states,
-    trade,
+    marketType,
     marketSlug,
     setRouteStates,
+    ...parseMarketSlug(marketSlug),
   }
 }
