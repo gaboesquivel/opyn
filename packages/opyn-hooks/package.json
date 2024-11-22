@@ -4,12 +4,12 @@
   "types": "src/index.ts",
   "devDependencies": {
     "@types/bun": "latest",
-    "wagmi": "^2.0.0",
+    "wagmi": "2.x",
     "@opyn/core": "workspace:*"
   },
   "peerDependencies": {
     "typescript": "^5.0.0",
-    "wagmi": "^2.0.0",
+    "wagmi": "2.x",
     "@opyn/core": "workspace:*"
   },
   "dependencies": {

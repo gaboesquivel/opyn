@@ -1,6 +1,5 @@
 'use client'
 
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
 import {
   MarketsIcon,
   PortfolioIcon,

@@ -1,6 +1,6 @@
 'use client'
 
-import { setAddressCookie } from '@/app/actions/ui/address-cookie'
+import { setAddressCookie } from '@/app/actions/user/address'
 import { OpynConnectButton } from '@/components/layout/header/connect'
 
 import { appConfig } from '@/lib/config'

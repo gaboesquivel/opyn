@@ -8,7 +8,7 @@ import Textarea from 'react-textarea-autosize'
 import {
   type IntervalOption,
   isValidInterval,
-} from '@/components/routes/trade/charts/trading-view'
+} from '@/components/routes/trade/perps/charts/trading-view'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {

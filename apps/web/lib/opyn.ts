@@ -1,4 +1,4 @@
-import type { OpynMarket } from '@/types/opyn'
+import type { OpynMarket } from '@opyn/types'
 
 export function getMarketSlug(market: OpynMarket) {
   return `${market.underlier?.symbol}-${market.numeraire?.symbol}-${market.id}`
@@ -20,7 +20,6 @@ export function parseMarketSlug(slug: string): {
 }
 
 export function getMarketLabel(market: OpynMarket) {
-  console.log('🤠 market', market)
   return `${market.underlier?.symbol}-${market.numeraire?.symbol}`
 }
 

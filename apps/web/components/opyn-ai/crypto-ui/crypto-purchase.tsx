@@ -1,8 +1,8 @@
 'use client'
 
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
 import { formatNumber } from '@/lib/utils'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
+import { useQueryState } from 'nuqs'
 import { useId, useState } from 'react'
 import type { AI } from '../actions/create-ai'
 
@@ -24,7 +24,10 @@ export function Purchase({
   const [aiState, setAIState] = useAIState<typeof AI>()
   const [, setMessages] = useUIState<typeof AI>()
   const { confirmPurchase } = useActions()
-  const { setRouteStates } = useTradeRoute()
+  const [_, setDeposit] = useQueryState('deposit', {
+    defaultValue: '',
+    clearOnDefault: true,
+  })
 
   const id = useId()
 
@@ -117,7 +120,7 @@ export function Purchase({
                 ...currentMessages,
                 response.newMessage,
               ])
-              setRouteStates({ dialog: 'deposit' })
+              setDeposit('deposit')
             }}
           >
             Purchase

@@ -1,12 +1,12 @@
 'use client'
 
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
-import { getMarkets } from '@/services/supabase'
+import { useMarket } from '@/components/routes/trade/hooks/use-market'
 import { createSupabaseServerClient } from '@/services/supabase'
+import { getMarkets } from '@opyn/supabase'
 import { useEffect, useRef } from 'react'
 
 export async function FooterTradingView() {
-  const { marketType } = useTradeRoute()
+  const { marketType } = useMarket()
   const supabase = await createSupabaseServerClient()
   const markets = getMarkets({ marketType, supabase })
   const footerRef = useRef<HTMLElement>(null)

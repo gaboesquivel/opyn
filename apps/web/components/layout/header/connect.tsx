@@ -11,8 +11,8 @@ export function OpynConnectButton() {
     <Suspense fallback={<Button>Connect Wallet</Button>}>
       <ConnectButton
         showBalance={false}
-        chainStatus="icon"
         accountStatus="address"
+        chainStatus="none"
       />
     </Suspense>
   )

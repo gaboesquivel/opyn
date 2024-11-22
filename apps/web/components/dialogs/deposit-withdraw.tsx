@@ -1,7 +1,6 @@
 'use client'
 
-import { useTradeData } from '@/components/routes/trade/hooks/use-trade-data'
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
+import { useMarket } from '@/components/routes/trade/hooks/use-market'
 import { CurrencyIcon } from '@/components/shared/icons'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -14,8 +13,8 @@ import { QuantityInput } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatCurrency } from '@/lib/utils'
-import { getMarket, getMarketData } from '@/services/supabase'
-import { useSupabaseClient } from '@/services/supabase/sdk/client'
+import { useSupabaseClient } from '@/services/supabase'
+import { getMarket } from '@opyn/supabase'
 import type { Tables } from '@opyn/supabase'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { useQuery } from '@tanstack/react-query'
@@ -36,9 +35,7 @@ export function DepositWithdraw() {
   const [activeTab, setActiveTab] = useQueryState('dialog', {
     defaultValue: 'deposit',
   })
-  const { marketSlug, marketType, underlierSymbol, numeraireSymbol } =
-    useTradeRoute()
-  const { data } = useTradeData({ marketSlug, marketType })
+  const { underlierSymbol, numeraireSymbol } = useMarket()
 
   return (
     <DialogContent>
@@ -74,7 +71,7 @@ export function DepositWithdraw() {
 function WithdrawContent() {
   const { address } = useAccount()
   const [amount, setAmount] = useState<string>('1,000')
-  const { marketSlug, marketId } = useTradeRoute()
+  const { marketSlug, marketId } = useMarket()
   const supabase = useSupabaseClient()
   const { data: market } = useQuery({
     queryKey: ['market', marketSlug],
@@ -162,22 +159,15 @@ function WithdrawContent() {
 function DepositContent() {
   const { address } = useAccount()
   const [amount, setAmount] = useState<string>('1,000')
-  const { marketSlug, marketId, marketType } = useTradeRoute()
+  const { marketSlug, marketId, marketType } = useMarket()
   const supabase = useSupabaseClient()
   const { data: market } = useQuery({
     queryKey: ['market', marketSlug],
     queryFn: () => getMarket({ marketId, supabase }),
     enabled: !!marketSlug,
   })
-  const {
-    writeContract,
-    data: hash,
-    isPending,
-    error,
-    reset,
-  } = useWriteContract()
+  const { writeContract, data: hash, isPending, error } = useWriteContract()
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash })
-  const { data } = useTradeData({ marketSlug, marketType })
 
   // return for now, skeleton loading state later
   if (!market?.numeraire) return null
@@ -250,9 +240,8 @@ function PositionInfo({
   amount,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }: { token: any; amount: string; action: 'withdraw' | 'deposit' }) {
-  const { marketSlug, marketType } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, marketType })
-  const position = data?.account.position || {
+  // TODO: get position info from supa
+  const position = {
     collateral: 0,
     liq: {
       low: 0,
@@ -309,7 +298,7 @@ function PositionInfo({
         },
       }
     }
-  }, [amount, position, action])
+  }, [amount, action])
 
   return (
     <div className="space-y-2 mb-6 text-xs text-neutral-light">

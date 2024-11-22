@@ -14,15 +14,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { getMarketLabel, getMarketSlug } from '@/lib/opyn'
 import { useSupabaseClient } from '@/services/supabase'
-import { getMarkets } from '@/services/supabase'
+import { getMarkets } from '@opyn/supabase'
 import { useQuery } from '@tanstack/react-query'
-import { useTradeRoute } from '../routes/trade/hooks/use-trade-route'
+import { useMarket } from '../routes/trade/hooks/use-market'
 
 export default async function MarketSearch() {
   const supabase = useSupabaseClient()
   const [searchTerm, setSearchTerm] = useState('')
   const searchParams = useSearchParams()
-  const { marketType } = useTradeRoute()
+  const { marketType } = useMarket()
   const { data: markets = [] } = useQuery({
     queryKey: ['markets-search', marketType],
     queryFn: () =>

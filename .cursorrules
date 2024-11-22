@@ -176,9 +176,10 @@ By following these best practices, your shadcn/ui components will be consistent,
 
 
 
-# Viem
-- Always use getAddress from viem to convert addresses to Address type, never as Address
-
+# Viem Wagmi
+- Use getAddress from viem to convert addresses to Address type, never as Address
+- Use viem 2.x apis
+- Use wagmi 2.x apis
 
 # NextJS Services 
 
@@ -207,5 +208,29 @@ export async function getTokenByUuid({
 
   return data as NonNullable<typeof data>
 }
+
+```
+
+
+# Trigger Hooks
+
+```ts
+import type { AlchemyActivity, AlchemyWebhookEvent } from '@opyn/alchemy'
+import { logger, task } from '@trigger.dev/sdk/v3'
+import { insertMarket } from '../../lib/supabase'
+
+export const newMarketTask = task({
+  id: 'collateral-deposit',
+  run: async (payload: AlchemyWebhookEvent) => {
+    const activity: AlchemyActivity[] = payload.event.activity
+
+    try {
+      const market = await insertCollateralDeposit({ market: dummyMarket })
+      logger.info('Inserted dummy market', { market })
+    } catch (error) {
+      logger.error('Failed to insert dummy market', { error })
+    }
+  },
+})
 
 ```
