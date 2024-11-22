@@ -1,17 +1,22 @@
 name: Deploy to Vercel [Custom]
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  GH_TOKEN: ${{ github.token }}
+
 on:
   push:
     branches:
       - "*"
-
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.actor != 'vercel-opynco'
     steps:
       - uses: actions/checkout@v2
-        if: github.actor != 'vercel-opynco'
       - name: Determine Deployment Environment
-        if: github.actor != 'vercel-opynco'
         id: prod_or_not
         run: |
           if [ "${{ github.ref }}" == 'refs/heads/main' ]
@@ -20,15 +25,12 @@ jobs:
           else
               echo "vercel-args=" >> $GITHUB_OUTPUT
           fi
-      - uses: amondnet/vercel-action@v25
-        name: Deploy to Vercel
-        if: github.actor != 'vercel-opynco'
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: ${{ steps.prod_or_not.outputs.vercel-args }}
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-          github-comment: true
-          working-directory: ./
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes ${{steps.prod_or_not.outputs.vercel-args}} --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy to Vercel
+        run: |
+          vercel ${{steps.prod_or_not.outputs.vercel-args}} -t ${{ secrets.VERCEL_TOKEN }} -m githubCommitSha=${{ github.sha }} -m githubCommitAuthorName=${{ github.actor }} -m githubCommitAuthorLogin=${{ github.actor }} -m githubDeployment=1 -m githubOrg=opynfinance -m githubCommitOrg=opynfinance -m githubCommitMessage="${{ github.event.head_commit.message }}" -m githubCommitRef=${{ github.ref_name }} --scope ${{ secrets.VERCEL_ORG_ID }} --force --yes > temp.txt
+          gh pr comment ${{ github.event.pull_request.number }} --body "Deployed to: $(<temp.txt )" || echo "Could not comment"
+          rm temp.txt
