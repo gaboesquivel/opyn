@@ -23,7 +23,7 @@ This package contains shared TypeScript type definitions used across the Opyn co
 - **`OpynMarket`**  
   Type representing a market from the Supabase database
 
-- **`MarketData`**  
+- **`MarketMetric`**  
   Type representing market metrics data
 
 - **`PosTab`**  

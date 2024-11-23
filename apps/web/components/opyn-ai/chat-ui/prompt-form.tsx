@@ -18,7 +18,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import type { Message } from 'ai'
-import { toPng } from 'html-to-image'
 import { nanoid } from 'nanoid'
 import { UserMessage } from '../crypto-ui/message'
 import { useEnterSubmit } from '../hooks/use-enter-submit'
@@ -174,41 +173,6 @@ const commandHandlers: Record<string, CommandHandler> = {
     router.push(`/trade/perps/${pair}?${currentParams.toString()}`)
     console.log(`Pair: ${pair}, Interval: ${interval}`)
     return ''
-  },
-
-  '/ta': async () => {
-    console.log('🍓 tech analysis command')
-    const element = document.getElementById('trading-chart')
-    if (!element) {
-      console.error('No element found with id: trading-chart')
-      return null
-    }
-
-    try {
-      // Capture the element as a PNG image and get base64 data URL
-      const imageDataUrl = await toPng(element, {
-        quality: 1,
-        pixelRatio: 2,
-        backgroundColor: 'transparent',
-      })
-
-      // The imageDataUrl is already in base64 format, starting with "data:image/png;base64,"
-      // We can use it directly or extract just the base64 part if needed
-      const base64Image = imageDataUrl.split(',')[1]
-
-      // Create and return the final payload as a JSON object
-      const payload = {
-        instruction: 'Do technical analysis on the chart image.',
-        image: base64Image, // or use imageDataUrl if you want to include the data URL prefix
-      }
-      console.log('🚀 /ta payload', payload)
-
-      // Return the JSON stringified payload
-      return JSON.stringify(payload)
-    } catch (error) {
-      console.error('Error capturing trading chart:', error)
-      return null
-    }
   },
 
   '/deposit': async (args) => {

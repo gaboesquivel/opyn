@@ -2,11 +2,15 @@ import { captureAppError } from '@opyn/errors'
 import type { SupaApiParams } from '../types'
 
 // TODO: filter by marketType
-export async function getMarkets({ supabase }: SupaApiParams) {
+export async function getMarkets({
+  supabase,
+  marketType,
+}: SupaApiParams & { marketType: string }) {
+  console.log('getMarkets', marketType)
   const { data, error } = await supabase.from('market').select(`
       *,
-      underlier:token!market_protocol_asset_fkey(*),
-      numeraire:token!market_protocol_numeraire_fkey(*)
+      underlier:asset!market_underlier_fkey(*),
+      numeraire:asset!market_numeraire_fkey(*)
     `)
 
   if (error || !data) captureAppError('FETCH_ERROR', error)
@@ -24,8 +28,8 @@ export async function getMarket({
     .from('market')
     .select(`
       *,
-      underlier:token!market_protocol_asset_fkey(*),
-      numeraire:token!market_protocol_numeraire_fkey(*)
+      underlier:asset!market_underlier_fkey(*),
+      numeraire:asset!market_numeraire_fkey(*)
     `)
     .eq('id', marketId)
     .single()
@@ -35,7 +39,7 @@ export async function getMarket({
   return data as NonNullable<typeof data>
 }
 
-export async function getMarketData({
+export async function getMarketMetric({
   marketId,
   supabase,
 }: SupaApiParams & {

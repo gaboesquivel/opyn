@@ -6,6 +6,8 @@ import type { Tables } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 import {
   http,
+  Address,
+  Hex,
   createPublicClient,
   createWalletClient,
   getAddress,
@@ -21,7 +23,7 @@ const withdrawSchema = z.object({
 })
 
 // Initialize wallet client with private key
-const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`)
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as Hex)
 const walletClient = createWalletClient({
   account,
   chain: sepolia,
@@ -33,7 +35,7 @@ export const issueTokens = createSafeActionClient()
   .action(
     async ({
       parsedInput: { address, amount },
-    }): Promise<ActionResult<Tables<'transactions'>>> => {
+    }): Promise<ActionResult<{ hash: Hex }>> => {
       try {
         const supabase = await createSupabaseServerClient()
         const normalizedAddress = getAddress(address)
@@ -45,10 +47,10 @@ export const issueTokens = createSafeActionClient()
           value: parsedAmount,
         })
 
-        if (transaction.error)
-          return failure('DB_OP_FAILURE', transaction.error)
+        if (!hash)
+          return failure('TRX_OP_FAILURE', 'Failed to send transaction')
 
-        return success(transaction.data)
+        return success({ hash })
       } catch (error) {
         return failure('UNEXPECTED_ERROR', error)
       }

@@ -13,7 +13,7 @@ import { QuantityInput } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useSupabaseClient } from '@/lib/supabase'
-import { formatCurrency } from '@/lib/utils'
+import { formatCurrency } from '@opyn/lib'
 import { getMarket } from '@opyn/supabase'
 import type { Tables } from '@opyn/supabase'
 import { DialogDescription } from '@radix-ui/react-dialog'
@@ -124,11 +124,11 @@ function WithdrawContent() {
           className="bg-primary"
         />
 
-        {numeraire ? <Balance token={numeraire} setAmount={setAmount} /> : null}
+        {numeraire ? <Balance asset={numeraire} setAmount={setAmount} /> : null}
       </div>
 
       {numeraire ? (
-        <PositionInfo token={numeraire} amount={amount} action="withdraw" />
+        <PositionInfo asset={numeraire} amount={amount} action="withdraw" />
       ) : null}
 
       <ChainWarning action="withdraw" />
@@ -204,10 +204,10 @@ function DepositContent() {
           deco={<CurrencyIcon currency={numeraire.symbol} />}
           className="bg-primary"
         />
-        <Balance token={numeraire} setAmount={setAmount} />
+        <Balance asset={numeraire} setAmount={setAmount} />
       </div>
 
-      <PositionInfo token={numeraire} amount={amount} action="deposit" />
+      <PositionInfo asset={numeraire} amount={amount} action="deposit" />
 
       <ChainWarning action="deposit" />
 
@@ -235,11 +235,11 @@ function DepositContent() {
 }
 
 function PositionInfo({
-  token,
+  asset,
   action,
   amount,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}: { token: any; amount: string; action: 'withdraw' | 'deposit' }) {
+}: { asset: Tables<'asset'>; amount: string; action: 'withdraw' | 'deposit' }) {
   // TODO: get position info from supa
   const position = {
     collateral: 0,
@@ -303,7 +303,7 @@ function PositionInfo({
   return (
     <div className="space-y-2 mb-6 text-xs text-neutral-light">
       <div className="flex justify-between ">
-        <span>Total {token.symbol} Collateral</span>
+        <span>Total {asset.symbol} Collateral</span>
         <span>
           {formatCurrency({
             value: formatUnits(BigInt(position.collateral), DECIMALS),
@@ -412,31 +412,31 @@ function CollateralWarning({ action }: { action: 'deposit' | 'withdraw' }) {
 }
 
 function Balance({
-  token,
+  asset,
   setAmount,
-}: { token: Tables<'token'>; setAmount: (amount: string) => void }) {
+}: { asset: Tables<'asset'>; setAmount: (amount: string) => void }) {
   const { address } = useAccount()
 
   const { data: balance, refetch } = useReadContract({
-    address: getAddress(token.address),
+    address: getAddress(asset.address),
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: [address ?? '0x'],
     query: {
-      enabled: Boolean(address) && Boolean(token.address),
+      enabled: Boolean(address) && Boolean(asset.address),
       refetchInterval: 5000,
     },
   })
 
   const formattedBalance = formatCurrency({
-    value: formatUnits(balance || 0n, token.decimals),
+    value: formatUnits(balance || 0n, asset.decimals),
   })
 
   useEffect(() => {
-    if (token.address) {
+    if (asset.address) {
       refetch()
     }
-  }, [token.address, refetch])
+  }, [asset.address, refetch])
 
   return (
     <div className="flex justify-between text-sm text-gray-400 mt-2">
@@ -446,7 +446,7 @@ function Balance({
 
         <span
           className="cursor-pointer text-brand"
-          onClick={() => setAmount(formatUnits(balance || 0n, token.decimals))}
+          onClick={() => setAmount(formatUnits(balance || 0n, asset.decimals))}
         >
           Max
         </span>
@@ -454,5 +454,3 @@ function Balance({
     </div>
   )
 }
-
-type DepositAction = 'approve' | 'transfer'

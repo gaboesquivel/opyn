@@ -1,7 +1,7 @@
 'use client'
 
 import { useAIState } from 'ai/rsc'
-import { format, subMonths } from 'lib/utils'
+import { format, subMonths } from 'date-fns'
 import { useEffect, useId, useRef, useState } from 'react'
 
 interface Crypto {

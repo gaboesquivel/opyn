@@ -1,0 +1,21 @@
+{
+  "name": "@opyn/desktop",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/main.ts",
+    "build": "bun run tsc",
+    "package": "electron-packager . Opyn --platform=darwin,win32 --arch=x64 --out=release-build --overwrite"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.9.3",
+    "electron-packager": "^17.1.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "electron": "^33.2.0"
+  }
+}

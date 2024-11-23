@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/card'
-import { appConfig } from '@/lib/config'
-import { cn, nanoid } from '@/lib/utils'
+
+import { nanoid } from '@opyn/lib'
+import { cn } from '@opyn/ui'
 import { AI, getMissingKeys } from './actions/create-ai'
 import { Chat } from './chat-ui'
 

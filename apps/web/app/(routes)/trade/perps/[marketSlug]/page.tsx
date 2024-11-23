@@ -14,7 +14,8 @@ import {
   TradingPositionsCard,
 } from '@/components/routes/trade/perps/positions'
 import { parseMarketSlug } from '@/lib/opyn'
-import { createSupabaseServerClient, getMarketData } from '@/lib/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase'
+import { getMarketMetric } from '@opyn/supabase'
 import type { AIBot, PerpType, PosTab, TradeSide } from '@opyn/types'
 
 export default async function TradePage({
@@ -26,7 +27,7 @@ export default async function TradePage({
   const { marketId, underlierSymbol, numeraireSymbol } =
     parseMarketSlug(marketSlug)
   const supabase = await createSupabaseServerClient()
-  const marketMetric = await getMarketData({ marketId, supabase })
+  const marketMetric = await getMarketMetric({ marketId, supabase })
 
   return (
     <TradeDashboard

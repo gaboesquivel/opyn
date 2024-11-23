@@ -2,11 +2,11 @@ import 'server-only'
 
 import { SystemMessage, spinner } from '@/components/opyn-ai/crypto-ui'
 import {
-  formatNumber,
+  formatCurrency,
   nanoid,
   runAsyncFnWithoutBlocking,
   sleep,
-} from '@/lib/utils'
+} from '@opyn/lib'
 import { createStreamableUI, getMutableAIState } from 'ai/rsc'
 import type { AI } from './create-ai'
 
@@ -48,7 +48,7 @@ export async function confirmPurchase(
       <div>
         <p className="mb-2">
           You have successfully purchased {amount} ${symbol}. Total cost:{' '}
-          {formatNumber(amount * price)}
+          {formatCurrency({ value: amount * price })}
         </p>
       </div>,
     )
@@ -56,7 +56,7 @@ export async function confirmPurchase(
     systemMessage.done(
       <SystemMessage>
         You have purchased {amount} coins of {symbol} at ${price}. Total cost ={' '}
-        {formatNumber(amount * price)}.
+        {formatCurrency({ value: amount * price })}.
       </SystemMessage>,
     )
 

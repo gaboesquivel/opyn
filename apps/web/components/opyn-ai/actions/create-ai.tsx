@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { nanoid } from '@/lib/utils'
+import { nanoid } from '@opyn/lib'
 import { createAI, getAIState } from 'ai/rsc'
 import { BotCard, BotMessage, Crypto, Purchase } from '../crypto-ui'
 import { Cryptos } from '../crypto-ui/cryptos'

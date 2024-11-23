@@ -6,8 +6,8 @@ import { createStreamableValue, getMutableAIState, streamUI } from 'ai/rsc'
 import { BotCard, BotMessage, Crypto, Purchase } from '../crypto-ui'
 
 import { appConfig } from '@/lib/config'
-import { nanoid, sleep } from '@/lib/utils'
 import { HfInference } from '@huggingface/inference'
+import { nanoid, sleep } from '@opyn/lib'
 import { createClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 

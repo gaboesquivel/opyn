@@ -1,10 +1,10 @@
 'use client'
 
-import { formatNumber } from '@/lib/utils'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { useQueryState } from 'nuqs'
 import { useId, useState } from 'react'
 import type { AI } from '../actions/create-ai'
+import { formatNumber } from '../lib'
 
 interface Purchase {
   symbol: string
