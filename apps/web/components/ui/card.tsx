@@ -1,7 +1,7 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 
 const cardVariants = cva(
   'rounded-lg bg-card text-card-foreground overflow-hidden w-full',

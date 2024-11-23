@@ -1,4 +1,5 @@
-import type { EVMTokenContractData } from '@repo/auction'
+import type { Tables } from '@opyn/supabase'
+import { sepolia } from 'viem/chains'
 import { useSwitchChain } from 'wagmi'
 import { Button } from './ui/button'
 
@@ -8,8 +9,11 @@ export function AddTokenToWallet({
   decimals,
   image,
   name,
-  chainId,
-}: EVMTokenContractData) {
+  chainId = sepolia.id,
+}: Tables<'asset'> & {
+  chainId?: number
+  image?: string
+}) {
   const { switchChain } = useSwitchChain()
   // console.log({ address, symbol, decimals, image, name })
   const addTokenToMetaMask = async () => {
@@ -47,6 +51,7 @@ export function AddTokenToWallet({
 }
 
 interface CustomWindow extends Window {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   ethereum?: any
 }
 

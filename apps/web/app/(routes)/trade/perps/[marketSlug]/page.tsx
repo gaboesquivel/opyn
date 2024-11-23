@@ -14,7 +14,7 @@ import {
   TradingPositionsCard,
 } from '@/components/routes/trade/perps/positions'
 import { parseMarketSlug } from '@/lib/opyn'
-import { createSupabaseServerClient, getMarketData } from '@/services/supabase'
+import { createSupabaseServerClient, getMarketData } from '@/lib/supabase'
 import type { AIBot, PerpType, PosTab, TradeSide } from '@opyn/types'
 
 export default async function TradePage({

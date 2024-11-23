@@ -1,4 +1,4 @@
-import { captureAppError } from '@/services/sentry'
+import { captureAppError } from '@opyn/errors'
 import type { Address } from 'viem'
 import type { SupaApiParams } from '../types'
 

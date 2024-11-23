@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { IconOpynAI, IconUser } from './chat-icons'
 import { ChatMessageActions } from './chat-message-actions'
 import { CodeBlock } from './codeblock'

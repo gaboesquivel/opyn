@@ -1,7 +1,7 @@
 'use server'
 
 import { type ActionResult, failure, success } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase'
 import { type Tables, userInsertSchema } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 

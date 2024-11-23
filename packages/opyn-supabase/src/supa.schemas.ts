@@ -14,6 +14,82 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
     .nullable(),
 );
 
+export const assetRowSchema = z.object({
+  address: z.string(),
+  created_at: z.string(),
+  decimals: z.number(),
+  name: z.string(),
+  stablecoin: z.boolean(),
+  symbol: z.string(),
+  uuid: z.string(),
+});
+
+export const assetInsertSchema = z.object({
+  address: z.string(),
+  created_at: z.string().optional(),
+  decimals: z.number().optional(),
+  name: z.string(),
+  stablecoin: z.boolean().optional(),
+  symbol: z.string(),
+  uuid: z.string().optional(),
+});
+
+export const assetUpdateSchema = z.object({
+  address: z.string().optional(),
+  created_at: z.string().optional(),
+  decimals: z.number().optional(),
+  name: z.string().optional(),
+  stablecoin: z.boolean().optional(),
+  symbol: z.string().optional(),
+  uuid: z.string().optional(),
+});
+
+export const assetRelationshipsSchema = z.tuple([]);
+
+export const balanceRowSchema = z.object({
+  address: z.string(),
+  half: z.number().nullable(),
+  market_id: z.string().nullable(),
+  one: z.number().nullable(),
+  two: z.number().nullable(),
+  zero: z.number().nullable(),
+});
+
+export const balanceInsertSchema = z.object({
+  address: z.string(),
+  half: z.number().optional().nullable(),
+  market_id: z.string().optional().nullable(),
+  one: z.number().optional().nullable(),
+  two: z.number().optional().nullable(),
+  zero: z.number().optional().nullable(),
+});
+
+export const balanceUpdateSchema = z.object({
+  address: z.string().optional(),
+  half: z.number().optional().nullable(),
+  market_id: z.string().optional().nullable(),
+  one: z.number().optional().nullable(),
+  two: z.number().optional().nullable(),
+  zero: z.number().optional().nullable(),
+});
+
+export const balanceRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal("balance_address_fkey"),
+    columns: z.tuple([z.literal("address")]),
+    isOneToOne: z.literal(true),
+    referencedRelation: z.literal("user"),
+    referencedColumns: z.tuple([z.literal("address")]),
+  }),
+  z.object({
+    foreignKeyName: z.literal("balance_market_id_fkey"),
+    columns: z.tuple([z.literal("market_id")]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal("market"),
+    referencedColumns: z.tuple([z.literal("id")]),
+  }),
+]);
+
 export const chainlinkPriceFeedRowSchema = z.object({
   asset: z.string(),
   asset_uuid: z.string().nullable(),
@@ -52,14 +128,14 @@ export const chainlinkPriceFeedRelationshipsSchema = z.tuple([
     foreignKeyName: z.literal("chainlink_price_feed_asset_fkey"),
     columns: z.tuple([z.literal("asset_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
   z.object({
     foreignKeyName: z.literal("chainlink_price_feed_numeraire_fkey"),
     columns: z.tuple([z.literal("numeraire_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
@@ -146,17 +222,17 @@ export const marketInsertSchema = z.object({
   is_active: z.boolean().optional().nullable(),
   is_immutable: z.boolean().optional().nullable(),
   label: z.string(),
+  numeraire: z.string(),
   oracle: z.string().optional().nullable(),
   oracle_type: oracleTypeSchema.optional().nullable(),
   power_perp_factory: z.string().optional().nullable(),
-  protocol_asset: z.string(),
-  protocol_numeraire: z.string(),
   redemption: z.string().optional().nullable(),
   safetypool: z.string().optional().nullable(),
   shutdown: z.string().optional().nullable(),
   span_margin: z.string().optional().nullable(),
   stable_flo: z.string(),
   two_crab: z.string(),
+  underlier: z.string(),
   updated_at: z.string().optional().nullable(),
 });
 
@@ -172,33 +248,33 @@ export const marketUpdateSchema = z.object({
   is_active: z.boolean().optional().nullable(),
   is_immutable: z.boolean().optional().nullable(),
   label: z.string().optional(),
+  numeraire: z.string().optional(),
   oracle: z.string().optional().nullable(),
   oracle_type: oracleTypeSchema.optional().nullable(),
   power_perp_factory: z.string().optional().nullable(),
-  protocol_asset: z.string().optional(),
-  protocol_numeraire: z.string().optional(),
   redemption: z.string().optional().nullable(),
   safetypool: z.string().optional().nullable(),
   shutdown: z.string().optional().nullable(),
   span_margin: z.string().optional().nullable(),
   stable_flo: z.string().optional(),
   two_crab: z.string().optional(),
+  underlier: z.string().optional(),
   updated_at: z.string().optional().nullable(),
 });
 
 export const marketRelationshipsSchema = z.tuple([
   z.object({
-    foreignKeyName: z.literal("market_protocol_asset_fkey"),
-    columns: z.tuple([z.literal("protocol_asset")]),
+    foreignKeyName: z.literal("market_numeraire_fkey"),
+    columns: z.tuple([z.literal("numeraire")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
   z.object({
-    foreignKeyName: z.literal("market_protocol_numeraire_fkey"),
-    columns: z.tuple([z.literal("protocol_numeraire")]),
+    foreignKeyName: z.literal("market_underlier_fkey"),
+    columns: z.tuple([z.literal("underlier")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
@@ -425,14 +501,14 @@ export const pythPriceFeedRelationshipsSchema = z.tuple([
     foreignKeyName: z.literal("pyth_price_feed_asset_fkey"),
     columns: z.tuple([z.literal("asset_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
   z.object({
     foreignKeyName: z.literal("pyth_price_feed_numeraire_fkey"),
     columns: z.tuple([z.literal("numeraire_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
@@ -476,41 +552,6 @@ export const tempMarketDataRelationshipsSchema = z.tuple([
     referencedColumns: z.tuple([z.literal("id")]),
   }),
 ]);
-
-export const tokenRowSchema = z.object({
-  address: z.string(),
-  chain_id: z.number(),
-  created_at: z.string(),
-  decimals: z.number(),
-  name: z.string(),
-  stablecoin: z.boolean(),
-  symbol: z.string(),
-  uuid: z.string(),
-});
-
-export const tokenInsertSchema = z.object({
-  address: z.string(),
-  chain_id: z.number(),
-  created_at: z.string().optional(),
-  decimals: z.number().optional(),
-  name: z.string(),
-  stablecoin: z.boolean().optional(),
-  symbol: z.string(),
-  uuid: z.string().optional(),
-});
-
-export const tokenUpdateSchema = z.object({
-  address: z.string().optional(),
-  chain_id: z.number().optional(),
-  created_at: z.string().optional(),
-  decimals: z.number().optional(),
-  name: z.string().optional(),
-  stablecoin: z.boolean().optional(),
-  symbol: z.string().optional(),
-  uuid: z.string().optional(),
-});
-
-export const tokenRelationshipsSchema = z.tuple([]);
 
 export const transactionsRowSchema = z.object({
   created_at: z.string().nullable(),
@@ -582,7 +623,7 @@ export const transactionsRelationshipsSchema = z.tuple([
     foreignKeyName: z.literal("transactions_token_fkey"),
     columns: z.tuple([z.literal("token")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
@@ -632,14 +673,14 @@ export const uniswapPoolRelationshipsSchema = z.tuple([
     foreignKeyName: z.literal("uniswap_pool_token0_uuid_fkey"),
     columns: z.tuple([z.literal("token0_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
   z.object({
     foreignKeyName: z.literal("uniswap_pool_token1_uuid_fkey"),
     columns: z.tuple([z.literal("token1_uuid")]),
     isOneToOne: z.literal(false),
-    referencedRelation: z.literal("token"),
+    referencedRelation: z.literal("asset"),
     referencedColumns: z.tuple([z.literal("uuid")]),
   }),
 ]);
@@ -666,6 +707,52 @@ export const userUpdateSchema = z.object({
 });
 
 export const userRelationshipsSchema = z.tuple([]);
+
+export const userMarketCollateralRowSchema = z.object({
+  balance: z.number(),
+  created_at: z.string().nullable(),
+  id: z.number(),
+  market_collateral_id: z.number(),
+  updated_at: z.string().nullable(),
+  user_address: z.string(),
+});
+
+export const userMarketCollateralInsertSchema = z.object({
+  balance: z.number().optional(),
+  created_at: z.string().optional().nullable(),
+  id: z.never().optional(),
+  market_collateral_id: z.number(),
+  updated_at: z.string().optional().nullable(),
+  user_address: z.string(),
+});
+
+export const userMarketCollateralUpdateSchema = z.object({
+  balance: z.number().optional(),
+  created_at: z.string().optional().nullable(),
+  id: z.never().optional(),
+  market_collateral_id: z.number().optional(),
+  updated_at: z.string().optional().nullable(),
+  user_address: z.string().optional(),
+});
+
+export const userMarketCollateralRelationshipsSchema = z.tuple([
+  z.object({
+    foreignKeyName: z.literal(
+      "user_market_collateral_market_collateral_id_fkey",
+    ),
+    columns: z.tuple([z.literal("market_collateral_id")]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal("market_collateral"),
+    referencedColumns: z.tuple([z.literal("id")]),
+  }),
+  z.object({
+    foreignKeyName: z.literal("user_market_collateral_user_address_fkey"),
+    columns: z.tuple([z.literal("user_address")]),
+    isOneToOne: z.literal(false),
+    referencedRelation: z.literal("user"),
+    referencedColumns: z.tuple([z.literal("address")]),
+  }),
+]);
 
 export const whitelistedCollateralRowSchema = z.object({
   chainlink_adapter: z.string().nullable(),
@@ -731,17 +818,17 @@ export const marketRowSchema = z.object({
   is_active: z.boolean().nullable(),
   is_immutable: z.boolean().nullable(),
   label: z.string(),
+  numeraire: z.string(),
   oracle: z.string().nullable(),
   oracle_type: oracleTypeSchema.nullable(),
   power_perp_factory: z.string().nullable(),
-  protocol_asset: z.string(),
-  protocol_numeraire: z.string(),
   redemption: z.string().nullable(),
   safetypool: z.string().nullable(),
   shutdown: z.string().nullable(),
   span_margin: z.string().nullable(),
   stable_flo: z.string(),
   two_crab: z.string(),
+  underlier: z.string(),
   updated_at: z.string().nullable(),
 });
 

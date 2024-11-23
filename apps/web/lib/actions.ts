@@ -13,7 +13,7 @@
  * - error is sent to sentry with captureAppError
  */
 
-import { captureAppError } from '@/services/sentry'
+import { captureAppError } from '@opyn/errors'
 import type { OpynError, OpynErrorCode } from '@opyn/errors'
 
 export type ActionResult<T> = Success<T> | Failure

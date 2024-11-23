@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/lib/config'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { useAIState, useUIState } from 'ai/rsc'
 import { XIcon } from 'lucide-react'
 import Link from 'next/link'

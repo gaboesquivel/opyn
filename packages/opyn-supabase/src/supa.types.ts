@@ -9,6 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      asset: {
+        Row: {
+          address: string
+          created_at: string
+          decimals: number
+          name: string
+          stablecoin: boolean
+          symbol: string
+          uuid: string
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          decimals?: number
+          name: string
+          stablecoin?: boolean
+          symbol: string
+          uuid?: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          decimals?: number
+          name?: string
+          stablecoin?: boolean
+          symbol?: string
+          uuid?: string
+        }
+        Relationships: []
+      }
+      balance: {
+        Row: {
+          address: string
+          half: number | null
+          market_id: string | null
+          one: number | null
+          two: number | null
+          zero: number | null
+        }
+        Insert: {
+          address: string
+          half?: number | null
+          market_id?: string | null
+          one?: number | null
+          two?: number | null
+          zero?: number | null
+        }
+        Update: {
+          address?: string
+          half?: number | null
+          market_id?: string | null
+          one?: number | null
+          two?: number | null
+          zero?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "balance_address_fkey"
+            columns: ["address"]
+            isOneToOne: true
+            referencedRelation: "user"
+            referencedColumns: ["address"]
+          },
+          {
+            foreignKeyName: "balance_market_id_fkey"
+            columns: ["market_id"]
+            isOneToOne: false
+            referencedRelation: "market"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chainlink_price_feed: {
         Row: {
           asset: string
@@ -45,14 +117,14 @@ export type Database = {
             foreignKeyName: "chainlink_price_feed_asset_fkey"
             columns: ["asset_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
           {
             foreignKeyName: "chainlink_price_feed_numeraire_fkey"
             columns: ["numeraire_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
         ]
@@ -130,17 +202,17 @@ export type Database = {
           is_active: boolean | null
           is_immutable: boolean | null
           label: string
+          numeraire: string
           oracle: string | null
           oracle_type: Database["public"]["Enums"]["oracle_type"] | null
           power_perp_factory: string | null
-          protocol_asset: string
-          protocol_numeraire: string
           redemption: string | null
           safetypool: string | null
           shutdown: string | null
           span_margin: string | null
           stable_flo: string
           two_crab: string
+          underlier: string
           updated_at: string | null
         }
         Insert: {
@@ -155,17 +227,17 @@ export type Database = {
           is_active?: boolean | null
           is_immutable?: boolean | null
           label: string
+          numeraire: string
           oracle?: string | null
           oracle_type?: Database["public"]["Enums"]["oracle_type"] | null
           power_perp_factory?: string | null
-          protocol_asset: string
-          protocol_numeraire: string
           redemption?: string | null
           safetypool?: string | null
           shutdown?: string | null
           span_margin?: string | null
           stable_flo: string
           two_crab: string
+          underlier: string
           updated_at?: string | null
         }
         Update: {
@@ -180,32 +252,32 @@ export type Database = {
           is_active?: boolean | null
           is_immutable?: boolean | null
           label?: string
+          numeraire?: string
           oracle?: string | null
           oracle_type?: Database["public"]["Enums"]["oracle_type"] | null
           power_perp_factory?: string | null
-          protocol_asset?: string
-          protocol_numeraire?: string
           redemption?: string | null
           safetypool?: string | null
           shutdown?: string | null
           span_margin?: string | null
           stable_flo?: string
           two_crab?: string
+          underlier?: string
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "market_protocol_asset_fkey"
-            columns: ["protocol_asset"]
+            foreignKeyName: "market_numeraire_fkey"
+            columns: ["numeraire"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
           {
-            foreignKeyName: "market_protocol_numeraire_fkey"
-            columns: ["protocol_numeraire"]
+            foreignKeyName: "market_underlier_fkey"
+            columns: ["underlier"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
         ]
@@ -430,14 +502,14 @@ export type Database = {
             foreignKeyName: "pyth_price_feed_asset_fkey"
             columns: ["asset_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
           {
             foreignKeyName: "pyth_price_feed_numeraire_fkey"
             columns: ["numeraire_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
         ]
@@ -479,39 +551,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      token: {
-        Row: {
-          address: string
-          chain_id: number
-          created_at: string
-          decimals: number
-          name: string
-          stablecoin: boolean
-          symbol: string
-          uuid: string
-        }
-        Insert: {
-          address: string
-          chain_id: number
-          created_at?: string
-          decimals?: number
-          name: string
-          stablecoin?: boolean
-          symbol: string
-          uuid?: string
-        }
-        Update: {
-          address?: string
-          chain_id?: number
-          created_at?: string
-          decimals?: number
-          name?: string
-          stablecoin?: boolean
-          symbol?: string
-          uuid?: string
-        }
-        Relationships: []
       }
       transactions: {
         Row: {
@@ -581,7 +620,7 @@ export type Database = {
             foreignKeyName: "transactions_token_fkey"
             columns: ["token"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
         ]
@@ -629,14 +668,14 @@ export type Database = {
             foreignKeyName: "uniswap_pool_token0_uuid_fkey"
             columns: ["token0_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
           {
             foreignKeyName: "uniswap_pool_token1_uuid_fkey"
             columns: ["token1_uuid"]
             isOneToOne: false
-            referencedRelation: "token"
+            referencedRelation: "asset"
             referencedColumns: ["uuid"]
           },
         ]
@@ -661,6 +700,48 @@ export type Database = {
           telegram?: string | null
         }
         Relationships: []
+      }
+      user_market_collateral: {
+        Row: {
+          balance: number
+          created_at: string | null
+          id: number
+          market_collateral_id: number
+          updated_at: string | null
+          user_address: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string | null
+          id?: never
+          market_collateral_id: number
+          updated_at?: string | null
+          user_address: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string | null
+          id?: never
+          market_collateral_id?: number
+          updated_at?: string | null
+          user_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_market_collateral_market_collateral_id_fkey"
+            columns: ["market_collateral_id"]
+            isOneToOne: false
+            referencedRelation: "market_collateral"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_market_collateral_user_address_fkey"
+            columns: ["user_address"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["address"]
+          },
+        ]
       }
       whitelisted_collateral: {
         Row: {

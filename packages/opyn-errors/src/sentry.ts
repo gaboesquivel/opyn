@@ -1,15 +1,15 @@
 import { type OpynError, type OpynErrorCode, opynErrors } from '@opyn/errors'
-import * as Sentry from '@sentry/node'
+// import * as Sentry from '@sentry/node'
 
-// Initialize Sentry with configuration
-export function initializeSentry(dsn: string) {
-  Sentry.init({
-    dsn,
-    tracesSampleRate: 1.0,
-    release: process.env.VERCEL_GIT_COMMIT_SHA || 'development',
-    environment: process.env.VERCEL_ENV || 'development',
-  })
-}
+// // Initialize Sentry with configuration
+// export function initializeSentry(dsn: string) {
+//   Sentry.init({
+//     dsn,
+//     tracesSampleRate: 1.0,
+//     release: process.env.VERCEL_GIT_COMMIT_SHA || 'development',
+//     environment: process.env.VERCEL_ENV || 'development',
+//   })
+// }
 
 /**
  * Logs an application error and reports it to Sentry for debugging purposes.
@@ -34,9 +34,9 @@ export function captureAppError(code: OpynErrorCode, error: unknown) {
 export function sentryCaptureException(error: OpynError | Error) {
   if ('code' in error && typeof error.code === 'string') {
     // For OpynError, use its code as a tag
-    Sentry.captureException(error, { tags: { code: error.code } })
+    // Sentry.captureException(error, { tags: { code: error.code } })
   } else {
     // For other errors, use a generic SYSTEM_ERROR tag
-    Sentry.captureException(error, { tags: { code: 'SYSTEM_ERROR' } })
+    // Sentry.captureException(error, { tags: { code: 'SYSTEM_ERROR' } })
   }
 }

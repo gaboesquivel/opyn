@@ -7,9 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import type { Tables } from '@opyn/supabase'
 import type { SelectProps } from '@radix-ui/react-select'
 
-export function TokenSelect({ options, ...props }: TokenSelectParams) {
+export function TokenSelect({
+  tokens,
+  ...props
+}: { tokens: Tables<'asset'>[] } & SelectProps) {
   return (
     <Select {...props}>
       <SelectTrigger className="w-[260px]">
@@ -18,7 +22,7 @@ export function TokenSelect({ options, ...props }: TokenSelectParams) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Token</SelectLabel>
-          {options.map((o, i) => (
+          {tokens.map((o, i) => (
             <SelectItem key={o.address} value={i.toString()}>
               {o.symbol} on Sepolia
             </SelectItem>
@@ -27,8 +31,4 @@ export function TokenSelect({ options, ...props }: TokenSelectParams) {
       </SelectContent>
     </Select>
   )
-}
-
-interface TokenSelectParams extends SelectProps {
-  options: TokenContractData[]
 }

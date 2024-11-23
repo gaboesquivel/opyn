@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { type VariantProps, cva } from 'class-variance-authority'
 import { useIsMobile } from './use-mobile'
 

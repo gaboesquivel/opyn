@@ -5,7 +5,7 @@ import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { nanoid } from 'nanoid'
 
 import { appConfig } from '@/lib/config'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import type { AI } from '../actions/create-ai'
 import { UserMessage } from '../crypto-ui/message'
 import { PromptForm } from './prompt-form'

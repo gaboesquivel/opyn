@@ -1,5 +1,3 @@
-import type { opynErrors } from './catalog'
-
 export interface OpynError {
   code: string
   message: string

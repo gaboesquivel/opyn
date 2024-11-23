@@ -7,7 +7,7 @@ import {
 } from '@/components/shared/icons'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { useSupabaseClient } from '@/lib/supa/client'
+import { useSupabaseClient } from '@/lib/supabase/client'
 import type { Tables } from '@opyn/supabase'
 import { getChainlinkPriceByMarketId } from '@opyn/supabase/src/api/price'
 import { useQuery } from '@tanstack/react-query'
@@ -32,7 +32,7 @@ export function TradeMarketData({
   const marketInfoItems = [
     {
       label: 'Index Price',
-      value: `$${chainlinkPrice?. ?? '0.00'}`,
+      value: '$1,235.67',
     },
     {
       label: 'Mark Price',

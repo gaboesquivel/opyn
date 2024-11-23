@@ -1,7 +1,7 @@
 'use client'
 
 import { useMarket } from '@/components/routes/trade/hooks/use-market'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { CheckIcon, Loader2, XIcon } from 'lucide-react'
 
 export function OrderToast({

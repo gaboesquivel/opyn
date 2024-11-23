@@ -3,7 +3,7 @@
 import type { Message } from 'ai'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { useCopyToClipboard } from '../hooks/use-copy-to-clipboard'
 import { IconCheck, IconCopy } from './chat-icons'
 

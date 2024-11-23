@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 import { NumericFormat, type NumericFormatProps } from 'react-number-format'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMarket } from '@/components/routes/trade/hooks/use-market'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase'
 import { getMarkets } from '@opyn/supabase'
 import { useEffect, useRef } from 'react'
 

@@ -6,7 +6,7 @@ import {
   ZeroDotFivePerpIcon,
 } from '@/components/shared/icons'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 
 export function PerpTypeButtons() {

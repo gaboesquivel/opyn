@@ -13,7 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { NavigationMenuLink } from '@radix-ui/react-navigation-menu'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

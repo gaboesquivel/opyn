@@ -1,4 +1,4 @@
-import { captureAppError } from '@/services/sentry/index'
+import { captureAppError } from '@opyn/errors'
 import type { SupaApiParams } from '../types'
 
 export async function getAllTransactions({ supabase }: SupaApiParams) {

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import type * as React from 'react'
 
 export function IconCheck({

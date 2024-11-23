@@ -183,16 +183,16 @@ By following these best practices, your shadcn/ui components will be consistent,
 
 # NextJS Services 
 
-- never use try/catch in services instead use captureAppError from @/services/sentry
+- never use try/catch in services instead use captureAppError from @opyn/errors
 - use SupaApiParams type for supabase client
 - return type guards for supabase queries and mutations
 - return data type can never be null
 
 ```tsx
-import { captureAppError } from '@/services/sentry/index'
+import { captureAppError } from '@opyn/errors'
 import type { SupaApiParams } from '../types'
 
-export async function getTokenByUuid({
+export async function getAssetByUuid({
   uuid,
   supabase,
 }: SupaApiParams & {

@@ -1,7 +1,7 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase'
 import { getPortfolioHealth } from '@opyn/supabase/src/api/portfolio'
 import { useQuery } from '@tanstack/react-query'
 import { InfoIcon } from 'lucide-react'

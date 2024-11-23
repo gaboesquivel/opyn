@@ -4,7 +4,7 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 
 const tabsTriggerVariants = cva(
   'inline-flex border-0 h-10 items-center justify-center whitespace-nowrap rounded-md px-3 text-sm transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',

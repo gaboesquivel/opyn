@@ -1,0 +1,15 @@
+import type { Database } from '@opyn/supabase'
+import { createBrowserClient } from '@supabase/ssr'
+import { useMemo } from 'react'
+import { appConfig } from '../config'
+
+export function getSupabaseBrowserClient() {
+  return createBrowserClient<Database>(
+    appConfig.supabase.url,
+    appConfig.supabase.anonKey,
+  )
+}
+
+export function useSupabaseClient() {
+  return useMemo(getSupabaseBrowserClient, [])
+}

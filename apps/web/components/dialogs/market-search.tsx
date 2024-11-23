@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { getMarketLabel, getMarketSlug } from '@/lib/opyn'
-import { useSupabaseClient } from '@/services/supabase'
+import { useSupabaseClient } from '@/lib/supabase'
 import { getMarkets } from '@opyn/supabase'
 import { useQuery } from '@tanstack/react-query'
 import { useMarket } from '../routes/trade/hooks/use-market'

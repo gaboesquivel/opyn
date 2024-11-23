@@ -1,14 +1,8 @@
-import { captureAppError } from '@/services/sentry'
-import type { MarketType } from '@opyn/types'
+import { captureAppError } from '@opyn/errors'
 import type { SupaApiParams } from '../types'
 
 // TODO: filter by marketType
-export async function getMarkets({
-  marketType,
-  supabase,
-}: SupaApiParams & {
-  marketType: MarketType
-}) {
+export async function getMarkets({ supabase }: SupaApiParams) {
   const { data, error } = await supabase.from('market').select(`
       *,
       underlier:token!market_protocol_asset_fkey(*),
@@ -58,31 +52,31 @@ export async function getMarketData({
   return data as NonNullable<typeof data>
 }
 
-export async function depositMarketCollateral({
-  marketId,
-  amount,
-  hash,
-  supabase,
-}: SupaApiParams & {
-  marketId: string
-  amount: string
-  hash: string
-}) {
-  const { data, error } = await supabase
-    .from('market_collateral')
-    .insert({
-      market_id: marketId,
-      amount,
-      deposit_hash: hash,
-      status: 'pending',
-    })
-    .select()
-    .single()
+// export async function depositMarketCollateral({
+//   marketId,
+//   amount,
+//   hash,
+//   supabase,
+// }: SupaApiParams & {
+//   marketId: string
+//   amount: string
+//   hash: string
+// }) {
+//   const { data, error } = await supabase
+//     .from('market_collateral')
+//     .insert({
+//       market_id: marketId,
+//       amount,
+//       deposit_hash: hash,
+//       status: 'pending',
+//     })
+//     .select()
+//     .single()
 
-  if (error || !data) captureAppError('FETCH_ERROR', error)
+//   if (error || !data) captureAppError('FETCH_ERROR', error)
 
-  return data as NonNullable<typeof data>
-}
+//   return data as NonNullable<typeof data>
+// }
 
 export async function getMarketPerp({
   marketId,

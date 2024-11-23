@@ -1,15 +1,23 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useSupabaseClient } from '@/lib/supabase'
+import { type Tables, getStablecoins } from '@opyn/supabase'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { parseUnits } from 'viem'
+import { getAddress, parseUnits } from 'viem'
+import { sepolia } from 'viem/chains'
 import { useAccount, useSwitchChain, useWriteContract } from 'wagmi'
+import TestnetToken from '../abis/TestnetToken.json'
 import { AddTokenToWallet } from './add-token-to-metamask'
 import { TokenSelect } from './token-select'
 
-const tokens = [TestnetUSDCred, SepoliaUSDT, TestnetMBOTSPL, TestnetUSDT]
-
 export function FaucetForm() {
+  const supabase = useSupabaseClient()
+  const { data: tokens = [] } = useQuery({
+    queryKey: ['stablecoins'],
+    queryFn: () => getStablecoins({ supabase }),
+  })
   const account = useAccount()
   const [address, setAddress] = useState<string | undefined>(
     account?.address ? account.address : undefined,
@@ -17,13 +25,13 @@ export function FaucetForm() {
   const [quantity, setQuantity] = useState<string>('100')
   const { writeContract, isPending, isSuccess, data, ...other } =
     useWriteContract()
-  const [token, setToken] = useState<EVMTokenContractData>(TestnetUSDCred)
+  const [token, setToken] = useState<Tables<'asset'> | undefined>(tokens?.[0])
   const { switchChain } = useSwitchChain()
 
   // Execute the contract write operation
   const callFaucet = async () => {
-    const chainId = token.chainId
-    switchChain({ chainId })
+    if (!token) return
+    switchChain({ chainId: sepolia.id })
 
     console.log(
       'callFaucet',
@@ -31,14 +39,15 @@ export function FaucetForm() {
         ...token,
         functionName: 'faucet',
         args: [address, parseUnits(quantity, token.decimals).toString()],
-        chainId,
+        chainId: sepolia.id,
       }),
     )
     writeContract({
-      ...token,
+      address: getAddress(token.address),
+      abi: TestnetToken.abi,
       functionName: 'faucet',
       args: [address, parseUnits(quantity, token.decimals)],
-      chainId,
+      chainId: sepolia.id,
     })
   }
   console.log({ data, ...other })
@@ -66,7 +75,7 @@ export function FaucetForm() {
           onChange={(e) => setQuantity(e.target.value)}
         />
         <TokenSelect
-          options={tokens}
+          tokens={tokens}
           defaultValue={'0'}
           onValueChange={(i) => setToken(tokens[Number.parseInt(i)])}
         />
@@ -93,7 +102,7 @@ export function FaucetForm() {
         >
           Submit
         </Button>
-        <AddTokenToWallet {...token} />
+        {token && <AddTokenToWallet {...token} />}
       </div>
 
       <div className="flex justify-center w-full">

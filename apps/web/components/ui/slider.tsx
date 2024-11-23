@@ -4,7 +4,7 @@ import * as SliderPrimitive from '@radix-ui/react-slider'
 import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 
 const sliderVariants = cva(
   'relative flex w-full touch-none select-none items-center',

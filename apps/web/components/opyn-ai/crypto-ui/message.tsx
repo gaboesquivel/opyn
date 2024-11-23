@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import type { StreamableValue } from 'ai/rsc'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'

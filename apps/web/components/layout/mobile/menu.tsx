@@ -6,7 +6,7 @@ import {
   TradeIcon,
   VaultsIcon,
 } from '@/components/shared/icons'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
 import { Bot } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
