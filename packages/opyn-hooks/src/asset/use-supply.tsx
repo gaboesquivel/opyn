@@ -13,7 +13,7 @@ import { useReadContract } from 'wagmi'
  */
 export function useSupply({
   assetAddress,
-  watch,
+  watch = false,
 }: { assetAddress: Address; watch?: boolean }) {
   const {
     data: supply,
@@ -27,10 +27,13 @@ export function useSupply({
 
   useEffect(() => {
     if (!watch) return
-    const timeout = setTimeout(() => refetch(), 5000)
+    const timeout = setTimeout(() => {
+      console.log('refetching supply for ', assetAddress)
+      refetch()
+    }, 5000)
 
     return () => clearTimeout(timeout)
   }, [refetch, watch])
 
-  return { supply, ...o }
+  return { supply, refetch, ...o }
 }

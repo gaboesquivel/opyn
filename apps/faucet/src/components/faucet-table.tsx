@@ -41,6 +41,7 @@ import {
 import { sepolia } from 'viem/chains'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { AddTokenToWallet } from './add-token-to-metamask'
+import { useEffect } from 'react'
 
 export function FaucetTable() {
   const { stablecoins } = useStablecoins()
@@ -72,14 +73,14 @@ export function FaucetTable() {
 
 function StablecoinRow({ asset }: { asset: Tables<'asset'> }) {
   const { address } = useAccount()
-  const [, setQueryStates] = useFaucetStates()
-  const { balance } = useLiveBalance({
+  const [{ token }, setQueryStates] = useFaucetStates()
+  const liveBalance = useLiveBalance({
     address,
     assetAddress: getAddress(asset?.address || ''),
+    watch: false,
   })
-  const { supply } = useSupply({
+  const tokenSupply = useSupply({
     assetAddress: getAddress(asset?.address || ''),
-    watch: true,
   })
 
   const handleAction = (action: 'mint' | 'burn') => {
@@ -90,6 +91,11 @@ function StablecoinRow({ asset }: { asset: Tables<'asset'> }) {
     })
   }
 
+  useEffect(() => {
+    tokenSupply.refetch()
+    liveBalance.refetch()
+  }, [token])
+
   if (!asset) return null
   return (
     <>
@@ -97,15 +103,20 @@ function StablecoinRow({ asset }: { asset: Tables<'asset'> }) {
         <TableCell>{asset.symbol}</TableCell>
         <TableCell>{asset.name}</TableCell>
         <TableCell>
-          {balance && balance.value > 0
+          {liveBalance.balance && liveBalance.balance.value > 0
             ? formatCurrency({
-                value: formatUnits(balance.value, balance.decimals),
+                value: formatUnits(
+                  liveBalance.balance.value,
+                  liveBalance.balance.decimals
+                ),
               })
             : DEFAULT_BALANCE}
         </TableCell>
         <TableCell>
-          {supply
-            ? formatCurrency({ value: formatUnits(supply, asset.decimals) })
+              {tokenSupply.supply
+            ? formatCurrency({
+                value: formatUnits(tokenSupply.supply, asset.decimals),
+              })
             : DEFAULT_BALANCE}
         </TableCell>
         <TableCell>
@@ -160,6 +171,8 @@ function FaucetDialog() {
       quantity: null,
       action: null,
     })
+    minter.reset()
+    burner.reset()
   }
   const { switchChain } = useSwitchChain()
 
@@ -241,7 +254,7 @@ function FaucetDialog() {
             </AlertDialogCancel>
           ) : (
             <>
-              <AlertDialogCancel className="h-10 min-w-[150px]">
+              <AlertDialogCancel className="h-10 min-w-[150px]" onClick={handleClose}>
                 Cancel
               </AlertDialogCancel>
               {account ? (

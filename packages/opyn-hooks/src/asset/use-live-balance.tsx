@@ -14,7 +14,7 @@ import { useAccount } from 'wagmi'
 export function useLiveBalance({
   address,
   assetAddress,
-  watch,
+  watch=true,
 }: {
   address?: Address
   assetAddress: Address
@@ -43,6 +43,7 @@ export function useLiveBalance({
 
   return {
     balance,
+    refetch,
     ...o,
   }
 }
