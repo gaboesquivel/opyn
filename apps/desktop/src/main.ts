@@ -7,7 +7,7 @@ app.on('ready', () => {
     width: 1024,
     height: 768,
     webPreferences: {
-      preload: __dirname + '/preload.js', // Preload script for secure IPC
+      preload: `${__dirname}/preload.js`, // Preload script for secure IPC
       nodeIntegration: false, // Disable Node.js integration for security
       contextIsolation: true, // Enable context isolation
     },
