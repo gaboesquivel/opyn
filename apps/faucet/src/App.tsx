@@ -6,10 +6,12 @@ import { useUsdtBalance } from './hooks/use-usdt-balance'
 export default function Component() {
   const balance = useUsdtBalance()
   return (
-    <div className="min-h-screen bg-[#f0f0f0]">
-      <nav className="flex items-center justify-between p-6 bg-white shadow-md">
+    <div className="min-h-screen bg-background">
+      <nav className="flex items-center justify-between p-6 ">
         <div className="flex items-center">
-          <span className="text-xl font-semibold">bitlauncher Faucet</span>
+          <span className="text-xl font-semibold text-brand-500">
+            bitlauncher Faucet
+          </span>
         </div>
         <div className="flex">
           <div className="flex items-center justify-center h-10 pr-5 font-bold">

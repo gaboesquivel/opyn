@@ -1,35 +1,55 @@
-import type { ReactNode } from 'react'
+'use client'
 
+import { opynRainbowKitTheme } from '@opyn/ui'
+import {
+  RainbowKitProvider,
+  darkTheme,
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit'
+import type { Theme as RainbowKitTheme } from '@rainbow-me/rainbowkit'
 import {
   metaMaskWallet,
   trustWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets'
-import { WagmiProvider } from 'wagmi'
-
-import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { sepolia } from 'wagmi/chains'
+import { merge } from 'lodash'
+import { WagmiProvider } from 'wagmi'
+import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
 
 const queryClient = new QueryClient()
 
 export const wagmiConfig = getDefaultConfig({
-  appName: 'Bitlauncher',
-  projectId: '25a868c834c1003aa0f0b69aba0ae056',
+  appName: 'opyn',
+  projectId: '325f49a9abd5fdea19e55bd58449c7dc',
   wallets: [
     {
       groupName: 'Popular',
       wallets: [metaMaskWallet, trustWallet, walletConnectWallet],
     },
   ],
-  chains: [sepolia],
+  chains: [arbitrum, arbitrumSepolia],
 })
 
-export function Providers({ children }: { children: ReactNode }) {
+const customRainbowKitTheme: RainbowKitTheme = merge(
+  darkTheme(),
+  opynRainbowKitTheme,
+)
+
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
+        <RainbowKitProvider
+          theme={customRainbowKitTheme}
+          modalSize="compact"
+          showRecentTransactions={true}
+          appInfo={{
+            appName: 'Opyn',
+          }}
+        >
+          {children}
+        </RainbowKitProvider>
       </WagmiProvider>
     </QueryClientProvider>
   )
