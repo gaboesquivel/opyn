@@ -41,10 +41,7 @@ export function AddTokenToWallet({
   }
 
   return (
-    <Button
-      onClick={addTokenToMetaMask}
-      className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring"
-    >
+    <Button variant="outline" onClick={addTokenToMetaMask}>
       Add {name} to MetaMask
     </Button>
   )

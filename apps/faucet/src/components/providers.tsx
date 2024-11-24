@@ -15,7 +15,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { merge } from 'lodash'
 import { WagmiProvider } from 'wagmi'
-import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
+import { arbitrumSepolia } from 'wagmi/chains'
 
 const queryClient = new QueryClient()
 
@@ -28,7 +28,7 @@ export const wagmiConfig = getDefaultConfig({
       wallets: [metaMaskWallet, trustWallet, walletConnectWallet],
     },
   ],
-  chains: [arbitrum, arbitrumSepolia],
+  chains: [arbitrumSepolia],
 })
 
 const customRainbowKitTheme: RainbowKitTheme = merge(

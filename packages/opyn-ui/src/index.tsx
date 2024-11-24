@@ -35,3 +35,5 @@ export * from './components/ui/slider'
 export * from './lib/utils'
 export * from './lib/rainbow'
 export * from './icons'
+
+export * from './components/opyn/opyn-alert-dialog'

@@ -3,7 +3,7 @@
 import { setAddressCookie } from '@/app/actions/user/address'
 import { OpynConnectButton } from '@/components/layout/header/connect'
 
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { useAction } from 'next-safe-action/hooks'
 
 import { DubShareDialog } from '@/components/layout/header/dub'
@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <div
-      className={`${appConfig.features.ai ? 'sticky' : 'sticky'}  top-0 z-50 flex max-h-[64px] h-[64px] w-full items-center justify-between p-2 bg-background`}
+      className={`${opynConfig.features.ai ? 'sticky' : 'sticky'}  top-0 z-50 flex max-h-[64px] h-[64px] w-full items-center justify-between p-2 bg-background`}
     >
       <div className="flex items-center gap-2">
         <Link href="/">
@@ -37,7 +37,7 @@ export function Header() {
           />
         </Link>
 
-        {!appConfig.features.ai ? (
+        {!opynConfig.features.ai ? (
           <div className="hidden md:flex md:gap-3 md:pl-4 lg:ml-[-1px] lg:gap-10">
             <Menu />
           </div>

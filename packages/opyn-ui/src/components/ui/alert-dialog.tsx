@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { cn } from '@opyn/ui'
 import { buttonVariants } from '@opyn/ui'
+import type { VariantProps } from 'class-variance-authority'
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -79,7 +80,7 @@ const AlertDialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
-    className={cn('text-lg font-semibold', className)}
+    className={cn('text-lg font-semibold text-brand-500', className)}
     {...props}
   />
 ))
@@ -100,11 +101,13 @@ AlertDialogDescription.displayName =
 
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action> & {
+    variant?: VariantProps<typeof buttonVariants>['variant']
+  }
+>(({ className, variant, ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
-    className={cn(buttonVariants(), className)}
+    className={cn(buttonVariants({ variant }), className)}
     {...props}
   />
 ))

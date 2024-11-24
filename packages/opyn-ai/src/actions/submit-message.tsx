@@ -6,7 +6,7 @@ import { createStreamableValue, getMutableAIState, streamUI } from 'ai/rsc'
 import { BotCard, BotMessage, Crypto, Purchase } from '../crypto-ui'
 
 import { HfInference } from '@huggingface/inference'
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { nanoid, sleep } from '@opyn/lib'
 import { createClient } from '@supabase/supabase-js'
 import { z } from 'zod'
@@ -57,8 +57,8 @@ export async function submitUserMessage({ content }: { content: string }) {
   const formattedEmbedding = `[${embedding.toString()}]`
 
   const supabase = createClient<Database>(
-    appConfig.supabase.url,
-    appConfig.supabase.anonKey,
+    opynConfig.supabase.url,
+    opynConfig.supabase.anonKey,
   )
   const { data: documents, error: matchError } = await supabase
     .rpc('match_document_sections', {

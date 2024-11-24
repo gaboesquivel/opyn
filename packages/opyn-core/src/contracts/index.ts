@@ -1,7 +1,7 @@
 import { getAddress, getContract } from 'viem'
 import type { PublicClient } from 'viem'
 import { opynAbis } from '../abis'
-import type { MarketAddresses, OpynContractName } from '../types'
+import type { MarketAddresses, MarketContractName } from '../types'
 
 export function getMarketContracts({
   client,
@@ -9,14 +9,14 @@ export function getMarketContracts({
 }: { client: PublicClient; marketAddresses: MarketAddresses }) {
   const contracts = Object.keys(opynAbis).reduce(
     (acc, key) => {
-      const address = getAddress(marketAddresses[key as OpynContractName])
+      const address = getAddress(marketAddresses[key as MarketContractName])
       if (!address) {
         console.error(`Address not found for contract: ${key}`)
         return acc
       }
 
       acc[key] = getContract({
-        abi: opynAbis[key as OpynContractName],
+        abi: opynAbis[key as MarketContractName],
         address,
         client,
       })

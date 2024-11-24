@@ -30,19 +30,29 @@
 # React/Next.js
 - Use functional components 
 - Use TypeScript interfaces at the bottom of files
+- Name everything semantically
 - Use types from @opyn/supabase
 - Use declarative JSX
 - Use function, not const for components
 - Use const for methods in components
 - Use variables for static content at the bottom of files
-- Use Shadcn UI, Radix, Tailwind Aria for styling
+- Use Shadcn UI, Radix, Tailwind Aria for styling importing components from @opyn/ui
 - Implement responsive design with Tailwind CSS; mobile-first approach
 - Use content variables for static content outside render functions
 - Minimize 'use client', 'useEffect', 'setState'; favor RSC
 - Use Zod for form validation
 - Optimize images: WebP format, size data, lazy loading
 - Use error boundaries for unexpected errors
-- Use useActionState with react-hook-form for form validation
+- Use useActionState with react-hook-form for form validation with <Form>
+- Use react functional components never render functions
+- Use guard clauses and early returns for validation and preconditions
+  ```typescript
+  useEffect(() => {
+    if (!watch) return
+      refetch()
+  }, [refetch, watch])
+``` 
+
 - Use next-safe-action for server actions:
   - Handle errors gracefully with captureAppError from @opyn/errors
   - Use ActionResult for consistent responses
@@ -173,12 +183,6 @@ export const saveDepositIntent = createSafeActionClient()
   <DialogContent>Content goes here</DialogContent>
 </Dialog>
 ```
-
-
-By following these best practices, your shadcn/ui components will be consistent, accessible, and maintainable.
-
-
-
 
 # Viem Wagmi
 - Use getAddress from viem to convert addresses to Address type, never as Address

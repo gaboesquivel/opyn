@@ -136,7 +136,7 @@ export default function AdvancedTradingPanel() {
                     <TableHead>Position</TableHead>
                     <TableHead>Size</TableHead>
                     <TableHead>Total Position Value</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead />
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -174,7 +174,7 @@ export default function AdvancedTradingPanel() {
                     <TableHead>Position</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Total Position Value</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead />
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -200,7 +200,7 @@ export default function AdvancedTradingPanel() {
                     <TableHead>Asset</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Total Value</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead />
                   </TableRow>
                 </TableHeader>
                 <TableBody>

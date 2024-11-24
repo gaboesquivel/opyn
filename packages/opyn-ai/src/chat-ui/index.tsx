@@ -1,6 +1,6 @@
 'use client'
 
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { Button } from '@opyn/ui'
 import { cn } from '@opyn/ui'
 import { useAIState, useUIState } from 'ai/rsc'
@@ -94,7 +94,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
 
   return (
     <div className="flex flex-col h-full sm:min-h-[calc(100dvh-140px)]">
-      {!appConfig.features.ai && !isAi ? (
+      {!opynConfig.features.ai && !isAi ? (
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-semibold">OpynAI Assistant</h2>
           <Link
@@ -121,7 +121,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
         ref={scrollerRef}
         className={cn(
           'overflow-y-scroll scroll-smooth flex-grow',
-          appConfig.features.ai || isAi
+          opynConfig.features.ai || isAi
             ? 'mt-50 max-h-[calc(100vh-250px)]'
             : 'h-full',
         )}

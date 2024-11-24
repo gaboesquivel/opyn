@@ -1,11 +1,11 @@
 // import { type OpynError, type OpynErrorCode, opynErrors } from '@opyn/errors'
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import * as Sentry from '@sentry/nextjs'
 
 // Initialize Sentry with configuration
 export function initializeSentry() {
   Sentry.init({
-    dsn: appConfig.services.sentryDsn,
+    dsn: opynConfig.services.sentryDsn,
     tracesSampleRate: 1.0,
     release: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'development',
     environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',

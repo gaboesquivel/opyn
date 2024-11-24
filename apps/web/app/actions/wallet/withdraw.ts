@@ -7,7 +7,7 @@ import { createSafeActionClient } from 'next-safe-action'
 import {
   http,
   Address,
-  Hex,
+  type Hex,
   createPublicClient,
   createWalletClient,
   getAddress,

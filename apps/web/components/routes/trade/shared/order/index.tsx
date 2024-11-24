@@ -1,6 +1,6 @@
 'use client'
 
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import type { TradeSide } from '@opyn/types'
 import { QuantityInput } from '@opyn/ui'
 import { TrendDownIcon, TrendUpIcon } from '@opyn/ui'
@@ -145,7 +145,7 @@ export function TradeOrder() {
             Compare Perps
           </span>
 
-          {appConfig.features.aiAssistant && (
+          {opynConfig.features.aiAssistant && (
             <Link
               href={{
                 pathname,

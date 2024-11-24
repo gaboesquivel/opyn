@@ -1,5 +1,5 @@
 import { captureAppError } from '@opyn/errors'
-import { TablesInsert } from '../..'
+import type { TablesInsert } from '../..'
 import type { SupaApiParams } from '../types'
 
 // TODO: filter by marketType

@@ -12,6 +12,6 @@ if (!parsedEnv.success) {
   process.exit(1)
 }
 
-export const appConfig = {
+export const opynConfig = {
   alchemyNotifyToken: parsedEnv.data.ALCHEMY_NOTIFY_TOKEN,
 }

@@ -1,5 +1,5 @@
 import { Alchemy, Network, WebhookType } from 'alchemy-sdk'
-import { appConfig } from '../src/config'
+import { opynConfig } from '../src/config'
 
 async function createAddressActivityNotification({
   addresses,
@@ -8,7 +8,7 @@ async function createAddressActivityNotification({
   console.log('🚀 createAddressActivityNotification', addresses, network)
   try {
     const settings = {
-      authToken: appConfig.alchemyNotifyToken,
+      authToken: opynConfig.alchemyNotifyToken,
       network,
     }
 

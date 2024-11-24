@@ -4,7 +4,7 @@ import { Card } from '@opyn/ui'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { nanoid } from 'nanoid'
 
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { cn } from '@opyn/ui'
 import type { AI } from '../actions/create-ai'
 import { UserMessage } from '../crypto-ui/message'
@@ -32,7 +32,7 @@ export function ChatPanel({
       className={cn(
         'inset-x-0 bottom-0 w-full from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in bg-card',
         {
-          'px-4 fixed pt-4': appConfig.features.ai,
+          'px-4 fixed pt-4': opynConfig.features.ai,
         },
       )}
     >

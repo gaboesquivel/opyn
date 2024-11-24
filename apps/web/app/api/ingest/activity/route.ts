@@ -5,7 +5,7 @@ import {
   type AlchemyWebhookEvent,
   chainIdAlchemyNetwork,
 } from '@opyn/alchemy'
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { arbitrum, mainnet } from 'viem/chains'
 
 // import { tasks } from '@trigger.dev/sdk/v3'
@@ -74,7 +74,7 @@ async function validateAlchemySignature(
 
   if (!alchemySignature) return false
   const settings = {
-    authToken: appConfig.alchemy.notifyToken,
+    authToken: opynConfig.alchemy.notifyToken,
     network,
   }
 

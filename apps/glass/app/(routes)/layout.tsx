@@ -2,7 +2,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import 'overlayscrollbars/overlayscrollbars.css'
 import 'katex/dist/katex.min.css'
 // last for overwerites
-import '@opyn/ui/opyn.css'
+// import '@opyn/ui/opyn.css'
 import '@/app/globals.css'
 
 import { GeistSans } from 'geist/font/sans'
@@ -12,7 +12,7 @@ import { Providers } from '@/components/layout/providers'
 
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { OpynNuqsAdapter } from '@opyn/hooks'
-import { appConfig } from '@opyn/lib'
+import { opynConfig } from '@opyn/lib'
 import { cn } from '@opyn/ui'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           'flex flex-col min-h-[100dvh] w-full ',
           'bg-background',
           'text-foreground antialiased p-0 text-xxs sm:text-base',
-          appConfig.features.ai && 'bg-card',
+          opynConfig.features.ai && 'bg-card',
         )}
       >
         <Providers>
@@ -59,7 +59,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 className={cn(
                   'flex w-full overflow-y-auto px-2 sm:px-0 flex flex-col  sm:min-h-[calc(100dvh-100px)] sm:h-auto sm:max-h-none h-[calc(100dvh-140px)] max-h-[calc(100dvh-140px)]',
                   {
-                    'sm:pb-11': !appConfig.features.ai,
+                    'sm:pb-11': !opynConfig.features.ai,
                   },
                 )}
               >
@@ -69,7 +69,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           </OpynNuqsAdapter>
         </Providers>
         <Toaster />
-        <GoogleAnalytics gaId={appConfig.services.googleAnalyticsId} />
+        <GoogleAnalytics gaId={opynConfig.services.googleAnalyticsId} />
         <Analytics />
         <SpeedInsights />
       </body>

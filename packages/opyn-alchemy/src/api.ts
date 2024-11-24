@@ -1,9 +1,9 @@
 import { Alchemy, Network } from 'alchemy-sdk'
 import { groupBy } from 'lodash'
-import { appConfig } from '../src/config'
+import { opynConfig } from '../src/config'
 
 const settings = {
-  authToken: appConfig.alchemyNotifyToken,
+  authToken: opynConfig.alchemyNotifyToken,
   network: Network.ARB_SEPOLIA, // Adjust the network as needed
 }
 

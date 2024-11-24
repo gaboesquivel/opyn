@@ -234,7 +234,6 @@ function PositionInfo({
   asset,
   action,
   amount,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }: { asset: Tables<'asset'>; amount: string; action: 'withdraw' | 'deposit' }) {
   // TODO: get position info from supa
   const position = {
