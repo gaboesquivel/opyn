@@ -14,7 +14,7 @@ import { useAccount } from 'wagmi'
 export function useLiveBalance({
   address,
   assetAddress,
-  watch = true,
+  watch,
 }: {
   address?: Address
   assetAddress: Address
@@ -36,17 +36,13 @@ export function useLiveBalance({
     if (!watch) return
     const interval = setInterval(() => {
       refetch()
-    }, 5000)
+    }, 500)
 
     return () => clearInterval(interval)
   }, [watch, refetch])
 
   return {
     balance,
-    humanBalance: formatUnits(
-      BigInt(balance?.value?.toString() || '0'),
-      balance?.decimals || 4,
-    ),
     ...o,
   }
 }

@@ -8,6 +8,7 @@ import {
   useSupply,
 } from '@opyn/hooks'
 
+import { formatCurrency } from '@opyn/lib'
 import type { Tables } from '@opyn/supabase'
 import {
   AlertDialog,
@@ -30,7 +31,13 @@ import {
 } from '@opyn/ui'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useQueryStates } from 'nuqs'
-import { type Address, formatUnits, getAddress, parseUnits } from 'viem'
+import {
+  type Address,
+  formatUnits,
+  getAddress,
+  parseUnits,
+  stringify,
+} from 'viem'
 import { sepolia } from 'viem/chains'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { AddTokenToWallet } from './add-token-to-metamask'
@@ -53,103 +60,53 @@ export function FaucetTable() {
           </TableHeader>
           <TableBody>
             {stablecoins?.map((stablecoin) => (
-              <StablecoinRow key={stablecoin.uuid} stablecoin={stablecoin} />
+              <StablecoinRow key={stablecoin.uuid} asset={stablecoin} />
             ))}
           </TableBody>
         </Table>
       </div>
+      <FaucetDialog />
     </div>
   )
 }
 
-function StablecoinRow({ stablecoin }: { stablecoin: Tables<'asset'> }) {
-  const account = useAccount()
-  const { openConnectModal } = useConnectModal()
-  const [{ action, quantity, token }, setQueryStates] = useQueryStates({
-    action: {
-      defaultValue: stablecoin.address,
-      parse: (value: string) => value as 'mint' | 'burn' | undefined,
-    },
-    quantity: {
-      defaultValue: '42000',
-      clearOnDefault: false,
-      parse: (value: string) => value as string,
-    },
-    token: {
-      clearOnDefault: false,
-      defaultValue: stablecoin.address,
-      parse: (value: string) => getAddress(value),
-    },
-  })
-  const { asset: dbAsset } = useAsset({
-    address: token || '0x',
-    enabled: !!token,
-  })
-  const asset: Tables<'asset'> = stablecoin || dbAsset
+function StablecoinRow({ asset }: { asset: Tables<'asset'> }) {
   const { address } = useAccount()
-  const minter = useMint({
-    tokenAddress: asset.address as Address,
-    amount: parseUnits(quantity || '0', asset.decimals),
-  })
-  const burner = useBurn({
-    tokenAddress: asset.address as Address,
-    amount: parseUnits(quantity || '0', asset.decimals),
-  })
-  const { humanBalance, balance } = useLiveBalance({
-    assetAddress: getAddress(asset.address),
+  const [, setQueryStates] = useFaucetStates()
+  const { balance } = useLiveBalance({
+    address,
+    assetAddress: getAddress(asset?.address || ''),
   })
   const { supply } = useSupply({
-    assetAddress: getAddress(asset.address),
+    assetAddress: getAddress(asset?.address || ''),
     watch: true,
   })
-  const { switchChain } = useSwitchChain()
-
-  const handleMint = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    await switchChain({ chainId: sepolia.id })
-    minter.mint()
-  }
-
-  const handleBurn = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    await switchChain({ chainId: sepolia.id })
-    burner.burn()
-  }
-
-  const isOpen = action === 'mint' || action === 'burn'
-  const isPending = minter.isPending || burner.isPending
-  const isCurrentAction = (currentAction: string) => action === currentAction
-  const hash = isCurrentAction('mint') ? minter.data : burner.data
-  const isSuccess = Boolean(hash)
-  const failureReason = minter.failureReason || burner.failureReason
 
   const handleAction = (action: 'mint' | 'burn') => {
     setQueryStates({
       action,
-      token: getAddress(asset.address),
+      token: getAddress(asset?.address || ''),
       quantity: '42000',
     })
   }
 
-  const handleClose = () => {
-    setQueryStates({
-      token: null,
-      quantity: null,
-      action: null,
-    })
-  }
-
-  console.log(asset)
+  if (!asset) return null
   return (
     <>
       <TableRow>
         <TableCell>{asset.symbol}</TableCell>
         <TableCell>{asset.name}</TableCell>
         <TableCell>
-          {balance && balance.value > 0 ? humanBalance : DEFAULT_BALANCE}
+          {balance && balance.value > 0
+            ? formatCurrency({
+                value: formatUnits(balance.value, balance.decimals),
+              })
+            : DEFAULT_BALANCE}
         </TableCell>
         <TableCell>
-          {supply ? formatUnits(supply, asset.decimals) : DEFAULT_BALANCE}
+          {supply
+            ? formatCurrency({ value: formatUnits(supply, asset.decimals) })
+            : DEFAULT_BALANCE}
         </TableCell>
         <TableCell>
           <div className="flex gap-2">
@@ -173,94 +130,165 @@ function StablecoinRow({ stablecoin }: { stablecoin: Tables<'asset'> }) {
           </div>
         </TableCell>
       </TableRow>
-
-      <AlertDialog open={isOpen} onOpenChange={handleClose}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {isCurrentAction('mint') ? 'Mint' : 'Burn'} {asset.symbol}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {isSuccess ? (
-                <a
-                  href={`https://sepolia.arbiscan.io/tx/${hash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-brand-500 hover:text-brand-400"
-                >
-                  View transaction: {hash}
-                </a>
-              ) : (
-                `Enter the amount you want to ${isCurrentAction('mint') ? 'mint' : 'burn'}`
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-
-          {!isSuccess && (
-            <div className="flex flex-col gap-2 py-4">
-              <div className="flex items-center gap-4">
-                <Label htmlFor="quantity">Amount</Label>
-                <Input
-                  id="quantity"
-                  value={quantity}
-                  onChange={(e) => setQueryStates({ quantity: e.target.value })}
-                  type="number"
-                  min="1"
-                  max="1000"
-                  placeholder="Enter amount"
-                  onKeyDown={(e) => {
-                    if (e.key === '.' || e.key === ',') {
-                      e.preventDefault()
-                    }
-                  }}
-                />
-              </div>
-
-              {failureReason && (
-                <p className="text-error-500 text-sm text-center">
-                  {failureReason.message.split('Request Arguments:')[0]}
-                </p>
-              )}
-            </div>
-          )}
-
-          <AlertDialogFooter>
-            {isSuccess ? (
-              <AlertDialogCancel className="h-10 min-w-[150px]">
-                Close
-              </AlertDialogCancel>
-            ) : (
-              <>
-                <AlertDialogCancel className="h-10 min-w-[150px]">
-                  Cancel
-                </AlertDialogCancel>
-                {account ? (
-                  <AlertDialogAction
-                    onClick={isCurrentAction('mint') ? handleMint : handleBurn}
-                    disabled={isPending}
-                    variant={isCurrentAction('mint') ? 'up' : 'down'}
-                    className="h-10 min-w-[150px]"
-                  >
-                    {isPending
-                      ? 'Processing...'
-                      : isCurrentAction('mint')
-                        ? 'Mint'
-                        : 'Burn'}
-                  </AlertDialogAction>
-                ) : (
-                  <AlertDialogAction
-                    onClick={() => openConnectModal?.()}
-                    variant={'brand'}
-                    className="h-10 min-w-[150px]"
-                  >
-                    {isPending ? 'Connecting...' : 'Connect Wallet'}
-                  </AlertDialogAction>
-                )}
-              </>
-            )}
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   )
+}
+
+function FaucetDialog() {
+  const account = useAccount()
+  const { openConnectModal } = useConnectModal()
+  const { stablecoins } = useStablecoins()
+  const [{ action, quantity, token }, setQueryStates] = useFaucetStates()
+
+  const asset = stablecoins?.find((stablecoin) => stablecoin.address === token)
+  const amount = parseUnits(quantity || '0', asset?.decimals || 0)
+  const tokenAddress = asset?.address as Address
+
+  console.log({ symbol: asset?.symbol, amount, tokenAddress, action })
+
+  const minter = useMint({
+    tokenAddress,
+    amount,
+  })
+  const burner = useBurn({
+    tokenAddress,
+    amount,
+  })
+  const handleClose = () => {
+    setQueryStates({
+      token: null,
+      quantity: null,
+      action: null,
+    })
+  }
+  const { switchChain } = useSwitchChain()
+
+  const handleMint = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    await switchChain({ chainId: sepolia.id })
+    minter.mint()
+  }
+
+  const handleBurn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    await switchChain({ chainId: sepolia.id })
+    burner.burn()
+  }
+
+  const isOpen = action === 'mint' || action === 'burn'
+  const isPending = minter.isPending || burner.isPending
+  const isCurrentAction = (currentAction: string) => action === currentAction
+  const hash = isCurrentAction('mint') ? minter.data : burner.data
+  const isSuccess = Boolean(hash)
+  const failureReason = minter.failureReason || burner.failureReason
+
+  if (!asset) return null
+  return (
+    <AlertDialog open={isOpen} onOpenChange={handleClose}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {isCurrentAction('mint') ? 'Mint' : 'Burn'} {asset.symbol}
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            {isSuccess ? (
+              <a
+                href={`https://sepolia.arbiscan.io/tx/${hash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" hover:text-brand-400"
+              >
+                View transaction: <span className="text-brand-500">{hash}</span>
+              </a>
+            ) : (
+              `Enter the amount you want to ${isCurrentAction('mint') ? 'mint' : 'burn'}`
+            )}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        {!isSuccess && (
+          <div className="flex flex-col gap-2 py-4">
+            <div className="flex items-center gap-4">
+              <Label htmlFor="quantity">Amount</Label>
+              <Input
+                id="quantity"
+                value={quantity}
+                onChange={(e) => setQueryStates({ quantity: e.target.value })}
+                type="currency"
+                min="1"
+                max="1000"
+                placeholder="Enter amount"
+                onKeyDown={(e) => {
+                  if (e.key === '.' || e.key === ',') {
+                    e.preventDefault()
+                  }
+                }}
+              />
+            </div>
+
+            {failureReason && (
+              <p className="text-error-500 text-sm text-center">
+                {failureReason.message.split('Request Arguments:')[0]}
+              </p>
+            )}
+          </div>
+        )}
+
+        <AlertDialogFooter>
+          {isSuccess ? (
+            <AlertDialogCancel className="h-10 min-w-[150px]">
+              Close
+            </AlertDialogCancel>
+          ) : (
+            <>
+              <AlertDialogCancel className="h-10 min-w-[150px]">
+                Cancel
+              </AlertDialogCancel>
+              {account ? (
+                <AlertDialogAction
+                  onClick={isCurrentAction('mint') ? handleMint : handleBurn}
+                  disabled={isPending}
+                  variant={isCurrentAction('mint') ? 'up' : 'down'}
+                  className="h-10 min-w-[150px]"
+                >
+                  {isPending
+                    ? 'Processing...'
+                    : isCurrentAction('mint')
+                      ? 'Mint'
+                      : 'Burn'}
+                </AlertDialogAction>
+              ) : (
+                <AlertDialogAction
+                  onClick={() => openConnectModal?.()}
+                  variant={'brand'}
+                  className="h-10 min-w-[150px]"
+                >
+                  {isPending ? 'Connecting...' : 'Connect Wallet'}
+                </AlertDialogAction>
+              )}
+            </>
+          )}
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+function useFaucetStates() {
+  return useQueryStates({
+    action: {
+      defaultValue: undefined,
+      parse: (value: string) => value as 'mint' | 'burn' | undefined,
+    },
+    quantity: {
+      defaultValue: '42000',
+      clearOnDefault: false,
+      parse: (value: string) => value as string,
+    },
+    token: {
+      clearOnDefault: false,
+      defaultValue: undefined,
+      parse: (value: string) => getAddress(value),
+    },
+  })
 }

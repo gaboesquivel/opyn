@@ -6,8 +6,8 @@ export function formatCurrency({
   const formatter = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currencyCode,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4,
   })
 
   return formatter.format(Number(value))
