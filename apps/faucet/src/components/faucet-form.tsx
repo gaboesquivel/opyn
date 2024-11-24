@@ -1,5 +1,4 @@
-import { useSupabaseClient } from '@/lib/supabase'
-import { type Tables, getStablecoins } from '@opyn/supabase'
+import { type Tables, getStablecoins, useSupabaseClient } from '@opyn/supabase'
 import { Button, Input, Label } from '@opyn/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'

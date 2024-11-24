@@ -1,3 +1,5 @@
+'use client'
+
 import { appConfig } from '@opyn/lib'
 import type { Database } from '@opyn/supabase'
 import { createBrowserClient } from '@supabase/ssr'

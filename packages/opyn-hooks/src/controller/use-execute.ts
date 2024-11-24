@@ -1,3 +1,5 @@
+'use client'
+
 import { opynAbis } from '@opyn/core'
 import type { Address } from 'viem'
 import { useWriteContract } from 'wagmi'

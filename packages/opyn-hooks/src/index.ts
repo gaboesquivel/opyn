@@ -1,8 +1,7 @@
-'use client'
-
 export * from './controller/use-execute'
 // export * from './redemption/use-redeem'
 export * from './market/use-market'
 // export * from './types'
+export * from './devtools'
 
 export * from './provider'

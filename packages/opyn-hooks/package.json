@@ -2,9 +2,6 @@
   "name": "@opyn/hooks",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --external react"
-  },
   "devDependencies": {
     "wagmi": "2.x",
     "@opyn/core": "workspace:*",
@@ -22,6 +19,8 @@
     "@opyn/types": "workspace:*",
     "next": "^15.0.3",
     "nuqs": "^2.2.3",
+    "react-use": "^17.5.1",
+    "vconsole": "^3.15.1",
     "viem": "2.x",
     "wagmi": "2.x"
   }

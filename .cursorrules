@@ -135,6 +135,10 @@ export const saveDepositIntent = createSafeActionClient()
 - Use shadcn/ui Skeleton in Suspense fallbacks
 - Use Sonner for toast notifications
 
+# Tools
+- Use React-use for hooks
+- Use date-fns for date manipulation
+
 ### Examples
 
 #### Example 1: Styling a Tab Component
