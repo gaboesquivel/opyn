@@ -1,7 +1,7 @@
 import type { Tables } from '@opyn/supabase'
+import { Button } from '@opyn/ui'
 import { sepolia } from 'viem/chains'
 import { useSwitchChain } from 'wagmi'
-import { Button } from './ui/button'
 
 export function AddTokenToWallet({
   address,

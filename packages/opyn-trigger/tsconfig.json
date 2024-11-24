@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/tsconfig/node16.json",
+  "extends": ["../../tooling/tsconfig/nextjs.json"],
   "include": ["./src/**/*", "src/lib/utils.ts", "trigger.config.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {

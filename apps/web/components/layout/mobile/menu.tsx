@@ -1,12 +1,7 @@
 'use client'
 
-import {
-  MarketsIcon,
-  PortfolioIcon,
-  TradeIcon,
-  VaultsIcon,
-} from '@/components/shared/icons'
 import { cn } from '@opyn/ui'
+import { MarketsIcon, PortfolioIcon, TradeIcon, VaultsIcon } from '@opyn/ui'
 import { Bot } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

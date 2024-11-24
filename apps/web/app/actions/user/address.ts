@@ -1,7 +1,7 @@
 'use server'
 
-import { type ActionResult, failure, success } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/lib/supabase'
+import { type ActionResult, failure, success } from '@opyn/lib'
+import { createSupabaseNextClient } from '@opyn/supabase'
 import { upsertUserAddress } from '@opyn/supabase/src/api/user'
 import { createSafeActionClient } from 'next-safe-action'
 import { cookies } from 'next/headers'
@@ -27,7 +27,7 @@ export const setAddressCookie = createSafeActionClient()
           return success({ address: '' })
         }
 
-        const supabase = await createSupabaseServerClient()
+        const supabase = await createSupabaseNextClient()
         await upsertUserAddress({ address, supabase })
 
         cookies().set('address', address, {

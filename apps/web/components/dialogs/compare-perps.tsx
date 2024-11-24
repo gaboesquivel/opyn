@@ -1,21 +1,21 @@
 'use client'
 
-import { TrendDownIcon, TrendUpIcon } from '@/components/shared/icons'
-import { Button } from '@/components/ui/button'
+import { TrendDownIcon, TrendUpIcon } from '@opyn/ui'
+
 import {
+  Button,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import {
+  Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { DialogDescription } from '@radix-ui/react-dialog'
+} from '@opyn/ui'
+
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
 import { Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'

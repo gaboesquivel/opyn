@@ -17,7 +17,9 @@
   "author": "opyn.co",
   "license": "MIT",
   "dependencies": {
+    "@opyn/lib": "workspace:*",
     "@opyn/types": "workspace:*",
+    "@supabase/ssr": "^0.5.2",
     "unist-builder": "^4.0.0"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 'use client'
+import { Button } from '@opyn/ui'
 import { useConnect, useConnectors } from 'wagmi'
-import { Button } from './ui/button'
 
 export function ConnectWalletButton() {
   const connectors = useConnectors()

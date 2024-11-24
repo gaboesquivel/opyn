@@ -1,13 +1,20 @@
 'use client'
 
-import { CurrencyIcon } from '@/components/shared/icons'
-import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { getMarketLabelFromSlug, parseMarketSlug } from '@/lib/opyn'
+import { getMarketLabelFromSlug, parseMarketSlug } from '@opyn/lib'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@opyn/ui'
+import { CurrencyIcon } from '@opyn/ui'
+
 import { useRouter } from 'next/navigation'
 import { useQueryState } from 'nuqs'
 
-import { useMarket } from '../hooks/use-market'
+import { useMarket } from '@opyn/hooks'
 import { DepositWithdrawButtons } from './deposit-withdraw'
 
 // NOTE: this component is good example of using url decouples components unlocking composability

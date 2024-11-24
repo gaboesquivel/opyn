@@ -1,20 +1,16 @@
 'use client'
 
-import {
-  MarketsIcon,
-  PortfolioIcon,
-  TradeIcon,
-  VaultsIcon,
-} from '@/components/shared/icons'
+import { cn } from '@opyn/ui'
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu'
-import { cn } from '@opyn/ui'
-import { NavigationMenuLink } from '@radix-ui/react-navigation-menu'
+} from '@opyn/ui'
+import { MarketsIcon, PortfolioIcon, TradeIcon, VaultsIcon } from '@opyn/ui'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

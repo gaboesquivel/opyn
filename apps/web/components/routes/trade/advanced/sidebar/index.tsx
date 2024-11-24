@@ -1,14 +1,14 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@opyn/ui'
+import { Card, CardContent } from '@opyn/ui'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
+  ScrollArea,
+  Separator,
+} from '@opyn/ui'
 import { ChevronDown, Plus } from 'lucide-react'
 import { useState } from 'react'
 

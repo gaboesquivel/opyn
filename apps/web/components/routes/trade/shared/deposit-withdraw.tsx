@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 
 export function DepositWithdrawButtons() {

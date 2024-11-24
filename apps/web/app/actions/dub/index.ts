@@ -1,6 +1,6 @@
 'use server'
 
-import { type ActionResult, failure, success } from '@/lib/actions'
+import { type ActionResult, failure, success } from '@opyn/lib'
 import { createSafeActionClient } from 'next-safe-action'
 import { z } from 'zod'
 

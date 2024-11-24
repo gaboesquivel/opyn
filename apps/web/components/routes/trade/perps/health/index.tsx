@@ -1,17 +1,17 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
-import { createSupabaseServerClient } from '@/lib/supabase'
+import { useMarket } from '@opyn/hooks'
+import { createSupabaseNextClient } from '@opyn/supabase'
 import { getPortfolioHealth } from '@opyn/supabase/src/api/portfolio'
+import { Card } from '@opyn/ui'
 import { useQuery } from '@tanstack/react-query'
 import { InfoIcon } from 'lucide-react'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
 import { useAccount } from 'wagmi'
-import { useMarket } from '../../hooks/use-market'
 import { DepositWithdrawButtons } from '../../shared/deposit-withdraw'
 
 export async function TradeAccountHealth() {
-  const supabase = await createSupabaseServerClient()
+  const supabase = await createSupabaseNextClient()
   const { marketId } = useMarket()
   const { address } = useAccount()
   const { data: health } = useQuery({

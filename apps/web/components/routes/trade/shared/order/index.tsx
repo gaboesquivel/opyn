@@ -1,24 +1,24 @@
 'use client'
 
-import { TrendDownIcon, TrendUpIcon } from '@/components/shared/icons'
-import { CurrencyIcon } from '@/components/shared/icons'
-import { AccordionContent } from '@/components/ui/accordion'
+import { appConfig } from '@opyn/lib'
+import type { TradeSide } from '@opyn/types'
+import { QuantityInput } from '@opyn/ui'
+import { TrendDownIcon, TrendUpIcon } from '@opyn/ui'
+import { CurrencyIcon } from '@opyn/ui'
+
+import { useMarket } from '@opyn/hooks'
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { QuantityInput } from '@/components/ui/input'
-import {
+  Button,
+  Card,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { appConfig } from '@/lib/config'
-import type { TradeSide } from '@opyn/types'
+} from '@opyn/ui'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { SettingsIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -28,8 +28,6 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useSignMessage } from 'wagmi'
 import { useAccount } from 'wagmi'
-
-import { useMarket } from '../../hooks/use-market'
 import { OrderDetails } from './details'
 import { PerpTypeButtons } from './perp-type'
 import { LeverageSlider } from './slider'

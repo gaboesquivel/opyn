@@ -1,12 +1,12 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@opyn/ui'
 import { MoreVertical } from 'lucide-react'
 import { useQueryState } from 'nuqs'
 

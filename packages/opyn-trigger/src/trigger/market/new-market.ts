@@ -1,6 +1,6 @@
 import type { AlchemyActivity, AlchemyWebhookEvent } from '@opyn/alchemy'
+import { insertMarket } from '@opyn/supabase'
 import { logger, task } from '@trigger.dev/sdk/v3'
-import { insertMarket } from '../../lib/supabase'
 
 export const newMarketTask = task({
   id: 'new-market',

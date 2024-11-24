@@ -3,7 +3,7 @@
 import { setAddressCookie } from '@/app/actions/user/address'
 import { OpynConnectButton } from '@/components/layout/header/connect'
 
-import { appConfig } from '@/lib/config'
+import { appConfig } from '@opyn/lib'
 import { useAction } from 'next-safe-action/hooks'
 
 import { DubShareDialog } from '@/components/layout/header/dub'

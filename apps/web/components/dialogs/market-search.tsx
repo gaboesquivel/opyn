@@ -5,18 +5,14 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { getMarketLabel, getMarketSlug } from '@/lib/opyn'
-import { useSupabaseClient } from '@/lib/supabase'
+import { useMarket } from '@opyn/hooks'
+import { getMarketLabel, getMarketSlug } from '@opyn/lib'
+import { useSupabaseClient } from '@opyn/supabase'
 import { getMarkets } from '@opyn/supabase'
+import { DialogContent, DialogHeader, DialogTitle } from '@opyn/ui'
+import { Input } from '@opyn/ui'
+import { Button } from '@opyn/ui'
 import { useQuery } from '@tanstack/react-query'
-import { useMarket } from '../routes/trade/hooks/use-market'
 
 export default async function MarketSearch() {
   const supabase = useSupabaseClient()

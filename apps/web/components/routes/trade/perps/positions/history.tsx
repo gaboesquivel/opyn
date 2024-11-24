@@ -1,5 +1,4 @@
 import { PositionsDropdownMenu } from '@/components/routes/trade/perps/positions/dropdown'
-import { CardContent } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -7,7 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@opyn/ui'
+import { CardContent } from '@opyn/ui'
 import { ChevronDown } from 'lucide-react'
 
 export function HistoryTable({

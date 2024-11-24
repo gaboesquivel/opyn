@@ -1,6 +1,6 @@
 'use client'
 
-import { useMarket } from '@/components/routes/trade/hooks/use-market'
+import { useMarket } from '@opyn/hooks'
 import { cn } from '@opyn/ui'
 import { CheckIcon, Loader2, XIcon } from 'lucide-react'
 

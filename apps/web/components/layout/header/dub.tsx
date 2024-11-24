@@ -1,6 +1,8 @@
 'use client'
 
 import { generateShortLink } from '@/app/actions/dub'
+import { ClipboardDocumentIcon, ShareIcon } from '@heroicons/react/24/solid'
+import { Input } from '@opyn/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { Input } from '@/components/ui/input'
-import { ClipboardDocumentIcon, ShareIcon } from '@heroicons/react/24/solid'
+} from '@opyn/ui'
 import { useAction } from 'next-safe-action/hooks'
 import { useEffect, useState } from 'react'
 

@@ -1,14 +1,12 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardHeader } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import { FundingChart, PayoffChart, TradingViewChart } from '@opyn/charts'
+import { Button } from '@opyn/ui'
+import { Card, CardHeader } from '@opyn/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@opyn/ui'
 import Link from 'next/link'
 import { useQueryState } from 'nuqs'
-import { FundingChart } from './funding'
-import { PayoffChart } from './payoff'
-import { TradingViewChart } from './trading-view'
 
 export function OpynCharts({
   underlierSymbol,

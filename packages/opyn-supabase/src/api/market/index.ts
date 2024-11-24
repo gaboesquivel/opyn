@@ -1,4 +1,5 @@
 import { captureAppError } from '@opyn/errors'
+import { TablesInsert } from '../..'
 import type { SupaApiParams } from '../types'
 
 // TODO: filter by marketType
@@ -92,6 +93,23 @@ export async function getMarketPerp({
     .from('market_perp')
     .select()
     .eq('market_id', marketId)
+    .single()
+
+  if (error || !data) captureAppError('FETCH_ERROR', error)
+
+  return data as NonNullable<typeof data>
+}
+
+export async function insertMarket({
+  market,
+  supabase,
+}: SupaApiParams & {
+  market: TablesInsert<'market'>
+}) {
+  const { data, error } = await supabase
+    .from('market')
+    .insert(market)
+    .select()
     .single()
 
   if (error || !data) captureAppError('FETCH_ERROR', error)

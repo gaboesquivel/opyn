@@ -1,12 +1,8 @@
 'use client'
 
-import {
-  OnePerpIcon,
-  TwoPerpIcon,
-  ZeroDotFivePerpIcon,
-} from '@/components/shared/icons'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@opyn/ui'
+import { Tabs, TabsList, TabsTrigger } from '@opyn/ui'
+import { OnePerpIcon, TwoPerpIcon, ZeroDotFivePerpIcon } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 
 export function PerpTypeButtons() {

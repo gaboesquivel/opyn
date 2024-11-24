@@ -1,43 +1,56 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from 'react'
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table"
-import { CircleDollarSign, TrendingUp, ChevronUp, ChevronDown } from 'lucide-react'
+import { Badge } from '@opyn/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@opyn/ui'
+import { ScrollArea } from '@opyn/ui'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@opyn/ui'
+import {
+  ChevronDown,
+  ChevronUp,
+  CircleDollarSign,
+  TrendingUp,
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 type ChartDataPoint = {
-  time: string;
-  value: number;
+  time: string
+  value: number
 }
 
 type Strategy = {
-  name: string;
-  positions: number;
-  trend: 'up' | 'down';
+  name: string
+  positions: number
+  trend: 'up' | 'down'
 }
 
 const initialChartData: ChartDataPoint[] = [
-  { time: "1:00", value: 21000 },
-  { time: "2:00", value: 22000 },
-  { time: "3:00", value: 23000 },
-  { time: "4:00", value: 24000 },
-  { time: "5:00", value: 23500 },
+  { time: '1:00', value: 21000 },
+  { time: '2:00', value: 22000 },
+  { time: '3:00', value: 23000 },
+  { time: '4:00', value: 24000 },
+  { time: '5:00', value: 23500 },
 ]
 
 const initialStrategies: Strategy[] = [
-  { name: "Crab", positions: 2, trend: "up" },
-  { name: "Anti-Crab", positions: 2, trend: "down" },
-  { name: "Zen Bull", positions: 3, trend: "up" }
+  { name: 'Crab', positions: 2, trend: 'up' },
+  { name: 'Anti-Crab', positions: 2, trend: 'down' },
+  { name: 'Zen Bull', positions: 3, trend: 'up' },
 ]
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -47,10 +60,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <p className="text-sm">{`Time: ${label}`}</p>
         <p className="text-sm text-primary">{`Value: $${payload[0].value}`}</p>
       </div>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
 export default function TradingDashboard() {
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
@@ -69,7 +82,8 @@ export default function TradingDashboard() {
           Simulated Portfolio
         </Badge>
         <span className="text-sm text-muted-foreground">
-          This is a simulated view of your account based on the queued transactions
+          This is a simulated view of your account based on the queued
+          transactions
         </span>
       </div>
 
@@ -92,10 +106,12 @@ export default function TradingDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-medium">{strategy.name}</h3>
-                  <p className="text-sm text-muted-foreground">{strategy.positions} positions</p>
+                  <p className="text-sm text-muted-foreground">
+                    {strategy.positions} positions
+                  </p>
                 </div>
                 <div className="w-12 h-12">
-                  {strategy.trend === "up" ? (
+                  {strategy.trend === 'up' ? (
                     <TrendingUp className="w-6 h-6 text-green-500" />
                   ) : (
                     <TrendingUp className="w-6 h-6 text-red-500 transform rotate-180" />
@@ -116,14 +132,17 @@ export default function TradingDashboard() {
             {chartData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis dataKey="time" />
                   <YAxis />
                   <Tooltip content={<CustomTooltip />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="hsl(var(--primary))" 
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="hsl(var(--primary))"
                     dot={false}
                   />
                 </LineChart>
@@ -187,4 +206,3 @@ export default function TradingDashboard() {
     </div>
   )
 }
-

@@ -1,12 +1,18 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardHeader } from '@/components/ui/card'
-import { ResizablePanel } from '@/components/ui/resizable'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useSupabaseClient } from '@/lib/supabase'
+import { useSupabaseClient } from '@opyn/supabase'
 import { getAllTransactions } from '@opyn/supabase/src/api/transaction'
-import { PosTab } from '@opyn/types'
+import type { PosTab } from '@opyn/types'
+import { Button } from '@opyn/ui'
+import { Card, CardHeader } from '@opyn/ui'
+import {
+  ResizablePanel,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@opyn/ui'
+
 import { useQuery } from '@tanstack/react-query'
 import { useQueryState } from 'nuqs'
 import { useState } from 'react'

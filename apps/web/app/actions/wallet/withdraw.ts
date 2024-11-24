@@ -1,7 +1,7 @@
 'use server'
 
-import { type ActionResult, failure, success } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/lib/supabase'
+import { type ActionResult, failure, success } from '@opyn/lib'
+import { createSupabaseNextClient } from '@opyn/supabase'
 import type { Tables } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 import {
@@ -37,7 +37,7 @@ export const issueTokens = createSafeActionClient()
       parsedInput: { address, amount },
     }): Promise<ActionResult<{ hash: Hex }>> => {
       try {
-        const supabase = await createSupabaseServerClient()
+        const supabase = await createSupabaseNextClient()
         const normalizedAddress = getAddress(address)
         const parsedAmount = parseEther(amount)
 

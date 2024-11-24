@@ -1,4 +1,4 @@
-import { Slider } from '@/components/ui/slider'
+import { Slider } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 import { useState } from 'react'
 

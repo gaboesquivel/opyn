@@ -1,9 +1,5 @@
 import { MobileSwiper } from '@/components/layout/mobile/swiper'
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui/resizable'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@opyn/ui'
 
 export function TradeDashboard({
   order,

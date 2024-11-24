@@ -1,6 +1,6 @@
+import { Button } from '@opyn/ui'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { FaucetForm } from './components/faucet-form'
-import { Button } from './components/ui/button'
 import { useUsdtBalance } from './hooks/use-usdt-balance'
 
 export default function Component() {

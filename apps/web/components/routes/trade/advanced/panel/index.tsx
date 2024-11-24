@@ -1,8 +1,6 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@opyn/ui'
 import {
   Table,
   TableBody,
@@ -10,8 +8,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+} from '@opyn/ui'
+import { Button } from '@opyn/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@opyn/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@opyn/ui'
 import {
   ArrowUpDown,
   LineChart as ChartIcon,

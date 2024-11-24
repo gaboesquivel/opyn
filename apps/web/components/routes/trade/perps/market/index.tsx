@@ -1,19 +1,18 @@
 'use client'
 
+import { useMarket } from '@opyn/hooks'
+import { getChainlinkPriceByMarketId, useSupabaseClient } from '@opyn/supabase'
+import type { Tables } from '@opyn/supabase'
 import {
+  Button,
+  Card,
   OnePerpIcon,
   TwoPerpIcon,
   ZeroDotFivePerpIcon,
-} from '@/components/shared/icons'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { useSupabaseClient } from '@/lib/supabase/client'
-import type { Tables } from '@opyn/supabase'
-import { getChainlinkPriceByMarketId } from '@opyn/supabase/src/api/price'
+} from '@opyn/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryState } from 'nuqs'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
-import { useMarket } from '../../hooks/use-market'
 
 export function TradeMarketData({
   marketMetric,

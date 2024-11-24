@@ -1,3 +1,4 @@
+import type { Tables } from '@opyn/supabase'
 import {
   Select,
   SelectContent,
@@ -6,8 +7,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import type { Tables } from '@opyn/supabase'
+} from '@opyn/ui'
 import type { SelectProps } from '@radix-ui/react-select'
 
 export function TokenSelect({

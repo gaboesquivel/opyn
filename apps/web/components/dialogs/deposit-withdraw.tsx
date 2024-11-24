@@ -1,21 +1,17 @@
 'use client'
 
-import { useMarket } from '@/components/routes/trade/hooks/use-market'
-import { CurrencyIcon } from '@/components/shared/icons'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { QuantityInput } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useSupabaseClient } from '@/lib/supabase'
+import { useMarket } from '@opyn/hooks'
 import { formatCurrency } from '@opyn/lib'
+import { useSupabaseClient } from '@opyn/supabase'
 import { getMarket } from '@opyn/supabase'
 import type { Tables } from '@opyn/supabase'
+import { DialogContent, DialogHeader, DialogTitle } from '@opyn/ui'
+import { QuantityInput } from '@opyn/ui'
+import { Button } from '@opyn/ui'
+import { Card } from '@opyn/ui'
+import { Label } from '@opyn/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@opyn/ui'
+import { CurrencyIcon } from '@opyn/ui'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { useQuery } from '@tanstack/react-query'
 import { AlertCircle } from 'lucide-react'
