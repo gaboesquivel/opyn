@@ -1,17 +1,6 @@
 import { TableCell, TableRow } from "@/components/ui/table"
-import { SparkChart } from "../spark-chart"
-
-interface MarketRowProps {
-  icon: string
-  name: string
-  markets: string
-  price: string
-  change: string
-  volume: string
-  oi: string
-  data: { value: number }[]
-  trend: "up" | "down"
-}
+import { SparkChart } from "../../spark-chart"
+import {MarketRowDataProps} from "@/components/routes/markets/base-markets/table/table.types";
 
 export function MarketRow({
   icon,
@@ -23,9 +12,9 @@ export function MarketRow({
   oi,
   data,
   trend,
-}: MarketRowProps) {
+}: MarketRowDataProps) {
   return (
-    <TableRow className="group transition-colors hover:bg-gray-900">
+    <TableRow className="group transition-colors hover:bg-gray-900 hover:cursor-pointer">
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           <img
