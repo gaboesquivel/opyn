@@ -6,6 +6,7 @@ import * as React from 'react'
 import { ComparePerps } from './compare-perps'
 import { DepositWithdraw } from './deposit-withdraw'
 import MarketSearch from './market-search'
+import { useCmdK } from '@/lib/hooks'
 
 export function OpynDialog() {
   const [dialog, setDialog] = useQueryState('dialog', {
@@ -15,20 +16,7 @@ export function OpynDialog() {
 
   const content = dialogs[dialog]
 
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-        event.preventDefault()
-        setDialog('marketsearch')
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [setDialog])
+  useCmdK(()=>{setDialog('marketsearch')})
 
   // id dialog component is not found we dont try to display it
   return (

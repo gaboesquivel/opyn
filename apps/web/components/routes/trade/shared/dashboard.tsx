@@ -1,5 +1,6 @@
 import { MobileSwiper } from '@/components/layout/mobile/swiper'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@opyn/ui'
+import { OpynDialog } from '@/components/dialogs/dialog'
 
 export function TradeDashboard({
   order,
@@ -22,6 +23,7 @@ export function TradeDashboard({
 }) {
   return (
     <div className="flex flex-col pt-1 sm:p-0 sm:m-4 pb-0 h-full flex-1 ">
+      <OpynDialog />
       <div className="gap-4 flex flex-col lg:flex-row justify-between items-center w-full mb-3 sm:mb-4 lg:m-0">
         <div className="lg:mb-4 lg:mb-0 flex-shrink-0 w-full lg:w-auto pl-2 sm:pl-0 sm:min-h-14">
           {nav}

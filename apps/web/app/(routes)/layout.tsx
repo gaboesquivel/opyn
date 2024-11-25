@@ -68,9 +68,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 {opynConfig.features.ai ? <div>AI</div> : children}
               </main>
               {opynConfig.features.ai ? null : <Footer />}
-            </div>
-            <OpynDialog />
-          </Providers>
+          </div>
+        </Providers>
           <Toaster />
           <GoogleAnalytics gaId={opynConfig.services.googleAnalyticsId} />
           <Analytics />
@@ -80,13 +79,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     </html>
   )
 }
-
-const OpynDialog = dynamic(
-  () => import('@/components/dialogs/dialog').then((mod) => mod.OpynDialog),
-  {
-    ssr: false,
-  },
-)
 
 // const OpynAi = dynamic(() => import('@opyn/ai').then((mod) => mod.OpynAi), {
 //   ssr: false,
