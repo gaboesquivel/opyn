@@ -1,7 +1,7 @@
 'use server'
 
-import { type ActionResult, failure, success } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { type ActionResult, failure, success } from '@opyn/lib'
+import { createSupabaseNextClient } from '@opyn/supabase'
 import { type Tables, userInsertSchema } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 
@@ -11,7 +11,7 @@ export const saveUser = createSafeActionClient()
   .action(
     async ({ parsedInput: user }): Promise<ActionResult<Tables<'user'>>> => {
       try {
-        const supabase = await createSupabaseServerClient()
+        const supabase = await createSupabaseNextClient()
 
         const { data, error } = await supabase
           .from('user')

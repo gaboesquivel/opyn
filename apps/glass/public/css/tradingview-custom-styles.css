@@ -1,0 +1,71 @@
+.theme-dark:root {
+  --tv-color-platform-background: #1b1c1d !important;
+  --tv-color-pane-background: #1b1c1d !important;
+  --tv-color-toolbar-button-background-hover: #2c2d2e !important;
+  --tv-color-toolbar-button-background-expanded: #2c2d2e !important;
+  --tv-color-toolbar-button-background-active: #3a3b3c !important;
+  --tv-color-toolbar-button-background-active-hover: #3a3b3c !important;
+  --tv-color-toolbar-button-text: #e0e0e0 !important;
+  --tv-color-toolbar-button-text-hover: #ffffff !important;
+  --tv-color-toolbar-button-text-active: #ffffff !important;
+  --tv-color-toolbar-button-text-active-hover: #ffffff !important;
+  --tv-color-item-active-text: #4caf50 !important;
+  --tv-color-toolbar-toggle-button-background-active: #3a3b3c !important;
+  --tv-color-toolbar-toggle-button-background-active-hover: #4a4b4c !important;
+  --tv-color-toolbar-divider-background: #2c2d2e !important;
+  --tv-color-toolbar-save-layout-loader: #888888 !important;
+
+  --tv-color-popup-background: #2c2d2e !important;
+  --tv-color-popup-element-text: #e0e0e0 !important;
+  --tv-color-popup-element-text-hover: #ffffff !important;
+  --tv-color-popup-element-background-hover: #3a3b3c !important;
+  --tv-color-popup-element-divider-background: #3a3b3c !important;
+  --tv-color-popup-element-secondary-text: #bdbdbd !important;
+  --tv-color-popup-element-hint-text: #9e9e9e !important;
+  --tv-color-popup-element-text-active: #4caf50 !important;
+  --tv-color-popup-element-background-active: #3a3b3c !important;
+  --tv-color-popup-element-toolbox-text: #e0e0e0 !important;
+  --tv-color-popup-element-toolbox-text-hover: #ffffff !important;
+  --tv-color-popup-element-toolbox-text-active-hover: #ffffff !important;
+  --tv-color-popup-element-toolbox-background-hover: #3a3b3c !important;
+  --tv-color-popup-element-toolbox-background-active-hover: #4a4b4c !important;
+}
+
+/* TradingView Widget Styles */
+.tv-ticker-item-tape .tv-ticker-item-tape {
+  @apply font-normal !important;
+  font-size: 6px !important;
+}
+
+.tv-ticker-item-tape .tv-ticker-item-tape__inner-wrapper {
+  @apply !font-mono !important;
+}
+
+.tv-ticker-item-tape .tv-ticker-item-tape__short-name {
+  @apply !text-xs !important;
+  color: var(--brand) !important; /* Using brand color instead of blue */
+}
+
+.tv-side-toolbar {
+  background-color: var(--card) !important; /* Using card color for consistency */
+}
+
+/* TradingView Widget Container Styles */
+.tradingview-widget-container * {
+  background-color: #1b1c1d !important;
+}
+
+.tradingview-widget-container .tv-chart-container,
+.tradingview-widget-container .tv-chart-container *,
+.tradingview-widget-container .tv-lightweight-charts,
+.tradingview-widget-container .tv-lightweight-charts * {
+  background-color: #1b1c1d !important;
+}
+
+.tradingview-widget-container iframe {
+  background-color: #1b1c1d !important;
+}
+
+.tradingview-widget-container iframe * {
+  background-color: #1b1c1d !important;
+}

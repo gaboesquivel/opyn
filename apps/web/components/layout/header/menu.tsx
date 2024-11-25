@@ -1,20 +1,16 @@
 'use client'
 
-import {
-  MarketsIcon,
-  PortfolioIcon,
-  TradeIcon,
-  VaultsIcon,
-} from '@/components/shared/icons'
+import { cn } from '@opyn/ui'
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu'
-import { cn } from '@/lib/utils'
-import { NavigationMenuLink } from '@radix-ui/react-navigation-menu'
+} from '@opyn/ui'
+import { MarketsIcon, PortfolioIcon, TradeIcon, VaultsIcon } from '@opyn/ui'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -81,9 +77,9 @@ function isActive(href: string, pathname: string) {
 
 const navOptions = [
   { text: 'Trade', href: '/', icon: TradeIcon },
-  { text: 'Markets', href: '/m', icon: MarketsIcon },
-  { text: 'Vaults', href: '/v', icon: VaultsIcon },
-  { text: 'Portfolio', href: '/p', icon: PortfolioIcon },
+  { text: 'Markets', href: '/markets', icon: MarketsIcon },
+  { text: 'Vaults', href: '/vaults', icon: VaultsIcon },
+  { text: 'Portfolio', href: '/portfolio', icon: PortfolioIcon },
   {
     text: 'More',
     options: [

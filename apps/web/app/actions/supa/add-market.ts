@@ -1,7 +1,7 @@
 'use server'
 
-import { type ActionResult, failure, success } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { type ActionResult, failure, success } from '@opyn/lib'
+import { createSupabaseNextClient } from '@opyn/supabase'
 import { type Tables, marketInsertSchema } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 
@@ -13,7 +13,7 @@ export const addMarket = createSafeActionClient()
       parsedInput: market,
     }): Promise<ActionResult<Tables<'market'>>> => {
       try {
-        const supabase = await createSupabaseServerClient()
+        const supabase = await createSupabaseNextClient()
 
         const { data, error } = await supabase
           .from('market')

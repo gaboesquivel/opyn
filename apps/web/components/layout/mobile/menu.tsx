@@ -1,13 +1,7 @@
 'use client'
 
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
-import {
-  MarketsIcon,
-  PortfolioIcon,
-  TradeIcon,
-  VaultsIcon,
-} from '@/components/shared/icons'
-import { cn } from '@/lib/utils'
+import { cn } from '@opyn/ui'
+import { MarketsIcon, PortfolioIcon, TradeIcon, VaultsIcon } from '@opyn/ui'
 import { Bot } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -16,7 +10,6 @@ import { useState } from 'react'
 export function MobileMenu() {
   const pathname = usePathname()
   const [isTradeMenuOpen, setIsTradeMenuOpen] = useState(false)
-  const { marketSlug } = useTradeRoute()
 
   function isActive(href: string) {
     if (href === '/') {
@@ -49,7 +42,7 @@ export function MobileMenu() {
                 {tradeSubOptions.map((subOption) => (
                   <Link
                     key={subOption.text}
-                    href={`${subOption.href}/${marketSlug || 'ETHUSDC-eth001'}`}
+                    href={`${subOption.href}/ETH-USDC-0x1`}
                     className="block px-4 w-[100px] h-10 py-2 pl-6 text-sm text-neutral-light hover:bg-accent"
                     onClick={() => setIsTradeMenuOpen(false)}
                   >

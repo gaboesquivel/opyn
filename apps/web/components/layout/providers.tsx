@@ -1,5 +1,6 @@
 'use client'
 
+import { opynRainbowKitTheme } from '@opyn/ui'
 import {
   RainbowKitProvider,
   darkTheme,
@@ -30,18 +31,10 @@ export const wagmiConfig = getDefaultConfig({
   chains: [arbitrum, arbitrumSepolia],
 })
 
-const customRainbowKitTheme: RainbowKitTheme = merge(darkTheme(), {
-  colors: {
-    accentColor: '#27292B',
-    accentColorForeground: '#fff',
-    connectButtonBackground: '#27292B',
-    connectButtonText: '#FFFFFF',
-  },
-  radii: {
-    actionButton: '9999px',
-    connectButton: '9999px',
-  },
-} as RainbowKitTheme)
+const customRainbowKitTheme: RainbowKitTheme = merge(
+  darkTheme(),
+  opynRainbowKitTheme,
+)
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

@@ -1,25 +1,22 @@
 'use client'
 
-import { useTradeData } from '@/components/routes/trade/hooks/use-trade-data'
-import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
-import { CurrencyIcon } from '@/components/shared/icons'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { QuantityInput } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { formatCurrency } from '@/lib/utils'
-import { getMarket, getMarketData } from '@/services/supabase'
-import { useSupabaseClient } from '@/services/supabase/sdk/client'
+import { useMarket } from '@opyn/hooks'
+import { formatCurrency } from '@opyn/lib'
+import { useSupabaseClient } from '@opyn/supabase'
+import { getMarket } from '@opyn/supabase'
 import type { Tables } from '@opyn/supabase'
+import { DialogContent, DialogHeader, DialogTitle } from '@opyn/ui'
+import { QuantityInput } from '@opyn/ui'
+import { Button } from '@opyn/ui'
+import { Card } from '@opyn/ui'
+import { Label } from '@opyn/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@opyn/ui'
+import { CurrencyIcon } from '@opyn/ui'
 import { DialogDescription } from '@radix-ui/react-dialog'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useQuery } from '@tanstack/react-query'
 import { AlertCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useQueryState } from 'nuqs'
 import { useEffect, useMemo, useState } from 'react'
 import { erc20Abi, formatUnits, getAddress, parseUnits } from 'viem'
@@ -36,9 +33,7 @@ export function DepositWithdraw() {
   const [activeTab, setActiveTab] = useQueryState('dialog', {
     defaultValue: 'deposit',
   })
-  const { marketSlug, marketType, underlierSymbol, numeraireSymbol } =
-    useTradeRoute()
-  const { data } = useTradeData({ marketSlug, marketType })
+  const { underlierSymbol, numeraireSymbol } = useMarket()
 
   return (
     <DialogContent>
@@ -73,8 +68,9 @@ export function DepositWithdraw() {
 
 function WithdrawContent() {
   const { address } = useAccount()
+  const { openConnectModal } = useConnectModal()
   const [amount, setAmount] = useState<string>('1,000')
-  const { marketSlug, marketId } = useTradeRoute()
+  const { marketSlug, marketId } = useMarket()
   const supabase = useSupabaseClient()
   const { data: market } = useQuery({
     queryKey: ['market', marketSlug],
@@ -127,28 +123,37 @@ function WithdrawContent() {
           className="bg-primary"
         />
 
-        {numeraire ? <Balance token={numeraire} setAmount={setAmount} /> : null}
+        {numeraire ? <Balance asset={numeraire} setAmount={setAmount} /> : null}
       </div>
 
       {numeraire ? (
-        <PositionInfo token={numeraire} amount={amount} action="withdraw" />
+        <PositionInfo asset={numeraire} amount={amount} action="withdraw" />
       ) : null}
 
       <ChainWarning action="withdraw" />
 
       <CollateralWarning action="withdraw" />
 
-      <Button
-        className="w-full bg-white text-black hover:bg-gray-200"
-        onClick={withdraw}
-        disabled={isPending || isLoading}
-      >
-        {isPending || isLoading
-          ? 'Withdrawing...'
-          : isSuccess
-            ? 'Withdrew!'
-            : `Withdraw ${numeraire.symbol}`}
-      </Button>
+      {!address ? (
+        <Button
+          className="w-full bg-white text-black hover:bg-gray-200"
+          onClick={openConnectModal}
+        >
+          Connect Wallet
+        </Button>
+      ) : (
+        <Button
+          className="w-full bg-white text-black hover:bg-gray-200"
+          onClick={withdraw}
+          disabled={isPending || isLoading}
+        >
+          {isPending || isLoading
+            ? 'Withdrawing...'
+            : isSuccess
+              ? 'Withdrew!'
+              : `Withdraw ${numeraire.symbol}`}
+        </Button>
+      )}
 
       {error && (
         <div className="text-red-500 text-sm text-center mt-4">
@@ -160,31 +165,30 @@ function WithdrawContent() {
 }
 
 function DepositContent() {
+  const router = useRouter()
   const { address } = useAccount()
+  const { openConnectModal } = useConnectModal()
   const [amount, setAmount] = useState<string>('1,000')
-  const { marketSlug, marketId, marketType } = useTradeRoute()
+  const { marketSlug, marketId, marketType } = useMarket()
   const supabase = useSupabaseClient()
   const { data: market } = useQuery({
     queryKey: ['market', marketSlug],
     queryFn: () => getMarket({ marketId, supabase }),
     enabled: !!marketSlug,
   })
-  const {
-    writeContract,
-    data: hash,
-    isPending,
-    error,
-    reset,
-  } = useWriteContract()
+  const { writeContract, data: hash, isPending, error } = useWriteContract()
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash })
-  const { data } = useTradeData({ marketSlug, marketType })
+  useEffect(() => {
+    // refresh the page to update the equity value in the health component
+    isSuccess && setTimeout(() => router.refresh(), 3000)
+  }, [isSuccess, router])
 
   // return for now, skeleton loading state later
-  if (!market?.numeraire) return null
+  if (!market || !market.numeraire || !market.controller) return null
 
   const numeraire = market.numeraire
 
-  function deposit() {
+  const deposit = () => {
     if (!numeraire?.address) return null
     if (!address || !numeraire.address || !amount) return
     const quantity = parseUnits(amount.replace(/,/g, ''), numeraire.decimals)
@@ -193,7 +197,7 @@ function DepositContent() {
       address: getAddress(numeraire.address),
       abi: erc20Abi,
       functionName: 'transfer',
-      args: [address, quantity],
+      args: [getAddress(market?.controller || '0x'), quantity],
     })
   }
 
@@ -214,26 +218,35 @@ function DepositContent() {
           deco={<CurrencyIcon currency={numeraire.symbol} />}
           className="bg-primary"
         />
-        <Balance token={numeraire} setAmount={setAmount} />
+        <Balance asset={numeraire} setAmount={setAmount} />
       </div>
 
-      <PositionInfo token={numeraire} amount={amount} action="deposit" />
+      <PositionInfo asset={numeraire} amount={amount} action="deposit" />
 
       <ChainWarning action="deposit" />
 
       <CollateralWarning action="deposit" />
 
-      <Button
-        className="w-full bg-white text-black hover:bg-gray-200"
-        onClick={deposit}
-        disabled={isPending || isLoading}
-      >
-        {isPending || isLoading
-          ? 'Depositing...'
-          : isSuccess
-            ? 'Deposited!'
-            : `Deposit ${numeraire.symbol}`}
-      </Button>
+      {!address ? (
+        <Button
+          className="w-full bg-white text-black hover:bg-gray-200"
+          onClick={openConnectModal}
+        >
+          Connect Wallet
+        </Button>
+      ) : (
+        <Button
+          className="w-full bg-white text-black hover:bg-gray-200"
+          onClick={deposit}
+          disabled={isPending || isLoading}
+        >
+          {isPending || isLoading
+            ? 'Depositing...'
+            : isSuccess
+              ? 'Deposited!'
+              : `Deposit ${numeraire.symbol}`}
+        </Button>
+      )}
 
       {error && (
         <div className="text-red-500 text-sm text-center mt-4">
@@ -245,14 +258,12 @@ function DepositContent() {
 }
 
 function PositionInfo({
-  token,
+  asset,
   action,
   amount,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}: { token: any; amount: string; action: 'withdraw' | 'deposit' }) {
-  const { marketSlug, marketType } = useTradeRoute()
-  const { data } = useTradeData({ marketSlug, marketType })
-  const position = data?.account.position || {
+}: { asset: Tables<'asset'>; amount: string; action: 'withdraw' | 'deposit' }) {
+  // TODO: get position info from supa
+  const position = {
     collateral: 0,
     liq: {
       low: 0,
@@ -309,12 +320,12 @@ function PositionInfo({
         },
       }
     }
-  }, [amount, position, action])
+  }, [amount, action])
 
   return (
     <div className="space-y-2 mb-6 text-xs text-neutral-light">
       <div className="flex justify-between ">
-        <span>Total {token.symbol} Collateral</span>
+        <span>Total {asset.symbol} Collateral</span>
         <span>
           {formatCurrency({
             value: formatUnits(BigInt(position.collateral), DECIMALS),
@@ -347,7 +358,6 @@ function PositionInfo({
 function ChainWarning({ action }: { action: 'deposit' | 'withdraw' }) {
   // const chainId = useChainId()
   // const { chains, switchChain } = useSwitchChain()
-  // console.log({ chainId, chains, switchChain: Boolean(switchChain) })
 
   return (
     <Card variant="outline" className="flex items-center space-x-2 mb-6 p-3 ">
@@ -423,31 +433,31 @@ function CollateralWarning({ action }: { action: 'deposit' | 'withdraw' }) {
 }
 
 function Balance({
-  token,
+  asset,
   setAmount,
-}: { token: Tables<'token'>; setAmount: (amount: string) => void }) {
+}: { asset: Tables<'asset'>; setAmount: (amount: string) => void }) {
   const { address } = useAccount()
 
   const { data: balance, refetch } = useReadContract({
-    address: getAddress(token.address),
+    address: getAddress(asset.address),
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: [address ?? '0x'],
     query: {
-      enabled: Boolean(address) && Boolean(token.address),
+      enabled: Boolean(address) && Boolean(asset.address),
       refetchInterval: 5000,
     },
   })
 
   const formattedBalance = formatCurrency({
-    value: formatUnits(balance || 0n, token.decimals),
+    value: formatUnits(balance || 0n, asset.decimals),
   })
 
   useEffect(() => {
-    if (token.address) {
+    if (asset.address) {
       refetch()
     }
-  }, [token.address, refetch])
+  }, [asset.address, refetch])
 
   return (
     <div className="flex justify-between text-sm text-gray-400 mt-2">
@@ -457,7 +467,7 @@ function Balance({
 
         <span
           className="cursor-pointer text-brand"
-          onClick={() => setAmount(formatUnits(balance || 0n, token.decimals))}
+          onClick={() => setAmount(formatUnits(balance || 0n, asset.decimals))}
         >
           Max
         </span>
@@ -465,5 +475,3 @@ function Balance({
     </div>
   )
 }
-
-type DepositAction = 'approve' | 'transfer'

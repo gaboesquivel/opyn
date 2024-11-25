@@ -1,0 +1,26 @@
+{
+  "name": "@opyn/alchemy",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "activity": "bun webhooks/activity.ts",
+    "wipe": "bun webhooks/dev/wipe.ts",
+    "activity-dev": "bun webhooks/dev/activity.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@opyn/lib": "workspace:*",
+    "@opyn/supabase": "workspace:*"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "alchemy-sdk": "^3.5.0",
+    "lodash": "^4.17.21",
+    "viem": "2.x",
+    "zod": "^3.23.8"
+  }
+}

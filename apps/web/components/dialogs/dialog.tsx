@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog } from '@/components/ui/dialog'
+import { Dialog } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 import * as React from 'react'
 import { ComparePerps } from './compare-perps'
