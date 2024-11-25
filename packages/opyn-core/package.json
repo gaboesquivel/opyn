@@ -2,6 +2,7 @@
   "name": "@opyn/core",
   "main": "src/index.ts",
   "types": "src/index.ts",
+
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,6 +10,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "viem": "2.x"
+    "viem": "2.x",
+    "@opyn/supabase": "workspace:*"
   }
 }

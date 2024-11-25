@@ -23,6 +23,17 @@ const nextConfig = {
       },
     ]
   },
+  transpilePackages: [
+    '@opyn/ui',
+    '@opyn/ai',
+    '@opyn/supabase',
+    '@opyn/core',
+    '@opyn/alchemy',
+    '@opyn/trigger',
+    '@opyn/hooks',
+    '@opyn/lib',
+    '@opyn/math',
+  ],
   experimental: {
     ...(process.env.NODE_ENV === 'development'
       ? { outputFileTracingRoot: path.join(__dirname, '../../') }

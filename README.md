@@ -29,10 +29,11 @@ For detailed information on each component, please refer to their respective REA
 - **Opyn API (`/packages/opyn-api`)**: Opyn API TypeScript SDK. [Details](/packages/opyn-api/README.md)
 - **Opyn Core (`/packages/opyn-core`)**: Core smart contract interactions and ABIs. [Details](/packages/opyn-core/README.md)
 - **Opyn Math (`/packages/opyn-math`)**: Math utilities for calculations. [Details](/packages/opyn-math/README.md)
-- **Alchemy (`/packages/alchemy`)**: Alchemy webhook handlers and blockchain event monitoring. [Details](/packages/alchemy/README.md)
-- **Trigger (`/packages/trigger`)**: Trigger.dev job definitions and event handlers. [Details](/packages/trigger/README.md)
-- **Supabase (`/packages/supabase`)**: Postgres database, types and zod schemas. [Details](/packages/supabase/README.md)
-- **Errors (`/packages/errors`)**: Centralized error catalog. [Details](/packages/errors/README.md)
+- **Opyn Hooks (`/packages/opyn-hooks`)**: React hooks for interacting with smart contracts. [Details](/packages/opyn-hooks/README.md)
+- **Opyn Alchemy (`/packages/opyn-alchemy`)**: Alchemy webhook handlers and blockchain event monitoring. [Details](/packages/opyn-alchemy/README.md)
+- **Opyn Trigger (`/packages/opyn-trigger`)**: Trigger.dev job definitions and event handlers. [Details](/packages/opyn-trigger/README.md)
+- **Opyn Supabase (`/packages/opyn-supabase`)**: Postgres database, types and zod schemas. [Details](/packages/opyn-supabase/README.md)
+- **Opyn Errors (`/packages/opyn-errors`)**: Centralized error catalog. [Details](/packages/opyn-errors/README.md)
 
 ### Tooling
 

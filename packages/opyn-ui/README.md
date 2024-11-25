@@ -1,8 +1,7 @@
 # Opyn UI Design System Documentation
 
 This directory serves as the **documentation repository** for the Opyn Markets Design System. It aims to provide clear and actionable guidelines for the team, ensuring a unified and efficient approach to building user interfaces.
-
-In the **future**, this repository may evolve to package a **Tailwind CSS theme** and **shadcn/ui components** for broader reuse. However, for **v1**, we are keeping these components directly within the Next.js app to maintain a pragmatic development workflow.
+Contains all styled shadcn/ui components and custom Opyn components
 
 
 ## Goals of the Design System
@@ -45,22 +44,15 @@ The design system includes robust typography settings for titles, headings, and 
 Refer to [`typography.json`](./path-to-typography.json) for the complete specification and details.
 
 
-
-
 ### Colors
 The color palette defines consistent color usage across the application. It includes categories such as **Primary**, **Error**, **Warning**, **Success**, **Neutral**, **Accent**, **Background**, and **Text**. Each category is carefully tailored to meet specific design requirements.
 
 Refer to [`colors.json`](./path-to-colors.json) for the complete specification and details.
 
-
-
 ### Shadows
 Shadows are categorized into styles for **Normal**, **Hover**, and **Focused** use cases. These are designed to add depth and clarity to UI components.
 
 Refer to [`shadows.json`](./path-to-shadows.json) for the complete specification and details.
-
-
-
 
 ### Icons
 We use **Heroicons** as our icon library for the design system.  
