@@ -1,19 +1,22 @@
 'use client'
 
 import { useTradeRoute } from '@/components/routes/trade/hooks/use-trade-route'
-import { getMarkets } from '@opyn/api'
+import { getMarkets } from '@/services/supabase'
+import { createSupabaseServerClient } from '@/services/supabase'
 import { useEffect, useRef } from 'react'
 
-export function FooterTradingView() {
-  const { trade } = useTradeRoute()
-  const markets = getMarkets({ trade })
+export async function FooterTradingView() {
+  const { marketType } = useTradeRoute()
+  const supabase = await createSupabaseServerClient()
+  const markets = getMarkets({ marketType, supabase })
   const footerRef = useRef<HTMLElement>(null)
 
-  const symbols = markets.map(({ value, label }) => ({
-    proName: `BINANCE:${value}`,
-    title: label,
-  }))
-  console.log(markets, symbols)
+  const symbols = await markets.then((markets) =>
+    markets.map((market) => ({
+      proName: `BINANCE:${market.underlier?.symbol}${market.numeraire?.symbol}`,
+      title: `${market.underlier?.symbol}/${market.numeraire?.symbol}`,
+    })),
+  )
 
   useEffect(() => {
     if (!footerRef.current) return

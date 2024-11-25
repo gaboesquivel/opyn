@@ -1,13 +1,14 @@
 'use client'
 
 import { setAddressCookie } from '@/app/actions/ui/address-cookie'
-import { Button } from '@/components/ui/button'
+import { OpynConnectButton } from '@/components/layout/header/connect'
+
 import { appConfig } from '@/lib/config'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAction } from 'next-safe-action/hooks'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { Menu } from './menu'
 
@@ -44,13 +45,7 @@ export function Header() {
 
       <div className="flex justify-end lg:min-w-[300px] lg:gap-5">
         <div className="items-center gap-5 flex">
-          <Suspense fallback={<Button>Login</Button>}>
-            <ConnectButton
-              showBalance={false}
-              chainStatus="icon"
-              accountStatus="address"
-            />
-          </Suspense>
+          <OpynConnectButton />
         </div>
         <div className="flex lg:hidden">
           {/* DynamicMobileNav component removed */}

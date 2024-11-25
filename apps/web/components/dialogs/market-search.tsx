@@ -12,15 +12,25 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { getMarkets } from '@opyn/api'
+import { getMarketLabel, getMarketSlug } from '@/lib/opyn'
+import { useSupabaseClient } from '@/services/supabase'
+import { getMarkets } from '@/services/supabase'
+import { useQuery } from '@tanstack/react-query'
 import { useTradeRoute } from '../routes/trade/hooks/use-trade-route'
 
-export default function MarketSearch() {
-  const tokens = getMarkets({ trade: 'perps' })
+export default async function MarketSearch() {
+  const supabase = useSupabaseClient()
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredTokens, setFilteredTokens] = useState(tokens)
-  const { trade } = useTradeRoute()
   const searchParams = useSearchParams()
+  const { marketType } = useTradeRoute()
+  const { data: markets = [] } = useQuery({
+    queryKey: ['markets-search', marketType],
+    queryFn: () =>
+      getMarkets({
+        marketType,
+        supabase,
+      }),
+  })
 
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -28,15 +38,18 @@ export default function MarketSearch() {
     searchInputRef.current?.focus()
   }, [])
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    const term = event.target.value.toLowerCase()
-    setSearchTerm(term)
-    const filtered = tokens.filter(
-      (token) =>
-        token.label.toLowerCase().includes(term) ||
-        token.value.toLowerCase().includes(term),
+  const filteredMarkets = markets.filter((market) => {
+    if (!searchTerm) return true
+    return (
+      market.underlier?.symbol
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      market.numeraire?.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    setFilteredTokens(filtered)
+  })
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
   }
 
   return (
@@ -56,11 +69,11 @@ export default function MarketSearch() {
           />
         </div>
         <div className="overflow-y-auto sm:min-h-[300px] sm:h-[300px]  sm:max-h-[300px]">
-          {filteredTokens.map((token) => (
+          {filteredMarkets?.map((market) => (
             <Link
-              key={token.value}
+              key={market.id}
               href={{
-                pathname: `/trade/${trade}/${token.value}`,
+                pathname: `/trade/${marketType}/${getMarketSlug(market)}`,
                 query: Object.fromEntries(
                   Array.from(searchParams.entries()).filter(
                     ([key]) => key !== 'dialog',
@@ -74,7 +87,7 @@ export default function MarketSearch() {
                 variant="ghost"
                 className="w-full justify-start font-normal"
               >
-                {token.label}
+                {getMarketLabel(market)}
               </Button>
             </Link>
           ))}

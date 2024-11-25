@@ -4,14 +4,14 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === '/compare') {
     return NextResponse.redirect(
-      new URL('/trade/perps/ETHUSDC-eth001?dialog=compare', request.url),
+      new URL('/trade/perps/ETH-USDC-0x1?dialog=compare', request.url),
     )
   }
 
   if (request.nextUrl.pathname !== '/') return NextResponse.next()
 
   return NextResponse.redirect(
-    new URL('/trade/perps/ETHUSDC-eth001', request.url),
+    new URL('/trade/perps/ETH-USDC-0x1', request.url),
   )
 }
 
