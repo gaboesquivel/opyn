@@ -1,11 +1,14 @@
 'use client'
 
 import {Button} from '@/components/ui/button'
-import {Table, TableHeader, TableRow, TableHead, TableBody} from '@/components/ui/table'
-import {ChevronUpIcon, ChevronDownIcon, ChevronsUpDownIcon} from 'lucide-react'
+import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from '@/components/ui/table'
+import {ChevronUpIcon, ChevronDownIcon, ChevronsUpDownIcon, LoaderIcon} from 'lucide-react'
 import {MarketRow} from '@/components/routes/markets/base-markets/table/market-row'
 import {parseAsStringEnum, useQueryState} from 'nuqs'
 import {ReactElement, ReactNode, useMemo} from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getAggregatedMarketMetrics, useSupabaseClient } from '@/services/supabase'
+import { MarketRowDataProps } from './table.types'
 
 const generateData = (points: number, trend: "up" | "down") =>
     Array.from({length: points}, (_, i) => ({
@@ -14,7 +17,7 @@ const generateData = (points: number, trend: "up" | "down") =>
             : 100 - (Math.random() * 50 + i)
     }))
 
-enum SortKey { name = "name", price = "price", change = "change", volume = "volume", oi = "oi" }
+enum SortKey { name = "name", price = "price", change = "change", volume = "total_volume_24h", oi = "total_open_interest" }
 
 enum Direction {
     asc = "ASC",
@@ -22,62 +25,38 @@ enum Direction {
 }
 
 export function MarketsTable() {
+
+    const supabase = useSupabaseClient()
+
     const [sortKey, setSortKey] = useQueryState("sortBy", parseAsStringEnum<SortKey>(Object.values(SortKey) as SortKey[]))
 
     const [sortOrder, setSortOrder] = useQueryState("order", parseAsStringEnum<Direction>(Object.values(Direction) as Direction[]))
 
-    const marketData = useMemo(() => [
-        {
-            icon: "https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/32/ethereum.png",
-            name: "Ethereum",
-            markets: "24",
-            price: 3000.00,
-            change: 5.83,
-            volume: 437,
-            oi: 35.6,
-            data: generateData(20, "up"),
-            trend: "up",
-        },
-        {
-            icon: "https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/32/bitcoin.png",
-            name: "Bitcoin",
-            markets: "2",
-            price: 3000.00,
-            change: 5.83,
-            volume: 437,
-            oi: 35.6,
-            data: generateData(20, "up"),
-            trend: "up",
-        },
-        {
-            icon: "https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/32/arbitrum.png",
-            name: "Arbitrum",
-            markets: "8",
-            price: 3000.00,
-            change: -5.83,
-            volume: 437,
-            oi: 35.6,
-            data: generateData(20, "down"),
-            trend: "down",
-        },
-        {
-            icon: "https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/32/bonk.png",
-            name: "BONK",
-            markets: "1",
-            price: 3000.00,
-            change: 5.83,
-            volume: 437,
-            oi: 35.6,
-            data: generateData(20, "up"),
-            trend: "up",
-        },
-    ], [])
-
-    const sortedMarketData = [...marketData].sort((a, b) => {
-        const sortingKey = sortKey || "name"
-        return a[sortingKey] < b[sortingKey] ? (sortOrder === Direction.asc ? -1 : 1) :
-            a[sortingKey] > b[sortingKey] ? (sortOrder === Direction.asc ? 1 : -1) : 0
+    const { data, isLoading } = useQuery({
+        queryKey: ["markets-table", sortKey, sortOrder],
+        queryFn: ()=>getAggregatedMarketMetrics({
+            sortField: (sortKey === SortKey.volume || sortKey === SortKey.oi) ? sortKey : "num_markets",
+            sortDirection: sortOrder as 'ASC' | 'DESC',
+            supabase
+        })
     })
+    // 
+
+    const marketData = useMemo<MarketRowDataProps[]>(() => {
+        return (data?.map((item: {[key: string]: any})=>(
+            {
+                icon: item?.underlier_asset_image_url,
+                name: item?.underlier_asset_name,
+                markets: item?.num_markets,
+                price: 3000.00,
+                change: 5.83,
+                volume: item?.total_volume_24h,
+                oi: item?.total_open_interest,
+                data: generateData(20, "up"),
+                trend: "up",
+            }
+        )) || [])
+    }, [data])
 
     const toggleSort = (key: SortKey) => {
         if (key === sortKey) {
@@ -95,44 +74,52 @@ export function MarketsTable() {
                     <TableHead>Market</TableHead>
                     <TableHead></TableHead>
                     <TableHead>
-                        <SortButton sortkey='price' currentSorting={sortKey} sortDir={sortOrder}
+                        <SortButton sortkey={SortKey.price} currentSorting={sortKey} sortDir={sortOrder}
                                     toggleSort={toggleSort}>
                             Price
                         </SortButton>
                     </TableHead>
                     <TableHead>
-                        <SortButton sortkey='change' currentSorting={sortKey} sortDir={sortOrder}
+                        <SortButton sortkey={SortKey.change} currentSorting={sortKey} sortDir={sortOrder}
                                     toggleSort={toggleSort}>
                             24h Change
                         </SortButton>
                     </TableHead>
                     <TableHead>
-                        <SortButton sortkey='volume' currentSorting={sortKey} sortDir={sortOrder}
+                        <SortButton sortkey={SortKey.volume} currentSorting={sortKey} sortDir={sortOrder}
                                     toggleSort={toggleSort}>
                             24h Volume
                         </SortButton>
                     </TableHead>
                     <TableHead>
-                        <SortButton sortkey='oi' currentSorting={sortKey} sortDir={sortOrder} toggleSort={toggleSort}>
+                        <SortButton sortkey={SortKey.oi} currentSorting={sortKey} sortDir={sortOrder} toggleSort={toggleSort}>
                             Open Interest
                         </SortButton>
                     </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {sortedMarketData.map((market, index) => (
-                    <MarketRow
-                        key={index}
-                        icon={market.icon}
-                        name={market.name}
-                        markets={market.markets}
-                        price={`$${market.price.toFixed(2)}`}
-                        change={`${market.change > 0 ? '+' : ''}${market.change.toFixed(2)}%`}
-                        volume={`$${market.volume}m`}
-                        oi={`$${market.oi}m`}
-                        data={market.data}
-                        trend={market.trend as ('up' | 'down')}
-                    />
+                { isLoading ? 
+                    (<TableRow>
+                        <TableCell colSpan={6} className='p-4 text-center'>
+                            <div className='flex w-full items-center justify-center'>
+                         <LoaderIcon className='animate-spin text-tertiary' />
+                            </div>
+                        </TableCell>
+                    </TableRow>) :
+                    marketData.map((market, index) => (
+                        <MarketRow
+                            key={index}
+                            icon={market.icon}
+                            name={market.name}
+                            markets={market.markets}
+                            price={`$${(+market.price).toFixed(2)}`}
+                            change={`${+market.change > 0 ? '+' : ''}${(+market.change).toFixed(2)}%`}
+                            volume={`$${market.volume}m`}
+                            oi={`$${market.oi}m`}
+                            data={market.data}
+                            trend={market.trend as ('up' | 'down')}
+                        />
                 ))}
             </TableBody>
         </Table>
