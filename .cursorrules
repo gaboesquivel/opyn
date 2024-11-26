@@ -30,19 +30,29 @@
 # React/Next.js
 - Use functional components 
 - Use TypeScript interfaces at the bottom of files
+- Name everything semantically
 - Use types from @opyn/supabase
 - Use declarative JSX
 - Use function, not const for components
 - Use const for methods in components
 - Use variables for static content at the bottom of files
-- Use Shadcn UI, Radix, Tailwind Aria for styling
+- Use Shadcn UI, Radix, Tailwind Aria for styling importing components from @opyn/ui
 - Implement responsive design with Tailwind CSS; mobile-first approach
 - Use content variables for static content outside render functions
 - Minimize 'use client', 'useEffect', 'setState'; favor RSC
 - Use Zod for form validation
 - Optimize images: WebP format, size data, lazy loading
 - Use error boundaries for unexpected errors
-- Use useActionState with react-hook-form for form validation
+- Use useActionState with react-hook-form for form validation with <Form>
+- Use react functional components never render functions
+- Use guard clauses and early returns for validation and preconditions
+  ```typescript
+  useEffect(() => {
+    if (!watch) return
+      refetch()
+  }, [refetch, watch])
+``` 
+
 - Use next-safe-action for server actions:
   - Handle errors gracefully with captureAppError from @opyn/errors
   - Use ActionResult for consistent responses
@@ -53,8 +63,8 @@
 ```typescript
 'use server'
 
-import { type ActionResult, success, failure } from '@/lib/actions'
-import { createSupabaseServerClient } from '@/services/supabase'
+import { type ActionResult, success, failure } from '@opyn/lib'
+import { createSupabaseNextClient } from '@/services/supabase'
 import { type Tables, depositInsertSchema } from '@opyn/supabase'
 import { createSafeActionClient } from 'next-safe-action'
 
@@ -66,7 +76,7 @@ export const saveDepositIntent = createSafeActionClient()
       parsedInput: transfer,
     }): Promise<ActionResult<Tables<'presale_deposit'>>> => {
       try {
-        const supabase = await createSupabaseServerClient()
+        const supabase = await createSupabaseNextClient()
 
         const transaction = await supabase
           .from('transaction')
@@ -135,6 +145,10 @@ export const saveDepositIntent = createSafeActionClient()
 - Use shadcn/ui Skeleton in Suspense fallbacks
 - Use Sonner for toast notifications
 
+# Tools
+- Use React-use for hooks
+- Use date-fns for date manipulation
+
 ### Examples
 
 #### Example 1: Styling a Tab Component
@@ -170,28 +184,23 @@ export const saveDepositIntent = createSafeActionClient()
 </Dialog>
 ```
 
-
-By following these best practices, your shadcn/ui components will be consistent, accessible, and maintainable.
-
-
-
-
-# Viem
-- Always use getAddress from viem to convert addresses to Address type, never as Address
-
+# Viem Wagmi
+- Use getAddress from viem to convert addresses to Address type, never as Address
+- Use viem 2.x apis
+- Use wagmi 2.x apis
 
 # NextJS Services 
 
-- never use try/catch in services instead use captureAppError from @/services/sentry
+- never use try/catch in services instead use captureAppError from @opyn/errors
 - use SupaApiParams type for supabase client
 - return type guards for supabase queries and mutations
 - return data type can never be null
 
 ```tsx
-import { captureAppError } from '@/services/sentry/index'
+import { captureAppError } from '@opyn/errors'
 import type { SupaApiParams } from '../types'
 
-export async function getTokenByUuid({
+export async function getAssetByUuid({
   uuid,
   supabase,
 }: SupaApiParams & {
@@ -207,5 +216,48 @@ export async function getTokenByUuid({
 
   return data as NonNullable<typeof data>
 }
+
+
+export async function insertMarket({
+  market,
+  supabase,
+}: SupaApiParams & {
+  market: TablesInsert<'market'>
+}) {
+  const { data, error } = await supabase
+    .from('market')
+    .insert(market)
+    .select()
+    .single()
+
+  if (error || !data) captureAppError('INSERT_ERROR', error)
+
+  return data as NonNullable<typeof data>
+}
+
+
+```
+
+
+# Trigger Hooks
+
+```ts
+import type { AlchemyActivity, AlchemyWebhookEvent } from '@opyn/alchemy'
+import { logger, task } from '@trigger.dev/sdk/v3'
+import { insertMarket } from '../../lib/supabase'
+
+export const newMarketTask = task({
+  id: 'collateral-deposit',
+  run: async (payload: AlchemyWebhookEvent) => {
+    const activity: AlchemyActivity[] = payload.event.activity
+
+    try {
+      const market = await insertCollateralDeposit({ market: dummyMarket })
+      logger.info('Inserted dummy market', { market })
+    } catch (error) {
+      logger.error('Failed to insert dummy market', { error })
+    }
+  },
+})
 
 ```

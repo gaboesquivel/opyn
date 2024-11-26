@@ -2,6 +2,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import 'overlayscrollbars/overlayscrollbars.css'
 import 'katex/dist/katex.min.css'
 // last for overwerites
+import '@opyn/ui/opyn.css'
 import '@/app/globals.css'
 
 import { GeistSans } from 'geist/font/sans'
@@ -10,9 +11,10 @@ import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { Providers } from '@/components/layout/providers'
 
-import { appConfig } from '@/lib/config'
-import { cn } from '@/lib/utils'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { OpynNuqsAdapter } from '@opyn/hooks'
+import { opynConfig } from '@opyn/lib'
+import { cn } from '@opyn/ui'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Viewport } from 'next'
@@ -47,31 +49,33 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           'flex flex-col min-h-[100dvh] w-full ',
           'bg-background',
-          'text-foreground antialiased p-0 ',
-          appConfig.features.ai && 'bg-card',
+          'text-foreground antialiased p-0 text-xxs sm:text-base',
+          opynConfig.features.ai && 'bg-card',
         )}
       >
-        <Providers>
-          <div className="flex flex-col min-h-[100dvh] w-full">
-            <Header />
-            <main
-              className={cn(
-                'flex w-full overflow-y-auto px-2 sm:px-0 flex flex-col  sm:min-h-[calc(100dvh-100px)] sm:h-auto sm:max-h-none h-[calc(100dvh-140px)] max-h-[calc(100dvh-140px)]',
-                {
-                  'sm:pb-11': !appConfig.features.ai,
-                },
-              )}
-            >
-              {appConfig.features.ai ? <OpynAi /> : children}
-            </main>
-            {appConfig.features.ai ? null : <Footer />}
-          </div>
-          <OpynDialog />
-        </Providers>
-        <Toaster />
-        <GoogleAnalytics gaId={appConfig.services.googleAnalyticsId} />
-        <Analytics />
-        <SpeedInsights />
+        <OpynNuqsAdapter>
+          <Providers>
+            <div className="flex flex-col min-h-[100dvh] w-full">
+              <Header />
+              <main
+                className={cn(
+                  'flex w-full overflow-y-auto px-2 sm:px-0 flex flex-col  sm:min-h-[calc(100dvh-100px)] sm:h-auto sm:max-h-none h-[calc(100dvh-140px)] max-h-[calc(100dvh-140px)]',
+                  {
+                    'sm:pb-11': !opynConfig.features.ai,
+                  },
+                )}
+              >
+                {opynConfig.features.ai ? <div>AI</div> : children}
+              </main>
+              {opynConfig.features.ai ? null : <Footer />}
+            </div>
+            <OpynDialog />
+          </Providers>
+          <Toaster />
+          <GoogleAnalytics gaId={opynConfig.services.googleAnalyticsId} />
+          <Analytics />
+          <SpeedInsights />
+        </OpynNuqsAdapter>
       </body>
     </html>
   )
@@ -84,13 +88,10 @@ const OpynDialog = dynamic(
   },
 )
 
-const OpynAi = dynamic(
-  () => import('@/components/opyn-ai').then((mod) => mod.OpynAi),
-  {
-    ssr: false,
-    loading: () => <div />,
-  },
-)
+// const OpynAi = dynamic(() => import('@opyn/ai').then((mod) => mod.OpynAi), {
+//   ssr: false,
+//   loading: () => <div />,
+// })
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -98,11 +99,11 @@ interface RootLayoutProps {
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'opyn',
-    template: '%s | opyn',
+    absolute: 'Opyn Markets',
+    template: '%s | Opyn Markets',
   },
   description: 'opyn!',
-  metadataBase: new URL('https://opyn.xyz'),
+  metadataBase: new URL('https://opyn-app.vercel.app'),
   alternates: {
     canonical: '/',
     languages: {
@@ -111,24 +112,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://opyn.xyz',
-    title: 'opyn',
+    url: 'https://opyn-app.vercel.app',
+    title: 'Opyn Markets',
     description: 'Opyn Markets',
     images: [
       {
-        url: 'https://opyn.xyz/images/og-image.webp',
-        alt: 'opyn',
+        url: 'https://opyn-app.vercel.app/images/og-image.webp',
+        alt: 'Opyn Markets',
       },
     ],
   },
   twitter: {
-    creator: 'opyn',
+    creator: 'Opyn Markets',
     site: '@opyn',
     card: 'summary_large_image',
     images: [
       {
-        url: 'https://opyn.xyz/images/og-image.webp',
-        alt: 'opyn',
+        url: 'https://opyn-app.vercel.app/images/og-image.webp',
+        alt: 'Opyn Markets',
       },
     ],
   },

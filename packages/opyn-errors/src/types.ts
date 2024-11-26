@@ -1,5 +1,3 @@
-import type { opynErrors } from './catalog'
-
 export interface OpynError {
   code: string
   message: string
@@ -21,7 +19,9 @@ export type OpynErrorCode =
   | 'BAD_REQUEST'
   | 'FETCH_ERROR'
   | 'DB_OP_FAILURE'
-
+  | 'TRX_OP_FAILURE'
+  | 'INSERT_ERROR'
+  | 'UPDATE_ERROR'
 // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
 export type ErrorWithMessage = {
   message: string

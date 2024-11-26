@@ -198,7 +198,7 @@ Benefits:
 - [lucide-react](https://lucide.dev/): Icon library for React applications.
 - [mini-svg-data-uri](https://github.com/tigt/mini-svg-data-uri): Optimizes SVGs for data URIs.
 - [zod](https://zod.dev/): TypeScript-first schema validation.
-- [@radix-ui/react-slot](https://www.radix-ui.com/primitives/docs/utilities/slot): Utility component for flexible composition.
+- [@radix-ui/react-slot](https://www.radix-ui.com/primitives/docs/utilities/slot): Utility component for flexible composition.x
 - [@blockmatic/hooks-utils](https://github.com/blockmatic/hooks-utils): A collection of useful React hooks, including createContextHook for easy context creation and consumption.
 - [pino-pretty](https://github.com/pinojs/pino-pretty): Prettifier for Pino logs. WalletConnect uses pino for logging.
 - [react-device-detect](https://github.com/duskload/react-device-detect): Device detection for React applications.
@@ -207,6 +207,7 @@ Benefits:
 - [sonner](https://sonner.emilkowal.ski/): An opinionated toast component for React.
 - [react-wrap-balancer](https://github.com/shuding/react-wrap-balancer): Text wrapping component for React.
 - [uuid](https://github.com/uuidjs/uuid): UUID generation library.
+- [react-use](https://github.com/streamich/react-use): React hooks library.
 - [vconsole](https://github.com/Tencent/vConsole): Mobile-friendly console for debugging.
 - [@total-typescript/ts-reset](https://github.com/total-typescript/ts-reset): TypeScript reset to fix common TypeScript annoyances.
 

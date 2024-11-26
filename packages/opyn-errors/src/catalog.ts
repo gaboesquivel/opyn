@@ -39,4 +39,16 @@ export const opynErrors: Record<OpynErrorCode, OpynError> = {
     code: 'DB_OP_FAILURE',
     message: 'Database operation failed',
   },
+  TRX_OP_FAILURE: {
+    code: 'TRX_OP_FAILURE',
+    message: 'Transaction operation failed',
+  },
+  INSERT_ERROR: {
+    code: 'INSERT_ERROR',
+    message: 'Insert operation failed',
+  },
+  UPDATE_ERROR: {
+    code: 'UPDATE_ERROR',
+    message: 'Update operation failed',
+  },
 } as const

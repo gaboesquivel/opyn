@@ -47,6 +47,13 @@
     }
   },
   "files": {
-    "ignore": ["**/chat-icons.tsx", "**/.trigger/**", "**/vercel.json"]
+    "ignore": [
+      "**/chat-icons.tsx",
+      "**/.trigger/**",
+      "**/vercel.json",
+      "**/dist/**",
+      "**/tsconfig.node.json",
+      "**/tsconfig.json"
+    ]
   }
 }
