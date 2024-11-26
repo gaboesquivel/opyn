@@ -14,7 +14,11 @@ import {
   TradingPositionsCard,
 } from '@/components/routes/trade/perps/positions'
 import { parseMarketSlug } from '@opyn/lib'
-import { createSupabaseNextClient, getUserMarketEquity } from '@opyn/supabase'
+import {
+  createSupabaseNextClient,
+  getMarket,
+  getUserMarketEquity,
+} from '@opyn/supabase'
 import { getMarketMetric } from '@opyn/supabase'
 import type { AIBot, PerpType, PosTab, TradeSide } from '@opyn/types'
 import { cookies } from 'next/headers'
@@ -35,6 +39,12 @@ export default async function TradePage({
   const equity = address
     ? await getUserMarketEquity({ marketId, address, supabase })
     : 0
+  const market = await getMarket({ marketId, supabase })
+  const mockData = Array.from({ length: 30 }, (_, i) => ({
+    timestamp: Date.now() - i * 24 * 60 * 60 * 1000,
+    rate: (Math.random() - 0.5) * 0.01, // Random rate between -0.5% and 0.5%
+  })).reverse()
+  const chartType = searchParams.chart || 'price'
 
   return (
     <TradeDashboard
@@ -45,8 +55,10 @@ export default async function TradePage({
       mobileMarket={<TradeMarketInfoMobile marketMetric={marketMetric} />}
       chart={
         <OpynCharts
+          data={mockData}
           underlierSymbol={underlierSymbol}
           numeraireSymbol={numeraireSymbol}
+          chartType={chartType}
         />
       }
       positions={<TradePositions />}
@@ -70,4 +82,5 @@ export type TradeSearchParams = {
   bot?: AIBot
   postab?: PosTab
   lev: number
+  chart?: 'price' | 'funding' | 'payoff'
 }

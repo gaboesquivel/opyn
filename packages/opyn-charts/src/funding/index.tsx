@@ -1,7 +1,6 @@
 'use client'
 
 import { Card, CardContent, CardHeader } from '@opyn/ui'
-import { useEffect, useState } from 'react'
 import {
   Area,
   AreaChart,
@@ -11,24 +10,12 @@ import {
   YAxis,
 } from 'recharts'
 
-interface FundingDataPoint {
+export interface FundingDataPoint {
   timestamp: number
   rate: number
 }
 
-export function FundingChart() {
-  const [data, setData] = useState<FundingDataPoint[]>([])
-
-  // TODO: Replace with actual funding rate data fetching
-  useEffect(() => {
-    const mockData = Array.from({ length: 30 }, (_, i) => ({
-      timestamp: Date.now() - i * 24 * 60 * 60 * 1000,
-      rate: (Math.random() - 0.5) * 0.01, // Random rate between -0.5% and 0.5%
-    })).reverse()
-
-    setData(mockData)
-  }, [])
-
+export function FundingChart({ data }: { data: FundingDataPoint[] }) {
   const formatDate = (timestamp: number) => {
     return new Date(timestamp).toLocaleDateString()
   }

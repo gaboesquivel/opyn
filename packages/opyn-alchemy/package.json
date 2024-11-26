@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "types": "src/index.d.ts",
   "scripts": {
-    "activity": "bun webhooks/activity.ts",
+    "market-positions": "bun webhooks/market/positions.ts",
+    "market-deposits": "bun webhooks/market/deposits.ts",
     "wipe": "bun webhooks/dev/wipe.ts",
     "activity-dev": "bun webhooks/dev/activity.ts"
   },

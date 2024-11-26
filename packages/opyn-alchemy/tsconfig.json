@@ -1,6 +1,6 @@
 {
   "extends": ["../../tooling/tsconfig/nextjs.json"],
-  "include": ["./src/**/*", "src/lib/utils.ts", "webhooks/activity.ts"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "sourceMap": true,

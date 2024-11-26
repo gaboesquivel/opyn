@@ -62,11 +62,12 @@ alter table "public"."uniswap_pool" drop constraint "uniswap_pool_token1_uuid_fk
 
 alter table "public"."token" drop constraint "tokens_pkey";
 
-drop index if exists "public"."tokens_pkey";
+-- drop index if exists "public"."tokens_pkey";
 
-drop index if exists "public"."tokens_uuid_key";
+-- drop index if exists "public"."tokens_uuid_key";
 
-drop table "public"."token";
+-- NOTE: this was giving problems
+-- drop table "public"."token";
 
 create table "public"."asset" (
     "address" text not null,

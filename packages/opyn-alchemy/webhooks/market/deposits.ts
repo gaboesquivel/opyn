@@ -1,5 +1,4 @@
-import { getMarkets } from '@/Users/gaboesquivel/Code/opyn/packages/opyn-supabase/src/api/market/index'
-import { createSupabaseServerClient } from '@opyn/supabase'
+import { createSupabaseServerClient, getMarkets } from '@opyn/supabase'
 import { Alchemy, Network, WebhookType } from 'alchemy-sdk'
 
 async function createAddressActivityNotification({
@@ -14,7 +13,7 @@ async function createAddressActivityNotification({
 
     const alchemy = new Alchemy(settings)
     const addressActivityWebhook = await alchemy.notify.createWebhook(
-      'https://opyn-app.vercel.app/api/ingest/perps/activity',
+      'https://opyn-app.vercel.app/api/ingest/market/deposits',
       WebhookType.ADDRESS_ACTIVITY,
       {
         addresses,

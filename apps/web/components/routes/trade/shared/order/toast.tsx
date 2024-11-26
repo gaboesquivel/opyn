@@ -9,7 +9,7 @@ export function OrderToast({
   status,
   errorMessage,
 }: {
-  size: number
+  size: string | number
   status: 'loading' | 'success' | 'error'
   errorMessage?: string
 }) {

@@ -3,18 +3,21 @@ import {
   TradeMarketData,
   TradeMarketInfoMobile,
 } from '@/components/routes/trade/perps/market'
-import { TradeDashboard } from '@/components/routes/trade/shared/dashboard'
-import { TradeNav } from '@/components/routes/trade/shared/nav'
-import { TradeOrder } from '@/components/routes/trade/shared/order'
-import { OpynAi } from '@opyn/ai'
-
-import { OpynCharts } from '@/components/routes/trade/perps/charts'
 import {
   TradePositions,
   TradingPositionsCard,
 } from '@/components/routes/trade/perps/positions'
+import { TradeDashboard } from '@/components/routes/trade/shared/dashboard'
+import { TradeNav } from '@/components/routes/trade/shared/nav'
+import { TradeOrder } from '@/components/routes/trade/shared/order'
+import { OpynSpotChart } from '@/components/routes/trade/spot/charts'
+import { OpynAi } from '@opyn/ai'
 import { parseMarketSlug } from '@opyn/lib'
-import { createSupabaseNextClient, getUserMarketEquity } from '@opyn/supabase'
+import {
+  createSupabaseNextClient,
+  getMarket,
+  getUserMarketEquity,
+} from '@opyn/supabase'
 import { getMarketMetric } from '@opyn/supabase'
 import type { AIBot, PerpType, PosTab, TradeSide } from '@opyn/types'
 import { cookies } from 'next/headers'
@@ -36,6 +39,8 @@ export default async function SpotPage({
     ? await getUserMarketEquity({ marketId, address, supabase })
     : 0
 
+  const market = await getMarket({ marketId, supabase })
+
   return (
     <TradeDashboard
       nav={<TradeNav />}
@@ -44,7 +49,7 @@ export default async function SpotPage({
       market={<TradeMarketData marketMetric={marketMetric} />}
       mobileMarket={<TradeMarketInfoMobile marketMetric={marketMetric} />}
       chart={
-        <OpynCharts
+        <OpynSpotChart
           underlierSymbol={underlierSymbol}
           numeraireSymbol={numeraireSymbol}
         />
