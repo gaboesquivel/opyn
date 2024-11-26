@@ -1,6 +1,6 @@
-import { OpynDialog } from '@/components/dialogs/dialog'
 import { MobileSwiper } from '@/components/layout/mobile/swiper'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@opyn/ui'
+import dynamic from 'next/dynamic'
 
 export function TradeDashboard({
   order,
@@ -91,3 +91,10 @@ export function TradeDashboard({
     </div>
   )
 }
+
+const OpynDialog = dynamic(
+  () => import('@/components/dialogs/dialog').then((mod) => mod.OpynDialog),
+  {
+    ssr: false,
+  },
+)
