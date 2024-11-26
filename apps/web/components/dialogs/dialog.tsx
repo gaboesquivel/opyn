@@ -1,12 +1,12 @@
 'use client'
 
 import { Dialog } from '@opyn/ui'
+import { useCmdK } from '@/lib/hooks'
 import { useQueryState } from 'nuqs'
-import * as React from 'react'
+import type * as React from 'react'
 import { ComparePerps } from './compare-perps'
 import { DepositWithdraw } from './deposit-withdraw'
 import MarketSearch from './market-search'
-import { useCmdK } from '@/lib/hooks'
 
 export function OpynDialog() {
   const [dialog, setDialog] = useQueryState('dialog', {
@@ -16,7 +16,9 @@ export function OpynDialog() {
 
   const content = dialogs[dialog]
 
-  useCmdK(()=>{setDialog('marketsearch')})
+  useCmdK(() => {
+    setDialog('marketsearch')
+  })
 
   // id dialog component is not found we dont try to display it
   return (

@@ -1,6 +1,6 @@
+import { OpynDialog } from '@/components/dialogs/dialog'
 import { MobileSwiper } from '@/components/layout/mobile/swiper'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@opyn/ui'
-import { OpynDialog } from '@/components/dialogs/dialog'
 
 export function TradeDashboard({
   order,

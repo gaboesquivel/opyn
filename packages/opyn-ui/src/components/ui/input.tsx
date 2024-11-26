@@ -60,8 +60,8 @@ DecoratedInput.displayName = 'DecoratedInput'
 
 const SearchInput = React.forwardRef<
   HTMLInputElement,
-  InputProps & { deco?: React.ReactNode|undefined }
->(({ className, type, deco=undefined, ...props }, ref) => {
+  InputProps & { deco?: React.ReactNode | undefined }
+>(({ className, type, deco = undefined, ...props }, ref) => {
   return (
     <div className="relative">
       <Input
@@ -70,15 +70,14 @@ const SearchInput = React.forwardRef<
         ref={ref}
         {...props}
       />
-      <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-        <Search className='h-4 w-4 text-gray-500' />
+      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <Search className="h-4 w-4 text-gray-500" />
       </div>
-      {
-        deco && 
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            {deco}
-          </div>
-      }
+      {deco && (
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          {deco}
+        </div>
+      )}
     </div>
   )
 })

@@ -63,28 +63,25 @@ export async function getAggregatedMarketMetrics({
   sortDirection = 'DESC',
   supabase,
 }: SupaApiParams & {
-  sortField: AggregateSortFields,
+  sortField: AggregateSortFields
   sortDirection: 'ASC' | 'DESC'
 }) {
-  
-  const pageLimit = 10;
-  const pageOffset = 0;
+  const pageLimit = 10
+  const pageOffset = 0
 
   const { data, error } = await supabase.rpc('aggregate_market_metrics', {
     sort_field: sortField,
     sort_direction: sortDirection,
     page_limit: pageLimit,
     page_offset: pageOffset,
-  });
+  })
 
   if (error || !data) captureAppError('FETCH_ERROR', error)
 
   return data as NonNullable<typeof data>
 }
 
-export async function getAllMarketsOverview({
-  supabase,
-}: SupaApiParams) {
+export async function getAllMarketsOverview({ supabase }: SupaApiParams) {
   const { data, error } = await supabase
     .from('market_metric')
     .select(`

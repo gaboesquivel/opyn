@@ -1,8 +1,9 @@
-import { TableCell, TableRow } from "@/components/ui/table"
-import { SparkChart } from "../../spark-chart"
-import {MarketRowDataProps} from "@/components/routes/markets/base-markets/table/table.types";
+import type { MarketRowDataProps } from '@/components/routes/markets/base-markets/table/table.types'
+import { TableCell, TableRow } from '@/components/ui/table'
+import { SparkChart } from '../../spark-chart'
 
 export function MarketRow({
+  key,
   icon,
   name,
   markets,
@@ -12,9 +13,12 @@ export function MarketRow({
   oi,
   data,
   trend,
-}: MarketRowDataProps) {
+}: MarketRowDataProps & { key: string | number }) {
   return (
-    <TableRow className="group transition-colors hover:bg-gray-900 hover:cursor-pointer">
+    <TableRow
+      key={key}
+      className="group transition-colors hover:bg-gray-900 hover:cursor-pointer"
+    >
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           <img
@@ -26,7 +30,9 @@ export function MarketRow({
           />
           <div>
             <div className="font-medium">{name}</div>
-            <div className="text-sm text-gray-400">{markets} {+markets > 1 ? "markets" : "market"}</div>
+            <div className="text-sm text-gray-400">
+              {markets} {+markets > 1 ? 'markets' : 'market'}
+            </div>
           </div>
         </div>
       </TableCell>
@@ -35,13 +41,18 @@ export function MarketRow({
           <SparkChart data={data} trend={trend} />
         </div>
       </TableCell>
-      <TableCell className="px-4 py-4 font-medium tabular-nums">{price}</TableCell>
-      <TableCell className={`px-4 py-4 font-medium tabular-nums ${trend === "up" ? "text-success-500" : "text-error-500"}`}>
+      <TableCell className="px-4 py-4 font-medium tabular-nums">
+        {price}
+      </TableCell>
+      <TableCell
+        className={`px-4 py-4 font-medium tabular-nums ${trend === 'up' ? 'text-success-500' : 'text-error-500'}`}
+      >
         {change}
       </TableCell>
-      <TableCell className="px-4 py-4 font-medium tabular-nums">{volume}</TableCell>
+      <TableCell className="px-4 py-4 font-medium tabular-nums">
+        {volume}
+      </TableCell>
       <TableCell className="px-4 py-4 font-medium tabular-nums">{oi}</TableCell>
     </TableRow>
   )
 }
-
