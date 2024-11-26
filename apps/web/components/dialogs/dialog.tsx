@@ -1,7 +1,7 @@
 'use client'
 
-import { Dialog } from '@opyn/ui'
 import { useCmdK } from '@/lib/hooks'
+import { Dialog } from '@opyn/ui'
 import { useQueryState } from 'nuqs'
 import type * as React from 'react'
 import { ComparePerps } from './compare-perps'

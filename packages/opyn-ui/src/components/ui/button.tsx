@@ -21,8 +21,6 @@ const buttonVariants = cva(
           'bg-positive/20 hover:bg-positive/20 text-positive hover:text-positive',
         up: 'border border-positive bg-positive/20 hover:bg-positive/20 text-positive hover:text-positive',
         down: 'border border-negative bg-negative/20 hover:bg-negative/20 text-negative hover:text-negative',
-        brand:
-          'border border-brand bg-brand/20 hover:bg-brand/20 text-brand hover:text-brand',
         inactive:
           'border border-primary  bg-primary/20 hover:bg-primary/20 text-negative hover:text-tertiary text-tertiary',
         subtle:

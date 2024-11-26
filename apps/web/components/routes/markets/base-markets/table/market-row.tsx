@@ -1,5 +1,5 @@
 import type { MarketRowDataProps } from '@/components/routes/markets/base-markets/table/table.types'
-import { TableCell, TableRow } from '@/components/ui/table'
+import { TableCell, TableRow } from '@opyn/ui'
 import { SparkChart } from '../../spark-chart'
 
 export function MarketRow({

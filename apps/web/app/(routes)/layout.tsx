@@ -68,8 +68,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 {opynConfig.features.ai ? <div>AI</div> : children}
               </main>
               {opynConfig.features.ai ? null : <Footer />}
-          </div>
-        </Providers>
+            </div>
+          </Providers>
           <Toaster />
           <GoogleAnalytics gaId={opynConfig.services.googleAnalyticsId} />
           <Analytics />

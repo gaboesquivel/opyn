@@ -1,6 +1,6 @@
 import { MarketsTable } from '@/components/routes/markets/base-markets/table/markets-table'
 import { MarketSearchInput } from '@/components/routes/markets/search-input'
-import { Switch } from '@/components/ui/switch'
+import { Switch } from '@opyn/ui'
 
 export default function MarketsSearchSection() {
   return (

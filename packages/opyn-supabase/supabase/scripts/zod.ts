@@ -3,8 +3,8 @@
 const fs = require('node:fs')
 const path = require('node:path')
 
-const inputFilePath = path.join(__dirname, '../src/supa.types.ts')
-const outputFilePath = path.join(__dirname, '../src/supa.modified.types.ts')
+const inputFilePath = path.join(__dirname, '../../src/supa.types.ts')
+const outputFilePath = path.join(__dirname, '../../src/supa.modified.types.ts')
 
 function removeSupabaseUrl(content) {
   // Use a regular expression to remove the supabase_url function definition

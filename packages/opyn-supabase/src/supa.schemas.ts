@@ -18,6 +18,7 @@ export const assetRowSchema = z.object({
   address: z.string(),
   created_at: z.string(),
   decimals: z.number(),
+  image_url: z.string().nullable(),
   name: z.string(),
   stablecoin: z.boolean(),
   symbol: z.string(),
@@ -28,6 +29,7 @@ export const assetInsertSchema = z.object({
   address: z.string(),
   created_at: z.string().optional(),
   decimals: z.number().optional(),
+  image_url: z.string().optional().nullable(),
   name: z.string(),
   stablecoin: z.boolean().optional(),
   symbol: z.string(),
@@ -38,6 +40,7 @@ export const assetUpdateSchema = z.object({
   address: z.string().optional(),
   created_at: z.string().optional(),
   decimals: z.number().optional(),
+  image_url: z.string().optional().nullable(),
   name: z.string().optional(),
   stablecoin: z.boolean().optional(),
   symbol: z.string().optional(),
@@ -211,6 +214,8 @@ export const oracleTypeSchema = z.union([
 ])
 
 export const marketInsertSchema = z.object({
+  '2_perp_long': z.string().optional().nullable(),
+  '2_perp_short': z.string().optional().nullable(),
   asset_flo: z.string(),
   auction: z.string(),
   controller: z.string(),
@@ -237,6 +242,8 @@ export const marketInsertSchema = z.object({
 })
 
 export const marketUpdateSchema = z.object({
+  '2_perp_long': z.string().optional().nullable(),
+  '2_perp_short': z.string().optional().nullable(),
   asset_flo: z.string().optional(),
   auction: z.string().optional(),
   controller: z.string().optional(),
@@ -805,6 +812,8 @@ export const documentsWithStoragePathRowSchema = z.object({
 export const documentsWithStoragePathRelationshipsSchema = z.tuple([])
 
 export const marketRowSchema = z.object({
+  '2_perp_long': z.string().nullable(),
+  '2_perp_short': z.string().nullable(),
   asset_flo: z.string(),
   auction: z.string(),
   controller: z.string(),

@@ -1,7 +1,7 @@
 'use client'
 
-import { SearchInput } from '@/components/ui/input'
 import { useCmdK } from '@/lib/hooks'
+import { SearchInput } from '@opyn/ui'
 import { useRef } from 'react'
 
 export function MarketSearchInput() {

@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { formatCurrency } from '@/lib/utils'
+import { formatCurrency } from '@opyn/lib'
 import {
   createSupabaseServerClient,
   getAllMarketsOverview,
-} from '@/services/supabase'
+} from '@opyn/supabase'
+import { Card, CardContent, CardHeader, CardTitle } from '@opyn/ui'
 import { LoaderIcon, TriangleAlertIcon } from 'lucide-react'
 import { Suspense } from 'react'
 

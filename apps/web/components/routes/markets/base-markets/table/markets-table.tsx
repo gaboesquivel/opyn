@@ -1,7 +1,8 @@
 'use client'
 
 import { MarketRow } from '@/components/routes/markets/base-markets/table/market-row'
-import { Button } from '@/components/ui/button'
+import { getAggregatedMarketMetrics, useSupabaseClient } from '@opyn/supabase'
+import { Button } from '@opyn/ui'
 import {
   Table,
   TableBody,
@@ -9,11 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import {
-  getAggregatedMarketMetrics,
-  useSupabaseClient,
-} from '@/services/supabase'
+} from '@opyn/ui'
 import { useQuery } from '@tanstack/react-query'
 import {
   ChevronDownIcon,
