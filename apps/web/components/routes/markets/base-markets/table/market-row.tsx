@@ -1,4 +1,5 @@
 import type { MarketRowDataProps } from '@/components/routes/markets/base-markets/table/table.types'
+import { formatCurrency } from '@opyn/lib'
 import { TableCell, TableRow } from '@opyn/ui'
 import { SparkChart } from '../../spark-chart'
 
@@ -42,17 +43,25 @@ export function MarketRow({
         </div>
       </TableCell>
       <TableCell className="px-4 py-4 font-medium tabular-nums">
-        {price}
+        {formatCurrency({
+          value: price,
+        })}
       </TableCell>
       <TableCell
         className={`px-4 py-4 font-medium tabular-nums ${trend === 'up' ? 'text-success-500' : 'text-error-500'}`}
       >
-        {change}
+        {`${change > 0 ? '+' : ''}${(change).toFixed(2)}%`}
       </TableCell>
       <TableCell className="px-4 py-4 font-medium tabular-nums">
-        {volume}
+        {formatCurrency({
+          value: volume,
+        })}
       </TableCell>
-      <TableCell className="px-4 py-4 font-medium tabular-nums">{oi}</TableCell>
+      <TableCell className="px-4 py-4 font-medium tabular-nums">
+        {formatCurrency({
+          value: oi,
+        })}
+      </TableCell>
     </TableRow>
   )
 }

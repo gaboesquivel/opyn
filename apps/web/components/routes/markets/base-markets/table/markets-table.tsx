@@ -159,10 +159,10 @@ export function MarketsTable() {
               icon={market.icon}
               name={market.name}
               markets={market.markets}
-              price={`$${(+market.price).toFixed(2)}`}
-              change={`${+market.change > 0 ? '+' : ''}${(+market.change).toFixed(2)}%`}
-              volume={`$${market.volume}m`}
-              oi={`$${market.oi}m`}
+              price={market.price}
+              change={market.change}
+              volume={market.volume}
+              oi={market.oi}
               data={market.data}
               trend={market.trend as 'up' | 'down'}
             />

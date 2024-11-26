@@ -2,10 +2,10 @@ export interface MarketRowDataProps {
   icon: string
   name: string
   markets: number
-  price: string
-  change: string
-  volume: string
-  oi: string
+  price: number
+  change: number
+  volume: number
+  oi: number
   data: { value: number }[]
   trend: 'up' | 'down'
 }
