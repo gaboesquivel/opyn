@@ -214,8 +214,6 @@ export const oracleTypeSchema = z.union([
 ])
 
 export const marketInsertSchema = z.object({
-  '2_perp_long': z.string().optional().nullable(),
-  '2_perp_short': z.string().optional().nullable(),
   asset_flo: z.string(),
   auction: z.string(),
   controller: z.string(),
@@ -237,13 +235,13 @@ export const marketInsertSchema = z.object({
   span_margin: z.string().optional().nullable(),
   stable_flo: z.string(),
   two_crab: z.string(),
+  two_perp_long: z.string().optional().nullable(),
+  two_perp_short: z.string().optional().nullable(),
   underlier: z.string(),
   updated_at: z.string().optional().nullable(),
 })
 
 export const marketUpdateSchema = z.object({
-  '2_perp_long': z.string().optional().nullable(),
-  '2_perp_short': z.string().optional().nullable(),
   asset_flo: z.string().optional(),
   auction: z.string().optional(),
   controller: z.string().optional(),
@@ -265,6 +263,8 @@ export const marketUpdateSchema = z.object({
   span_margin: z.string().optional().nullable(),
   stable_flo: z.string().optional(),
   two_crab: z.string().optional(),
+  two_perp_long: z.string().optional().nullable(),
+  two_perp_short: z.string().optional().nullable(),
   underlier: z.string().optional(),
   updated_at: z.string().optional().nullable(),
 })
@@ -812,8 +812,6 @@ export const documentsWithStoragePathRowSchema = z.object({
 export const documentsWithStoragePathRelationshipsSchema = z.tuple([])
 
 export const marketRowSchema = z.object({
-  '2_perp_long': z.string().nullable(),
-  '2_perp_short': z.string().nullable(),
   asset_flo: z.string(),
   auction: z.string(),
   controller: z.string(),
@@ -835,6 +833,8 @@ export const marketRowSchema = z.object({
   span_margin: z.string().nullable(),
   stable_flo: z.string(),
   two_crab: z.string(),
+  two_perp_long: z.string().nullable(),
+  two_perp_short: z.string().nullable(),
   underlier: z.string(),
   updated_at: z.string().nullable(),
 })

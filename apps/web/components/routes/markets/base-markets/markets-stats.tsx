@@ -7,6 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@opyn/ui'
 import { LoaderIcon, TriangleAlertIcon } from 'lucide-react'
 import { Suspense } from 'react'
 
+const isValidMetrics = (
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  metrics: any,
+): metrics is { total_volume_24h: number; total_open_interest: number } =>
+  metrics && !metrics.error
+
 export default async function MarketsStats() {
   const client = await createSupabaseServerClient()
   const aggregatedMetrics = await getAllMarketsOverview({ supabase: client })
@@ -25,7 +31,7 @@ export default async function MarketsStats() {
           </CardHeader>
           <CardContent className="p-0 sm:p-0">
             <h2 className="text-2xl font-medium font-mono">
-              {aggregatedMetrics ? (
+              {isValidMetrics(aggregatedMetrics) ? (
                 formatCurrency({
                   value: aggregatedMetrics.total_volume_24h || 0,
                 })
@@ -46,9 +52,9 @@ export default async function MarketsStats() {
           </CardHeader>
           <CardContent className="p-0 sm:p-0">
             <h2 className="text-2xl font-medium font-mono">
-              {aggregatedMetrics ? (
+              {isValidMetrics(aggregatedMetrics) ? (
                 formatCurrency({
-                  value: aggregatedMetrics.total_open_interest || 0,
+                  value: aggregatedMetrics.total_open_interest,
                 })
               ) : (
                 <TriangleAlertIcon className="w-6 h-6" />

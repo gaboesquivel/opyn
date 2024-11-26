@@ -194,8 +194,6 @@ export type Database = {
       }
       market: {
         Row: {
-          '2_perp_long': string | null
-          '2_perp_short': string | null
           asset_flo: string
           auction: string
           controller: string
@@ -217,12 +215,12 @@ export type Database = {
           span_margin: string | null
           stable_flo: string
           two_crab: string
+          two_perp_long: string | null
+          two_perp_short: string | null
           underlier: string
           updated_at: string | null
         }
         Insert: {
-          '2_perp_long'?: string | null
-          '2_perp_short'?: string | null
           asset_flo: string
           auction: string
           controller: string
@@ -244,12 +242,12 @@ export type Database = {
           span_margin?: string | null
           stable_flo: string
           two_crab: string
+          two_perp_long?: string | null
+          two_perp_short?: string | null
           underlier: string
           updated_at?: string | null
         }
         Update: {
-          '2_perp_long'?: string | null
-          '2_perp_short'?: string | null
           asset_flo?: string
           auction?: string
           controller?: string
@@ -271,6 +269,8 @@ export type Database = {
           span_margin?: string | null
           stable_flo?: string
           two_crab?: string
+          two_perp_long?: string | null
+          two_perp_short?: string | null
           underlier?: string
           updated_at?: string | null
         }

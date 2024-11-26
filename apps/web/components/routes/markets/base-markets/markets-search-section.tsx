@@ -1,6 +1,8 @@
 import { MarketsTable } from '@/components/routes/markets/base-markets/table/markets-table'
 import { MarketSearchInput } from '@/components/routes/markets/search-input'
 import { Switch } from '@opyn/ui'
+import { LoaderIcon } from 'lucide-react'
+import { Suspense } from 'react'
 
 export default function MarketsSearchSection() {
   return (
@@ -16,7 +18,13 @@ export default function MarketsSearchSection() {
       </div>
 
       <div className="overflow-hidden">
-        <MarketsTable />
+        <Suspense
+          fallback={
+            <LoaderIcon className="w-6 h-6 text-gray-400 animate-spin" />
+          }
+        >
+          <MarketsTable />
+        </Suspense>
       </div>
     </>
   )

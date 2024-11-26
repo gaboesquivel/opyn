@@ -1,7 +1,7 @@
 export interface MarketRowDataProps {
   icon: string
   name: string
-  markets: string
+  markets: number
   price: string
   change: string
   volume: string

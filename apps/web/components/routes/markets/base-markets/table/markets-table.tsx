@@ -20,7 +20,6 @@ import {
 } from 'lucide-react'
 import { parseAsStringEnum, useQueryState } from 'nuqs'
 import { type ReactElement, type ReactNode, useMemo } from 'react'
-import type { MarketRowDataProps } from './table.types'
 
 const generateData = (points: number, trend: 'up' | 'down') =>
   Array.from({ length: points }, (_, i) => ({
@@ -68,21 +67,22 @@ export function MarketsTable() {
         supabase,
       }),
   })
-  //
 
-  const marketData = useMemo<MarketRowDataProps[]>(() => {
+  const marketData = useMemo(() => {
     return (
-      data?.map((item: { [key: string]: string | number }) => ({
-        icon: item?.underlier_asset_image_url,
-        name: item?.underlier_asset_name,
-        markets: item?.num_markets,
-        price: 3000.0,
-        change: 5.83,
-        volume: item?.total_volume_24h,
-        oi: item?.total_open_interest,
-        data: generateData(20, 'up'),
-        trend: 'up',
-      })) || []
+      data?.map((item) => {
+        return {
+          icon: item?.underlier_asset_image_url,
+          name: item?.underlier_asset_name,
+          markets: item?.num_markets,
+          price: 3000.0,
+          change: 5.83,
+          volume: item?.total_volume_24h,
+          oi: item?.total_open_interest,
+          data: generateData(20, 'up'),
+          trend: 'up',
+        }
+      }) || []
     )
   }, [data])
 
