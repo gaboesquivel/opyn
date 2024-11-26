@@ -1,12 +1,12 @@
 'use client'
 
-import { useMarket, useMint } from '@opyn/hooks'
 import { opynConfig } from '@opyn/lib'
-import type { Tables } from '@opyn/supabase'
 import type { TradeSide } from '@opyn/types'
 import { QuantityInput } from '@opyn/ui'
 import { TrendDownIcon, TrendUpIcon } from '@opyn/ui'
 import { CurrencyIcon } from '@opyn/ui'
+
+import { useMarket } from '@opyn/hooks'
 import {
   Accordion,
   AccordionContent,
@@ -26,37 +26,25 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useQueryState } from 'nuqs'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { getAddress } from 'viem'
+import { useSignMessage } from 'wagmi'
 import { useAccount } from 'wagmi'
 import { OrderDetails } from './details'
 import { PerpTypeButtons } from './perp-type'
 import { LeverageSlider } from './slider'
 import { OrderToast } from './toast'
 
-const getMintState = (mint: ReturnType<typeof useMint>) => ({
-  isPending: mint.isPending,
-  isSuccess: mint.isSuccess,
-  isError: mint.isError,
-  error: mint.error,
-  reset: mint.reset,
-})
-
-export function TradeOrder({ market }: { market: Tables<'market'> }) {
-  const [quantity, setQuantity] = useState<string>('1000')
-  const mintShort = useMint({
-    tokenAddress: market.two_perp_short
-      ? getAddress(market.two_perp_short)
-      : '0x',
-    amount: BigInt(quantity),
-  })
-  const mintLong = useMint({
-    tokenAddress: market.two_perp_long
-      ? getAddress(market.two_perp_long)
-      : '0x',
-    amount: BigInt(quantity),
-  })
-
+export function TradeOrder() {
+  const { marketSlug } = useMarket()
   const [_, setDialog] = useQueryState('dialog')
+  const {
+    signMessage,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+    reset,
+    failureReason,
+  } = useSignMessage()
 
   const [side, setSide] = useQueryState<TradeSide>('side', {
     defaultValue: 'long',
@@ -67,45 +55,57 @@ export function TradeOrder({ market }: { market: Tables<'market'> }) {
   const [leverage] = useQueryState<number>('lev', {
     parse: (value) => Number.parseFloat(value),
   })
+  const [quantity, setQuantity] = useState<string>('1000')
+
+  const order = {
+    pair: marketSlug.split('-')[0],
+    type: 'market',
+    side,
+    size: Number.parseFloat(quantity), // * leverage
+    price: 0,
+    stopPrice: 0,
+    trailingPercent: 0,
+    reduceOnly: false,
+    postOnly: false,
+    timeInForce: 'GTC',
+    leverage,
+    marginType: 'cross',
+  }
 
   const executeOrder = () => {
-    if (side === 'long') {
-      mintLong.mint()
-    } else {
-      mintShort.mint()
-    }
+    const orderMessage = JSON.stringify(order)
+    signMessage({ message: orderMessage })
   }
 
   // User notifications
   useEffect(() => {
-    const mint = side === 'long' ? mintLong : mintShort
-    const mintState = getMintState(mint)
-
-    if (mintState.isPending) {
-      toast.custom((t) => <OrderToast size={quantity} status="loading" />, {
+    if (isPending) {
+      toast.custom((t) => <OrderToast size={order.size} status="loading" />, {
         id: 'order-execution',
-        duration: Number.POSITIVE_INFINITY,
+        // biome-ignore lint/style/useNumberNamespace: <explanation>
+        duration: Infinity,
       })
-    } else if (mintState.isSuccess) {
-      toast.custom((t) => <OrderToast size={quantity} status="success" />, {
+    } else if (isSuccess) {
+      toast.custom((t) => <OrderToast size={order.size} status="success" />, {
         id: 'order-execution',
         duration: 5000,
       })
-      setTimeout(() => mintState.reset(), 5000)
-    } else if (mintState.isError && mintState.error) {
+      setTimeout(() => reset(), 5000)
+    } else if (isError && error) {
       toast.custom(
         (t) => (
           <OrderToast
-            size={quantity}
+            size={order.size}
             status="error"
-            errorMessage={mintState.error?.message || 'Transaction failed'}
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            errorMessage={(failureReason?.cause as any).message}
           />
         ),
         { id: 'order-execution', duration: 5000 },
       )
-      setTimeout(() => mintState.reset(), 5000)
+      setTimeout(() => reset(), 5000)
     }
-  }, [side, quantity, mintLong, mintShort])
+  }, [isPending, isSuccess, isError, error, reset, order.size, failureReason])
 
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -212,7 +212,7 @@ export function TradeOrder({ market }: { market: Tables<'market'> }) {
           variant="positve"
           className="w-full mb-4"
           onClick={address ? executeOrder : openConnectModal}
-          // disabled={address ? isPending || quantity === '0' : false}
+          disabled={address ? isPending || quantity === '0' : false}
         >
           {address ? 'Place order' : 'Connect Wallet'}
         </Button>

@@ -45,7 +45,7 @@ export default async function SpotPage({
     <TradeDashboard
       nav={<TradeNav />}
       health={<TradeAccountHealth equity={equity} />}
-      order={bot ? <OpynAi /> : <TradeOrder market={market} />}
+      order={bot ? <OpynAi /> : <TradeOrder />}
       market={<TradeMarketData marketMetric={marketMetric} />}
       mobileMarket={<TradeMarketInfoMobile marketMetric={marketMetric} />}
       chart={
