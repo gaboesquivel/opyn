@@ -14,6 +14,7 @@ export type Database = {
           address: string
           created_at: string
           decimals: number
+          image_url: string | null
           name: string
           stablecoin: boolean
           symbol: string
@@ -23,6 +24,7 @@ export type Database = {
           address: string
           created_at?: string
           decimals?: number
+          image_url?: string | null
           name: string
           stablecoin?: boolean
           symbol: string
@@ -32,6 +34,7 @@ export type Database = {
           address?: string
           created_at?: string
           decimals?: number
+          image_url?: string | null
           name?: string
           stablecoin?: boolean
           symbol?: string
@@ -212,6 +215,8 @@ export type Database = {
           span_margin: string | null
           stable_flo: string
           two_crab: string
+          two_perp_long: string | null
+          two_perp_short: string | null
           underlier: string
           updated_at: string | null
         }
@@ -237,6 +242,8 @@ export type Database = {
           span_margin?: string | null
           stable_flo: string
           two_crab: string
+          two_perp_long?: string | null
+          two_perp_short?: string | null
           underlier: string
           updated_at?: string | null
         }
@@ -262,6 +269,8 @@ export type Database = {
           span_margin?: string | null
           stable_flo?: string
           two_crab?: string
+          two_perp_long?: string | null
+          two_perp_short?: string | null
           underlier?: string
           updated_at?: string | null
         }
@@ -797,6 +806,50 @@ export type Database = {
       }
     }
     Functions: {
+      aggregate_market_metrics:
+        | {
+            Args: {
+              sort_field?: string
+              sort_direction?: string
+              page_limit?: number
+              page_offset?: number
+            }
+            Returns: {
+              underlier_asset_symbol: string
+              underlier_asset_name: string
+              underlier_asset_image_url: string
+              num_markets: number
+              total_liquidity: number
+              total_volume_24h: number
+              total_volume_7d: number
+              total_volume_30d: number
+              total_open_interest: number
+              total_num_traders: number
+              total_fees_collected: number
+            }[]
+          }
+        | {
+            Args: {
+              sort_field?: string
+              sort_direction?: string
+              page_limit?: number
+              page_offset?: number
+              query?: string
+            }
+            Returns: {
+              underlier_asset_symbol: string
+              underlier_asset_name: string
+              underlier_asset_image_url: string
+              num_markets: number
+              total_liquidity: number
+              total_volume_24h: number
+              total_volume_7d: number
+              total_volume_30d: number
+              total_open_interest: number
+              total_num_traders: number
+              total_fees_collected: number
+            }[]
+          }
       match_document_sections: {
         Args: {
           embedding: string

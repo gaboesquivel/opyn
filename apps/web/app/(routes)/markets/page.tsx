@@ -1,16 +1,15 @@
-import Image from 'next/image'
+import MarketsHeader from '@/components/routes/markets/base-markets/markets-header'
+import MarketsSearchSection from '@/components/routes/markets/base-markets/markets-search-section'
+import MarketsStats from '@/components/routes/markets/base-markets/markets-stats'
+import type { MarekstPageProps } from '@/components/routes/markets/base-markets/types'
 
-export default async function MarketsPage() {
+export default async function MarketsPage({ searchParams }: MarekstPageProps) {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="flex flex-col items-center gap-4 mb-[150px]">
-        <Image
-          src="/images/soon.png"
-          alt="Coming Soon"
-          width={200}
-          height={200}
-          priority
-        />
+    <div className="bg-background px-28 py-14">
+      <div className="mx-auto space-y-6">
+        <MarketsHeader />
+        <MarketsStats />
+        <MarketsSearchSection searchParams={searchParams} />
       </div>
     </div>
   )
