@@ -18,10 +18,11 @@ jobs:
       - name: Supabase Branch
         uses: 0xBigBoss/supabase-branch-gh-action@v1
         with:
-          supabase_token: ${{ secrets.SUPABASE_TOKEN }}
-          supabase_url: ${{ secrets.SUPABASE_URL }}
-          branch_name: ${{ github.ref_name }}
-          branch_type: preview
+        supabase-access-token: ${{ secrets.SUPABASE_TOKEN }}
+        supabase-project-id: ${{ secrets.SUPABASE_PROJECT_ID }}
+        wait-for-migrations: true # Optional. Default is false.
+        timeout: 60 # Optional. Default is 60.
+
 
   get_result:
     name: Get result
