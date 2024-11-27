@@ -193,10 +193,12 @@ export async function getMarketByControllerAddress({
 export async function getAggregatedMarketMetrics({
   sortField = 'total_volume_24h',
   sortDirection = 'DESC',
+  query,
   supabase,
 }: SupaApiParams & {
   sortField: AggregateSortFields
   sortDirection: 'ASC' | 'DESC'
+  query: string
 }) {
   const pageLimit = 10
   const pageOffset = 0
@@ -206,6 +208,7 @@ export async function getAggregatedMarketMetrics({
     sort_direction: sortDirection,
     page_limit: pageLimit,
     page_offset: pageOffset,
+    query: query,
   })
 
   if (error || !data) captureAppError('FETCH_ERROR', error)

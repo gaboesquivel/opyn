@@ -3,13 +3,18 @@ import { MarketSearchInput } from '@/components/routes/markets/search-input'
 import { Switch } from '@opyn/ui'
 import { LoaderIcon } from 'lucide-react'
 import { Suspense } from 'react'
+import type { MarketsPageSearchParams } from './types'
 
-export default function MarketsSearchSection() {
+export default function MarketsSearchSection({
+  searchParams,
+}: { searchParams: MarketsPageSearchParams }) {
   return (
     <>
       <div className="flex items-center justify-between gap-6">
         <div className="relative flex-1">
-          <MarketSearchInput />
+          <Suspense key="search" fallback="Loading ...">
+            <MarketSearchInput />
+          </Suspense>
         </div>
         <div className="flex items-center gap-2">
           <Switch />
@@ -23,7 +28,7 @@ export default function MarketsSearchSection() {
             <LoaderIcon className="w-6 h-6 text-gray-400 animate-spin" />
           }
         >
-          <MarketsTable />
+          <MarketsTable searchParams={searchParams} />
         </Suspense>
       </div>
     </>

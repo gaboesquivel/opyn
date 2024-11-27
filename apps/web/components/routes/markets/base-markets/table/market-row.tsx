@@ -4,7 +4,6 @@ import { TableCell, TableRow } from '@opyn/ui'
 import { SparkChart } from '../../spark-chart'
 
 export function MarketRow({
-  key,
   icon,
   name,
   markets,
@@ -14,12 +13,9 @@ export function MarketRow({
   oi,
   data,
   trend,
-}: MarketRowDataProps & { key: string | number }) {
+}: MarketRowDataProps) {
   return (
-    <TableRow
-      key={key}
-      className="group transition-colors hover:bg-gray-900 hover:cursor-pointer"
-    >
+    <TableRow className="group transition-colors hover:bg-gray-900 hover:cursor-pointer">
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           <img

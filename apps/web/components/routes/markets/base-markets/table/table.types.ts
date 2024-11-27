@@ -9,3 +9,16 @@ export interface MarketRowDataProps {
   data: { value: number }[]
   trend: 'up' | 'down'
 }
+
+export enum SortKey {
+  name = 'name',
+  price = 'price',
+  change = 'change',
+  volume = 'total_volume_24h',
+  oi = 'total_open_interest',
+}
+
+export enum Direction {
+  asc = 'ASC',
+  desc = 'DESC',
+}
