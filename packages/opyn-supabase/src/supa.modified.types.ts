@@ -69,18 +69,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "balance_address_fkey"
-            columns: ["address"]
+            foreignKeyName: 'balance_address_fkey'
+            columns: ['address']
             isOneToOne: true
-            referencedRelation: "user"
-            referencedColumns: ["address"]
+            referencedRelation: 'user'
+            referencedColumns: ['address']
           },
           {
-            foreignKeyName: "balance_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'balance_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -117,18 +117,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "chainlink_price_feed_asset_fkey"
-            columns: ["asset_uuid"]
+            foreignKeyName: 'chainlink_price_feed_asset_fkey'
+            columns: ['asset_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
           {
-            foreignKeyName: "chainlink_price_feed_numeraire_fkey"
-            columns: ["numeraire_uuid"]
+            foreignKeyName: 'chainlink_price_feed_numeraire_fkey'
+            columns: ['numeraire_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
         ]
       }
@@ -153,18 +153,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "document_sections_document_id_fkey"
-            columns: ["document_id"]
+            foreignKeyName: 'document_sections_document_id_fkey'
+            columns: ['document_id']
             isOneToOne: false
-            referencedRelation: "documents"
-            referencedColumns: ["id"]
+            referencedRelation: 'documents'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "document_sections_document_id_fkey"
-            columns: ["document_id"]
+            foreignKeyName: 'document_sections_document_id_fkey'
+            columns: ['document_id']
             isOneToOne: false
-            referencedRelation: "documents_with_storage_path"
-            referencedColumns: ["id"]
+            referencedRelation: 'documents_with_storage_path'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -207,7 +207,7 @@ export type Database = {
           label: string
           numeraire: string
           oracle: string | null
-          oracle_type: Database["public"]["Enums"]["oracle_type"] | null
+          oracle_type: Database['public']['Enums']['oracle_type'] | null
           power_perp_factory: string | null
           redemption: string | null
           safetypool: string | null
@@ -234,7 +234,7 @@ export type Database = {
           label: string
           numeraire: string
           oracle?: string | null
-          oracle_type?: Database["public"]["Enums"]["oracle_type"] | null
+          oracle_type?: Database['public']['Enums']['oracle_type'] | null
           power_perp_factory?: string | null
           redemption?: string | null
           safetypool?: string | null
@@ -261,7 +261,7 @@ export type Database = {
           label?: string
           numeraire?: string
           oracle?: string | null
-          oracle_type?: Database["public"]["Enums"]["oracle_type"] | null
+          oracle_type?: Database['public']['Enums']['oracle_type'] | null
           power_perp_factory?: string | null
           redemption?: string | null
           safetypool?: string | null
@@ -276,18 +276,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "market_numeraire_fkey"
-            columns: ["numeraire"]
+            foreignKeyName: 'market_numeraire_fkey'
+            columns: ['numeraire']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
           {
-            foreignKeyName: "market_underlier_fkey"
-            columns: ["underlier"]
+            foreignKeyName: 'market_underlier_fkey'
+            columns: ['underlier']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
         ]
       }
@@ -315,18 +315,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "market_collateral_collateral_address_fkey"
-            columns: ["collateral_address"]
+            foreignKeyName: 'market_collateral_collateral_address_fkey'
+            columns: ['collateral_address']
             isOneToOne: false
-            referencedRelation: "whitelisted_collateral"
-            referencedColumns: ["collateral_address"]
+            referencedRelation: 'whitelisted_collateral'
+            referencedColumns: ['collateral_address']
           },
           {
-            foreignKeyName: "market_collateral_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'market_collateral_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -369,11 +369,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "market_metric_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'market_metric_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: true
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -388,7 +388,7 @@ export type Database = {
           lower_carry: number
           market_id: string
           minting_fee: number
-          perp_type: Database["public"]["Enums"]["perp_type"]
+          perp_type: Database['public']['Enums']['perp_type']
           updated_at: string | null
           upper_carry: number
         }
@@ -402,7 +402,7 @@ export type Database = {
           lower_carry: number
           market_id: string
           minting_fee: number
-          perp_type: Database["public"]["Enums"]["perp_type"]
+          perp_type: Database['public']['Enums']['perp_type']
           updated_at?: string | null
           upper_carry: number
         }
@@ -416,17 +416,17 @@ export type Database = {
           lower_carry?: number
           market_id?: string
           minting_fee?: number
-          perp_type?: Database["public"]["Enums"]["perp_type"]
+          perp_type?: Database['public']['Enums']['perp_type']
           updated_at?: string | null
           upper_carry?: number
         }
         Relationships: [
           {
-            foreignKeyName: "market_perp_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'market_perp_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -460,18 +460,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "portfolio_health_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'portfolio_health_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "portfolio_health_user_address_fkey"
-            columns: ["user_address"]
+            foreignKeyName: 'portfolio_health_user_address_fkey'
+            columns: ['user_address']
             isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["address"]
+            referencedRelation: 'user'
+            referencedColumns: ['address']
           },
         ]
       }
@@ -508,18 +508,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "pyth_price_feed_asset_fkey"
-            columns: ["asset_uuid"]
+            foreignKeyName: 'pyth_price_feed_asset_fkey'
+            columns: ['asset_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
           {
-            foreignKeyName: "pyth_price_feed_numeraire_fkey"
-            columns: ["numeraire_uuid"]
+            foreignKeyName: 'pyth_price_feed_numeraire_fkey'
+            columns: ['numeraire_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
         ]
       }
@@ -553,11 +553,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "temp_market_data_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'temp_market_data_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -612,25 +612,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "transactions_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'transactions_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "transactions_perp_id_fkey"
-            columns: ["perp_id"]
+            foreignKeyName: 'transactions_perp_id_fkey'
+            columns: ['perp_id']
             isOneToOne: false
-            referencedRelation: "market_perp"
-            referencedColumns: ["id"]
+            referencedRelation: 'market_perp'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "transactions_token_fkey"
-            columns: ["token"]
+            foreignKeyName: 'transactions_token_fkey'
+            columns: ['token']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
         ]
       }
@@ -667,25 +667,25 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "uniswap_pool_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'uniswap_pool_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "uniswap_pool_token0_uuid_fkey"
-            columns: ["token0_uuid"]
+            foreignKeyName: 'uniswap_pool_token0_uuid_fkey'
+            columns: ['token0_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
           {
-            foreignKeyName: "uniswap_pool_token1_uuid_fkey"
-            columns: ["token1_uuid"]
+            foreignKeyName: 'uniswap_pool_token1_uuid_fkey'
+            columns: ['token1_uuid']
             isOneToOne: false
-            referencedRelation: "asset"
-            referencedColumns: ["uuid"]
+            referencedRelation: 'asset'
+            referencedColumns: ['uuid']
           },
         ]
       }
@@ -737,18 +737,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "user_market_collateral_market_id_fkey"
-            columns: ["market_id"]
+            foreignKeyName: 'user_market_collateral_market_id_fkey'
+            columns: ['market_id']
             isOneToOne: false
-            referencedRelation: "market"
-            referencedColumns: ["id"]
+            referencedRelation: 'market'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "user_market_collateral_user_address_fkey"
-            columns: ["user_address"]
+            foreignKeyName: 'user_market_collateral_user_address_fkey'
+            columns: ['user_address']
             isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["address"]
+            referencedRelation: 'user'
+            referencedColumns: ['address']
           },
         ]
       }
@@ -862,10 +862,10 @@ export type Database = {
           id: number
         }[]
       }
-          }
+    }
     Enums: {
-      oracle_type: "CHAINLINK" | "PYTH" | "UNISWAP"
-      perp_type: "zero_perp" | "half_perp" | "one_perp" | "two_perp"
+      oracle_type: 'CHAINLINK' | 'PYTH' | 'UNISWAP'
+      perp_type: 'zero_perp' | 'half_perp' | 'one_perp' | 'two_perp'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -873,27 +873,27 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, 'public'>]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
+        PublicSchema['Views'])
+    ? (PublicSchema['Tables'] &
+        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -902,19 +902,19 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
+    | keyof PublicSchema['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -923,19 +923,19 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
+    | keyof PublicSchema['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -944,28 +944,28 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
+    | keyof PublicSchema['Enums']
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema["CompositeTypes"]
+    | keyof PublicSchema['CompositeTypes']
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
-    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never
