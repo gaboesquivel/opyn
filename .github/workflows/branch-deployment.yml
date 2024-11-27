@@ -11,34 +11,45 @@ on:
       - "*"
   
 jobs:
-  - name: Supabase Database Branching Preview
-    uses: 0xBigBoss/supabase-branch-gh-action@v1
-    with:
-      supabase_token: ${{ secrets.SUPABASE_TOKEN }}
-      supabase_url: ${{ secrets.SUPABASE_URL }}
-      branch_name: ${{ github.ref_name }}
-      branch_type: preview
-  - name: Get result
-    run: | 
-      echo "ref=${{steps.supabase-branch.outputs.ref}}"
-      echo "api_url=${{steps.supabase-branch.outputs.api_url}}"
-      echo "graphql_url=${{steps.supabase-branch.outputs.graphql_url}}"
-      echo "db_host=${{steps.supabase-branch.outputs.db_host}}"
-      echo "db_port=${{steps.supabase-branch.outputs.db_port}}"
-      echo "db_user=${{steps.supabase-branch.outputs.db_user}}"
-      echo "db_password=${{steps.supabase-branch.outputs.db_password}}"
-      echo "jwt_secret=${{steps.supabase-branch.outputs.jwt_secret}}"
-      echo "anon_key=${{steps.supabase-branch.outputs.anon_key}}"
-      echo "service_role_key=${{steps.supabase-branch.outputs.service_role_key}}"
-  deploy:
+  supabase_branch_preview:
+    name: Supabase Database Branching Preview
     runs-on: ubuntu-latest
-    # Skipping for vercel admin username since vercel will auto-deploy for admin
+    steps:
+      - name: Supabase Branch
+        uses: 0xBigBoss/supabase-branch-gh-action@v1
+        with:
+          supabase_token: ${{ secrets.SUPABASE_TOKEN }}
+          supabase_url: ${{ secrets.SUPABASE_URL }}
+          branch_name: ${{ github.ref_name }}
+          branch_type: preview
+
+  get_result:
+    name: Get result
+    runs-on: ubuntu-latest
+    needs: supabase_branch_preview
+    steps:
+      - name: Output Supabase Branch Details
+        run: |
+          echo "ref=${{ needs.supabase_branch_preview.outputs.ref }}"
+          echo "api_url=${{ needs.supabase_branch_preview.outputs.api_url }}"
+          echo "graphql_url=${{ needs.supabase_branch_preview.outputs.graphql_url }}"
+          echo "db_host=${{ needs.supabase_branch_preview.outputs.db_host }}"
+          echo "db_port=${{ needs.supabase_branch_preview.outputs.db_port }}"
+          echo "db_user=${{ needs.supabase_branch_preview.outputs.db_user }}"
+          echo "db_password=${{ needs.supabase_branch_preview.outputs.db_password }}"
+          echo "jwt_secret=${{ needs.supabase_branch_preview.outputs.jwt_secret }}"
+          echo "anon_key=${{ needs.supabase_branch_preview.outputs.anon_key }}"
+          echo "service_role_key=${{ needs.supabase_branch_preview.outputs.service_role_key }}"
+
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    needs: get_result
     if: github.actor != 'vercel-opynco'
     steps:
       - uses: actions/checkout@v4
       - name: Determine Deployment Environment
         id: prod_or_not
-        # use --prod flag for main branch
         run: |
           if [ "${{ github.ref }}" == 'refs/heads/main' ]
           then
@@ -50,9 +61,8 @@ jobs:
         run: npm install --global vercel@latest
       - name: Deploy to Vercel
         id: deploy_cli
-      # deploy using vercel CLI with custom flags to ensure proper author, branch and commit tagging is done on vercel dashboard
-        run: | 
-          DEPLOY_URL=$(vercel ${{steps.prod_or_not.outputs.vercel-args}} -t ${{ secrets.VERCEL_TOKEN }} \
+        run: |
+          DEPLOY_URL=$(vercel ${{ steps.prod_or_not.outputs.vercel-args }} -t ${{ secrets.VERCEL_TOKEN }} \
             -m githubCommitSha=${{ github.sha }} \
             -m githubCommitAuthorName=${{ github.actor }} \
             -m githubCommitAuthorLogin=${{ github.actor }} \
