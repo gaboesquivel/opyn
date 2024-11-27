@@ -184,6 +184,6 @@ grant truncate on table "public"."users" to "service_role";
 
 grant update on table "public"."users" to "service_role";
 
-CREATE TRIGGER embed AFTER INSERT ON public.document_sections FOR EACH ROW EXECUTE FUNCTION supabase_functions.http_request('https://iyzpghlzpofnklzeeiws.supabase.co/functions/v1/embed', 'POST', '{"Content-type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5enBnaGx6cG9mbmtsemVlaXdzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODA1ODU0MCwiZXhwIjoyMDQzNjM0NTQwfQ.l1nCylAJdTaheaPwAC23sOZ1z5nXJNkqbJZjF8VcKeo"}', '{}', '1000');
+-- CREATE TRIGGER embed AFTER INSERT ON public.document_sections FOR EACH ROW EXECUTE FUNCTION supabase_functions.http_request('https://iyzpghlzpofnklzeeiws.supabase.co/functions/v1/embed', 'POST', '{"Content-type":"application/json","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5enBnaGx6cG9mbmtsemVlaXdzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODA1ODU0MCwiZXhwIjoyMDQzNjM0NTQwfQ.l1nCylAJdTaheaPwAC23sOZ1z5nXJNkqbJZjF8VcKeo"}', '{}', '1000');
 
 

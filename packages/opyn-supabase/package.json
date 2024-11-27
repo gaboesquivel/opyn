@@ -7,11 +7,17 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "scripts": {
+    "supa:deploy": "bun run supa:deploy-functions &&supabase db push",
+    "supa:deploy-functions": "supabase functions deploy",
     "supa:update": "supabase db pull; bun run supa:gen",
     "supa:gen": "bun run types && bun run schemas",
-    "supa:remove": "bun run ./supabase/scripts/zod",
+    "supa:seed": "supabase db execute ./supabase/seed.sql",
+    "supa:prepare": "bun run ./scripts/zod",
+    "supa:dump": "supabase db dump --link > dump.sql && bun run supa:dump-seeds",
+    "supa:dump-seeds": "supabase db dump --data-only --schema public --file ./supabase/seed.sql",
     "types": "supabase gen types gen types --lang=typescript --project-id iyzpghlzpofnklzeeiws > src/supa.types.ts",
-    "schemas": "bun run supa:remove && supabase-to-zod --input src/supa.modified.types.ts --output src/supa.schemas.ts",
+
+    "schemas": "bun run supa:prepare && supabase-to-zod --input src/supa.modified.types.ts --output src/supa.schemas.ts",
     "fake": "bun run ./scripts/fake-orders.ts"
   },
   "author": "opyn.co",
